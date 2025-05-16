@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.cjs",
     "dev": "nodemon src/index.js",
-    "build": "npm i && npm i --prefix client && webpack --mode production && npm run build --prefix client"
+    "build": "npm i && npm i --prefix client && npx webpack --mode production && npm run build --prefix client"
   },
   "keywords": [],
   "author": "",
