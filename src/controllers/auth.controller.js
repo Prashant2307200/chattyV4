@@ -89,7 +89,7 @@ export const AuthController = {
       response.cookie("access_token", newAccessToken, { ...AppConfig.cookieOptions, maxAge: 15 * 60 * 1000 });
       response.cookie("refresh_token", newRefreshToken, { ...AppConfig.cookieOptions });
 
-      redisClient.setEx("refresh_token", 60 * 60 * 24 * 7, newRefreshToken); 
+      await redisClient.setEx(`refresh_token:${decodedRefreshToken._id}`, 60 * 60 * 24 * 7, newRefreshToken); 
     }
 
     const decodedAccessToken = jwt.verify(access_token, AppConfig.env.ACCESS_TOKEN_SECRET);

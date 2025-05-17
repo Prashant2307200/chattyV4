@@ -112,6 +112,7 @@ export const AppConfig = {
       directives: {
         "script-src": ["'self'"],
         "style-src": ["'self'", "'unsafe-inline'"], // Allow inline styles
+        "img-src": ["'self'", "data:", "https:", "blob:"],
       },
     },
   },
@@ -123,7 +124,8 @@ export const AppConfig = {
     legacyHeaders: false,
     skipSuccessfulRequests: false,
     skipFailedRequests: false,
-    message: 'Too many requests from this IP, please try again later'
+    message: 'Too many requests from this IP, please try again later',
+    filter: (request) => request.originalUrl.startsWith('/api/v1'),
   },
 
   jsonParseConfig: {

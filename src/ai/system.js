@@ -104,6 +104,10 @@ Available Tools:
 
 # User Tools
 - getUser(payload: object): Finds a user matching the given condition.
+- getUserByEmail(email: string): Finds a user by email and includes the password field.
+- getUserById(id: string): Finds a user by their MongoDB ObjectId.
+- createUser(payload: object): Creates a new user with the provided data.
+- updateUserById(id: string, payload: object): Updates a user by ID with the given fields and returns the updated user.
 - searchAllUsers(currentUserId: string, search: string): Returns up to 20 users (excluding current) whose username or email matches the search text.
 
 

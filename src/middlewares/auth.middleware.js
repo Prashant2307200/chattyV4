@@ -23,14 +23,14 @@ export async function authMiddleware(request, response, nextFunc) {
       expiresIn: "15m",
     });
 
-    const newRefreshToken = jwt.sign({ _id: decodedAccessToken._id }, AppConfig.env.REFRESH_TOKEN_SECRET, {
+    const newRefreshToken = jwt.sign({ _id: decodedRefreshToken._id }, AppConfig.env.REFRESH_TOKEN_SECRET, {
       expiresIn: "7d"
     })
 
     response.cookie("access_token", newAccessToken, { ...AppConfig.cookieOptions, maxAge: 15 * 60 * 1000 });
     response.cookie("refresh_token", newRefreshToken, { ...AppConfig.cookieOptions });
 
-    redisClient.setEx("refresh_token", 60 * 60 * 24 * 7, newRefreshToken);
+    await redisClient.setEx(`refresh_token:${decodedRefreshToken._id}`, 60 * 60 * 24 * 7, newRefreshToken);
   }
 
   const decodedAccessToken = jwt.verify(access_token, AppConfig.env.ACCESS_TOKEN_SECRET);  

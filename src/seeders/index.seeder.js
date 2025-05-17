@@ -22,6 +22,19 @@ export async function seedDB() {
     MessageModel.deleteMany({}),
     ChatModel.deleteMany({}),
     RequestModel.deleteMany({}),
+  ]);
+
+  await Promise.all([
+    RequestModel.insertMany(requests),
+    UserModel.insertMany(users),
+    MessageModel.insertMany(messages),
+    ChatModel.insertMany(chats),
+  ]);
+}
+
+export async function createDatabaseIndexes() {
+
+  await Promise.all([
     UserModel.collection.dropIndexes({}),
     MessageModel.collection.dropIndexes({}),
     ChatModel.collection.dropIndexes({}),
@@ -29,10 +42,6 @@ export async function seedDB() {
   ]);
 
   await Promise.all([
-    UserModel.insertMany(users),
-    MessageModel.insertMany(messages),
-    ChatModel.insertMany(chats),
-    RequestModel.insertMany(requests),
     createUserIndexes(),
     createMessageIndexes(),
     createChatIndexes(),
