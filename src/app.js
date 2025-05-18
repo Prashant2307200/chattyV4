@@ -65,6 +65,11 @@ if (NODE_ENV === "production") {
     return response.sendFile(path.resolve(__dirname, "../client", "dist", "index.html"));
   });
 
+  app.use((request, _response, nextFunc) => {
+    logger.info(`request received: ${request.method} ${request.url}`);
+    nextFunc();
+  });
+
 } else {
 
   app.use(cors(corsConfig));

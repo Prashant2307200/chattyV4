@@ -45,7 +45,7 @@ const ChatContainer = ({ onMobileBack }) => {
   return (
     <div className="flex-1 flex flex-col h-full">
 
-      <div className="sticky top-0">
+      <div className="fixed left-0 right-0 top-0">
         <ChatHeader onMobileBack={onMobileBack} />
       </div>
 
