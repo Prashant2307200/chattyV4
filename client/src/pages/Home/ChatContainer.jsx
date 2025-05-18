@@ -45,7 +45,9 @@ const ChatContainer = ({ onMobileBack }) => {
   return (
     <div className="flex-1 flex flex-col h-full">
 
-      <ChatHeader onMobileBack={onMobileBack} />
+      <div className="sticky top-0">
+        <ChatHeader onMobileBack={onMobileBack} />
+      </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages?.map((message, index) => {
