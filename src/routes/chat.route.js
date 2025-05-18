@@ -10,7 +10,7 @@ import { ChatController } from "../controllers/chat.controller.js";
 const router = Router();
 const { Paths } = AppConfig;
 
-router.use(authMiddleware);
+router.use(catchError(authMiddleware));
 
 router.param("id", checkId)
 

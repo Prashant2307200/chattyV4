@@ -54,7 +54,7 @@ const AiChat = ({ onClose }) => {
               </div>
             </div>
             <div>
-              <h3 className="font-medium">Chatty AI Assistant</h3>
+              <h3 className="font-medium">Chitty AI Agent</h3>
               <p className="text-sm text-base-content/70">
                 {isLoading ? (
                   <span className="text-primary animate-pulse">typing...</span>
@@ -93,7 +93,7 @@ const AiChat = ({ onClose }) => {
               </div>
             </div>
             <div className="chat-header mb-1">
-              Chatty AI
+              Chitty AI Agent
               <time className="text-xs opacity-50 ml-1">{formatMessageTime(new Date())}</time>
             </div>
             <div className="chat-bubble bg-base-200">
@@ -130,7 +130,7 @@ const AiChat = ({ onClose }) => {
                 </div>
               </div>
               <div className="chat-header mb-1">
-                {message.isUser ? "You" : "Chatty AI"}
+                {message.isUser ? "You" : "Chitty AI"}
                 <time className="text-xs opacity-50 ml-1">{formatMessageTime(message.timestamp)}</time>
               </div>
               <div className={`chat-bubble ${message.isUser ? "bg-secondary text-secondary-content" : message.isError ? "bg-error text-error-content" : "bg-base-200"}`}>

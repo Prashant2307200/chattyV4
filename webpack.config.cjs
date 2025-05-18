@@ -3,7 +3,7 @@ const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-  entry: './src/index.js',  
+  entry: './index.js',  
   target: 'node',
   output: {
     filename: 'index.cjs',

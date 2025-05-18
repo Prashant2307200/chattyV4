@@ -5,7 +5,7 @@ import { getSystemPrompt } from "./system.js";
 // tasks on automation
 export async function processAIChat(userMessage, userId) {
 
-  const SYSTEM_PROMPT = getSystemPrompt(userId);
+  const SYSTEM_PROMPT = getSystemPrompt(userId); 
 
   userMessage = userMessage.trim().replace(/[<>]/g, '')
   const userQuery = { type: "user", user: userMessage };

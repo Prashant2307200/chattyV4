@@ -23,9 +23,9 @@ export const AppConfig = {
     PORT: Number(PORT) || 8080,
     NODE_ENV: NODE_ENV || "development",
 
-    REDIS_HOST: REDIS_HOST || "organic-crow-18740.upstash.io",
+    REDIS_HOST: REDIS_HOST || "redis",
     REDIS_PORT: Number(REDIS_PORT) || 6379,
-    REDIS_URI: REDIS_URI || `redis://localhost:6379`,
+    REDIS_URI: REDIS_URI || `redis://redis:6379`,
 
     MONGO_URI: MONGO_URI || "mongodb://127.0.0.1:27017/chatty",
 
@@ -33,11 +33,11 @@ export const AppConfig = {
     ACCESS_TOKEN_SECRET: ACCESS_TOKEN_SECRET || "access_token_secret",
     REFRESH_TOKEN_SECRET: REFRESH_TOKEN_SECRET || "refresh_token_secret",
 
-    CLOUD_NAME: CLOUD_NAME,
-    CLOUD_API_KEY: CLOUD_API_KEY,
-    CLOUD_API_SECRET: CLOUD_API_SECRET,
+    CLOUD_NAME,
+    CLOUD_API_KEY,
+    CLOUD_API_SECRET,
 
-    GEMINI_API_KEY: GEMINI_API_KEY,
+    GEMINI_API_KEY,
   },
 
   Paths: {

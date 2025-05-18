@@ -5,7 +5,7 @@
   "main": "dist/index.cjs",
   "scripts": {
     "start": "node dist/index.cjs",
-    "dev": "nodemon src/index.js",
+    "dev": "nodemon index.js",
     "build": "npm i && webpack --mode production && npm i --prefix client && npm run build --prefix client"
   },
   "keywords": [],

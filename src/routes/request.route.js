@@ -11,7 +11,7 @@ import { requestValidationSchema, responseValidationSchema } from "../schemas/re
 const router = Router();
 const { Paths } = AppConfig;
 
-router.use(authMiddleware);
+router.use(catchError(authMiddleware));
  
 router.param("id", checkId);
 

@@ -8,7 +8,7 @@ import { UserController } from "../controllers/user.controller.js";
 const router = Router();
 const { Paths } = AppConfig;
 
-router.use(authMiddleware);
+router.use(catchError(authMiddleware));
  
 router.get(Paths.Users.Search, catchError(UserController.getAllUsers));
 

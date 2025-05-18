@@ -1,9 +1,7 @@
-import { Schema, model } from "mongoose";
+import { Schema, model } from "mongoose"; 
 
-import { clearAuthTokens } from "./methods/clearAuthTokens.method.js";
-import { comparePassword } from "./methods/comparePassword.method.js"; 
-import { hashPassword } from "./middlewares/hashPassword.middleware.js";
-import { generateAuthTokens } from "./methods/generateAuthTokens.method.js";
+import { Hash } from "../utils/Hash.util.js";
+import { Token } from "../utils/Token.util.js";
 
 const userSchema = new Schema(
   {
@@ -36,9 +34,22 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.pre("save", hashPassword);
+userSchema.pre("save", async function (nextFunc) {
+  await Hash.hsh(this, "password");
+  return nextFunc();
+});
 
-userSchema.methods = { comparePassword, generateAuthTokens, clearAuthTokens };
+userSchema.methods = { 
+  comparePassword: async function (password) {
+    return await Hash.validate(password, this.password);
+  }, 
+  generateAuthTokens: async function (response) {
+    return await Token.generateAuthTokens(response, this._id);
+  }, 
+  clearAuthTokens: async function (response) {
+    await Token.clearAuthTokens(response, this._id);
+  }
+};
 
 const UserModel = model("User", userSchema);
 

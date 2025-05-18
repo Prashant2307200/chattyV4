@@ -37,7 +37,7 @@ const AiChatPage = () => {
                     </div>
                   </div>
                   <div>
-                    <h2 className="text-lg font-bold">AI Assistant</h2>
+                    <h2 className="text-lg font-bold">Chitty AI Agent</h2>
                     <p className="text-sm text-base-content/70">Ask me about your chats</p>
                   </div>
                 </div>

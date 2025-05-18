@@ -293,23 +293,22 @@ const Sidebar = memo(({ onChatSelect }) => {
                   >
                     {isGroup ? (
                       <div className="relative mx-auto lg:mx-0">
-                        <div className="avatar-group -space-x-4 size-10 lg:size-12">
+                        {/* Avatar Stack */}
+                        <div className="flex -space-x-4 w-fit">
                           {chat.participants.slice(0, 2).map((participant, idx) => (
-                            <div key={participant._id} className="avatar aspect-square">
-                              <div className="rounded-full size-full">
-                                <img
-                                  className="object-cover"
-                                  src={participant?.profilePic || "/avatar.png"}
-                                  alt={participant?.username || `User ${idx + 1}`}
-                                />
-                              </div>
+                            <div key={participant._id} className="w-10 h-10 lg:w-12 lg:h-12 rounded-full overflow-hidden border-2 border-transparent">
+                              <img className="w-full h-full object-cover"
+                                src={participant?.profilePic || "/avatar.png"}
+                                alt={participant?.username || `User ${idx + 1}`}
+                              />
                             </div>
                           ))}
                         </div>
-                        
-                        <div className="absolute -top-1 -right-1 bg-primary text-primary-content text-xs font-bold rounded-full size-5 flex items-center justify-center">
+
+                        {/* Group Icon Badge */}
+                        <div className="absolute -top-1 -right-1 bg-primary text-primary-content text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center">
                           <Users size={12} />
-                        </div> 
+                        </div>
                       </div>
                     ) : (
                       <div className="relative mx-auto lg:mx-0">

@@ -28,10 +28,10 @@ const SidebarAiChat = () => {
 
         <div className="flex flex-col text-left min-w-0 flex-1">
           <div className="font-medium truncate flex items-center gap-1">
-            Chatty AI Assistant
+            Chitty Agent
           </div>
           <div className="text-xs text-primary/80 h-4 flex items-center">
-            Ask about your chats
+            Automate chats
           </div>
         </div>
 

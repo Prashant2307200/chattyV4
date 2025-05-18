@@ -12,7 +12,7 @@ import { MessageController } from "../controllers/message.controller.js";
 const router = Router({ mergeParams: true });
 const { Paths } = AppConfig;
 
-router.use(authMiddleware);
+router.use(catchError(authMiddleware));
 
 router.param("id", checkId);
 

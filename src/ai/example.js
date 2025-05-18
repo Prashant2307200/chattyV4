@@ -1,7 +1,6 @@
 export default function examples(userId) {
   return {
-
-    ex1: [
+    "User ID": [
       {
         "type": "user",
         "user": "What's my user ID?"
@@ -12,7 +11,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex2: [
+    "Show chats": [
       {
         "type": "user",
         "user": "Hey, can you give me my chats"
@@ -71,7 +70,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex3: [
+    "Show chat messages": [
       {
         "type": "user",
         "user": "Hey, can you give me my chats with janesmith"
@@ -143,7 +142,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex4: [
+    "Send chat message": [
       {
         "type": "user",
         "user": "Hey, can you send a message to janesmith saying 'Hi, how are you?'"
@@ -208,7 +207,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex5: [
+    "Search for users": [
       {
         "type": "user",
         "user": "Find users with 'smith' in their name"
@@ -248,7 +247,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex6: [
+    "Check friend requests": [
       {
         "type": "user",
         "user": "Do I have any pending friend requests?"
@@ -305,7 +304,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex7: [
+    "Create a new group chat": [
       {
         "type": "user",
         "user": "Create a group chat called 'Project Team' with bob and emma"
@@ -396,7 +395,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex8: [
+    "Send a friend request (existing request)": [
       {
         "type": "user",
         "user": "Send a friend request to david"
@@ -450,7 +449,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex9: [
+    "Send a friend request (complete flow)": [
       {
         "type": "user",
         "user": "Send a friend request to michael"
@@ -533,7 +532,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex10: [
+    "Send a friend request (users already in chat)": [
       {
         "type": "user",
         "user": "Send a friend request to bob"
@@ -603,7 +602,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex11: [
+    "Find and get messages from a specific chat": [
       {
         "type": "user",
         "user": "Show me messages from the Project Team group chat"
@@ -690,7 +689,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex12: [
+    "Handle a case when a user doesn't exist": [
       {
         "type": "user",
         "user": "Send a message to alex saying 'Hello'"
@@ -716,7 +715,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex13: [
+    "Create a new chat with a user": [
       {
         "type": "user",
         "user": "Start a new chat with emma"
@@ -781,7 +780,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex14: [
+    "Accept a friend request": [
       {
         "type": "user",
         "user": "Accept friend request from emma"
@@ -866,7 +865,7 @@ export default function examples(userId) {
       }
     ],
 
-    ex15: [
+    "Get a specific message": [
       {
         "type": "user",
         "user": "Show me message with ID message4"

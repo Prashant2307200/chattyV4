@@ -11,7 +11,7 @@ import { userLoginSchema, userSchema } from "../schemas/user.schema.js";
 const router = Router(); 
 const { Paths } = AppConfig;
 
-router.get(Paths.Auth.Check, catchError(AuthController.check));
+router.get(Paths.Auth.Check, AuthController.check);
 
 router.post(Paths.Auth.Login, validate(userLoginSchema), AuthController.login);
 router.post(Paths.Auth.Register, validate(userSchema), AuthController.register);
