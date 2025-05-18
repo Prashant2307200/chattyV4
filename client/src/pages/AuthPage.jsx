@@ -34,7 +34,7 @@ const AuthPage = () => {
   const { form, authImagePattern } = authForm;
 
   return (
-    <main className="h-screen grid lg:grid-cols-2 overflow-hidden"> 
+    <main className="h-[100dvh] grid lg:grid-cols-2 overflow-hidden"> 
 
       {/* auth form  */}
       <section className="relative flex flex-col justify-center items-center p-6 sm:p-12">

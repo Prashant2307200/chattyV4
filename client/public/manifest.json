@@ -4,8 +4,8 @@
   "description": "A real-time chat application built with React and Socket.io.",
   "start_url": ".",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#2EB9DF",
+  "background_color": "#333",
+  "theme_color": "#333",
   "icons": [
     {
       "src": "/image.png",
