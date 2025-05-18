@@ -65,6 +65,11 @@ if (NODE_ENV === "production") {
     return response.sendFile(path.resolve(__dirname, "../client", "dist", "index.html"));
   });
 
+  // Serve Digital Asset Links for Android app association
+  app.get('/.well-known/assetlinks.json', (_req, res) => {
+    res.sendFile(path.resolve(__dirname, '../client/public/.well-known/assetlinks.json'));
+  });
+
   app.use((request, _response, nextFunc) => {
     logger.info(`request received: ${request.method} ${request.url}`);
     nextFunc();
