@@ -13,3 +13,8 @@ input[type="password"]::-webkit-credentials-auto-fill-button,
 input[type="password"]::-webkit-password-toggle-button {
   display: none;
 }
+
+html, body {
+  height: 100vh;
+  overflow: hidden;
+}
