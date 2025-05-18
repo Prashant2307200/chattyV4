@@ -95,7 +95,7 @@ const ChatContainer = ({ onMobileBack }) => {
         })}
       </div>
 
-      <div className="mt-auto">
+      <div className="mt-auto sticky bottom-0">
         <MessageInput />
       </div>
     </div>
