@@ -6,6 +6,7 @@ import ChatContainer from "./ChatContainer";
 import NoChatSelected from "./NoChatSelected";
 import { Tabs, Tab } from "../../components/ui/Tabs";
 import { useSocketStore } from "../../store/useSocketStore";
+import ChatHeader from "./ChatHeader";
 
 const HomePage = () => {
 
@@ -51,7 +52,7 @@ const HomePage = () => {
             <div className="flex-1 overflow-auto">
               {showChatOnMobile ? (
                 // Pass our custom back handler to the chat container
-                <ChatContainer onMobileBack={handleMobileBack} />
+                <ChatContainer><ChatHeader onMobileBack={handleMobileBack} /></ChatContainer>
               ) : (
                 // Show sidebar or users list based on active tab
                 activeTab === "chats" ? (
@@ -76,7 +77,7 @@ const HomePage = () => {
               </div>
             </div>
             <div className="flex-1 overflow-hidden">
-              {!selectedChat ? memoizedNoChatSelected : <ChatContainer />}
+              {!selectedChat ? memoizedNoChatSelected : <ChatContainer><ChatHeader /></ChatContainer>}
             </div>
           </div>
         </div>

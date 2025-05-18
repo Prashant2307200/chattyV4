@@ -9,7 +9,7 @@ import { useApiQuery } from "../../hooks/useApiQuery";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
 import { useSocketStore } from "../../store/useSocketStore";
 
-const ChatContainer = ({ onMobileBack }) => {
+const ChatContainer = ({ children }) => {
 
   const { selectedChat } = useSocketStore();
 
@@ -31,7 +31,7 @@ const ChatContainer = ({ onMobileBack }) => {
   if (isMessagesLoading) {
     return (
       <div className="flex-1 flex flex-col h-full">
-        <ChatHeader onMobileBack={onMobileBack} />
+        {children}
         <div className="flex-1 overflow-y-auto">
           <MessageSkeleton />
         </div>
@@ -45,7 +45,7 @@ const ChatContainer = ({ onMobileBack }) => {
   return (
     <div className="flex-1 flex flex-col h-full relative">
 
-      <ChatHeader onMobileBack={onMobileBack} />
+      {children}
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages?.map((message, index) => {
