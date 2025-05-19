@@ -34,7 +34,7 @@ const ChatRequestsLink = memo(() => {
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
-      <Link to="/requests" className="btn btn-sm gap-2">
+      <Link to="/requests" aria-label="Open chat requests" className="btn btn-sm gap-2">
         <div className="indicator">
           <AnimatePresence>
             {pendingCount > 0 && (

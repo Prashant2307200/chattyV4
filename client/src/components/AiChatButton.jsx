@@ -12,6 +12,7 @@ const AiChatButton = () => {
   return (
     <>
       <motion.button
+        aria-label="Open AI chat"
         className="btn btn-circle btn-primary"
         onClick={openChat}
         whileHover={{ scale: 1.1 }}

@@ -110,7 +110,7 @@ export const AppConfig = {
     contentSecurityPolicy: {
       useDefaults: true,
       directives: {
-        "script-src": ["'self'"],
+        "script-src": ["'self'", "'unsafe-inline'"],
         "style-src": ["'self'", "'unsafe-inline'"], // Allow inline styles
         "img-src": ["'self'", "data:", "https:", "blob:"],
       },

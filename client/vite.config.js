@@ -51,6 +51,36 @@ export default defineConfig({
       },
       workbox: {
         globPatterns: ['**/*.{js,css,html,png,svg,ico,jpg,jpeg,json}'],
+        runtimeCaching: [
+          {
+            urlPattern: /\/api\/ai\//,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'ai-responses',
+              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 },
+              backgroundSync: {
+                name: 'ai-response-queue',
+                options: {
+                  maxRetentionTime: 24 * 60 // Retry for max 24h
+                }
+              }
+            }
+          },
+          {
+            urlPattern: /\/api\//,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 },
+              backgroundSync: {
+                name: 'api-queue',
+                options: {
+                  maxRetentionTime: 24 * 60
+                }
+              }
+            }
+          }
+        ]
       },
       devOptions: {
         enabled: true,
@@ -60,6 +90,7 @@ export default defineConfig({
 
   build: {
     outDir: 'dist',
+    sourcemap: true, // Enable source maps for debugging and best practices
   },
 
   server: {
