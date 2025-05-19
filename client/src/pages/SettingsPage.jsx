@@ -8,7 +8,7 @@ const SettingsPage = () => {
 
   return (
     <div className="overflow-auto">
-      <main className="h-[100dvh] container mx-auto px-4 pt-20 max-w-5xl space-y-6">
+      <main className="h-[100svh] container mx-auto px-4 pt-20 max-w-5xl space-y-6">
 
         <section className="flex flex-col gap-1">
           <h2 className="text-lg font-semibold">Theme</h2>

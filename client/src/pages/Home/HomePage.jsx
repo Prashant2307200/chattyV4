@@ -30,7 +30,7 @@ const HomePage = () => {
   const memoizedUsersList = useMemo(() => <UsersList />, []);
 
   return (
-    <main className="h-screen bg-base-200">
+    <main className="h-[100svh] bg-base-200">
 
       {/* chat layout */}
       <section className="flex items-center justify-center pt-15 sm:px-4 sm:pt-20">

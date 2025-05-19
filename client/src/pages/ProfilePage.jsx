@@ -39,7 +39,7 @@ const ProfilePage = () => {
   return (
     <div className="overflow-auto">
 
-      <section className="h-[100dvh] pt-20">
+      <section className="h-[100svh] pt-20">
         <div className="max-w-2xl mx-auto p-4 py-8">
           <div className="bg-base-200 rounded-xl p-6 space-y-8">
             <div className="text-center">
