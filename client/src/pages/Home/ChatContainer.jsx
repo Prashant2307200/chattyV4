@@ -45,7 +45,7 @@ const ChatContainer = ({ children }) => {
   return (
     <div className="flex-1 flex flex-col h-full">
 
-      <div className="shrink-0 z-10 fixed left-0 right-0 bg-base-100"> 
+      <div className="mb-auto">  
         {children}
       </div>
 
