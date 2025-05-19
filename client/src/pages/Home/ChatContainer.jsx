@@ -31,7 +31,9 @@ const ChatContainer = ({ children }) => {
   if (isMessagesLoading) {
     return (
       <div className="flex-1 flex flex-col h-full">
-        {children}
+        <div className="mb-auto">
+          {children}
+        </div>
         <div className="flex-1 overflow-y-auto">
           <MessageSkeleton />
         </div>
