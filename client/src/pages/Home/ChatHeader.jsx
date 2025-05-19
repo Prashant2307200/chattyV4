@@ -65,7 +65,7 @@ const ChatHeader = ({ onMobileBack }) => {
   };
 
   return (
-    <div className="p-2.5 border-b border-base-300 absolute top-0 left-0 right-0 z-10">
+    <div className="p-2.5 border-b border-base-300">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
           {/* Back button for mobile */}

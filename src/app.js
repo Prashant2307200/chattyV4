@@ -53,20 +53,8 @@ if (NODE_ENV === "production") {
     }
   }));
 
-  app.get(["/manifest.webmanifest", "/manifest.json"], (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/manifest.webmanifest"));
-  });
-
-  app.get(["/service-worker.js", "/sw.js", "/sw.js.map", /^\/workbox-.*\.js$/], (req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist", req.path.replace(/^\//, '')));
-  });
-
   app.get('/', (_request, response) => {
     return response.sendFile(path.resolve(__dirname, "../client", "dist", "index.html"));
-  });
-
-  app.get('/.well-known/assetlinks.json', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, '../client/public/.well-known/assetlinks.json'));
   });
 } else {
 

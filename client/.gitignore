@@ -28,3 +28,11 @@ dist-ssr
 
 .env
 .env.local
+
+sw.js
+registerSW.js
+manifest.json
+webbox-*.js
+
+dev-*
+.well-known

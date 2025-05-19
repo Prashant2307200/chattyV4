@@ -9,13 +9,27 @@
   "icons": [
     {
       "src": "/image.png",
-      "sizes": "192x192",
+      "sizes": "512x512",
       "type": "image/png"
     },
     {
       "src": "/avatar.png",
-      "sizes": "512x512",
+      "sizes": "266x261",
       "type": "image/png"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshot1.png",
+      "sizes": "385x663",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot2.png",
+      "sizes": "900x565",
+      "type": "image/png",
+      "form_factor": "wide" 
     }
   ]
 }
