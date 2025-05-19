@@ -45,7 +45,9 @@ const ChatContainer = ({ children }) => {
   return (
     <div className="flex-1 flex flex-col h-full">
 
-      {children}
+      <div className="shrink-0 z-10"> 
+        {children}
+      </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages?.map((message, index) => {
