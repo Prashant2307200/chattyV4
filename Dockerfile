@@ -30,14 +30,14 @@ RUN chown -R node:node /server && chmod -R 755 /server
 RUN npm run build 
 
 
-FROM debian:bullseye-slim
+FROM debian:bullseye-slim as app
 
 WORKDIR /app
 
 RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=client /client/dist/ ./client/dist
-COPY --from=server /server/dist ./dist
+COPY --from=server /server/dist/ ./dist  
 
 EXPOSE 8080
 
