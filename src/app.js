@@ -49,16 +49,16 @@ if (NODE_ENV === "production") {
   app.use(helmet(helmetConfig));
   app.use(rateLimit(rateLimitConfig));
 
-  app.use(express.static(path.resolve(__dirname, "client", "dist"), {
+  app.use(express.static("./client/dist"), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html'))
         res.setHeader('Cache-Control', 'no-store');
     }
-  }));
+  });
 
   app.get('/', (_request, response) => {
-    return response.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
+    return response.sendFile("./client/dist/index.html");
   });
 } else {
 
