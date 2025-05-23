@@ -34,3 +34,5 @@ webbox-*.js
 
 dev-*
 .well-known
+
+app.exe

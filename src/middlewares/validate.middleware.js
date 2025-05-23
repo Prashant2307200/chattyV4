@@ -1,14 +1,14 @@
 import { AppConfig } from "../config/app.config.js";
 
 export function validate (schema) {
-  return function (request, _response, nextFunct) {
+  return function (request, _response, nextFunc) {
 
-    if (!request.body) return nextFunct(new ExpressError("Invalid request object.", AppConfig.Status.BadRequest));
+    if (!request.body) return nextFunc(new ExpressError("Invalid request object.", AppConfig.Status.BadRequest));
 
     const { error } = schema.validate(request.body);
     if (error)
-      return nextFunct(error);
+      return nextFunc(error);
 
-    nextFunct();
+    nextFunc();
   }
 }

@@ -1,12 +1,11 @@
-import React from "react";
-
 import { Link } from "react-router-dom";
-import { memo, useCallback, useMemo } from "react"; 
+import { memo, useMemo, useCallback } from "react"; 
 
-import ChatRequestsLink from "../ChatRequestsLink"; 
+import ChatRequestsLink from "../ChatRequestsLink";  
+import { navigation } from "../../constants/navigation.constant";
+
 import { useSocketStore } from "../../store/useSocketStore";
 import { useApiMutation } from "../../hooks/useApiMutation"; 
-import { navigation } from "../../constants/navigation.constant";
 
 const Navbar = memo(() => {
   const Logo = navigation.logo;
@@ -43,8 +42,9 @@ const Navbar = memo(() => {
 export default Navbar;
 
 const AuthNavigation = () => {
+  
   const { hasAuthUser } = useSocketStore();
-  const User = useMemo(() => navigation.links[1].icon, []);
+  const User = useMemo(() => navigation.links[1].icon, []); 
 
   return hasAuthUser && (
     <>
@@ -59,26 +59,27 @@ const AuthNavigation = () => {
 }
 
 const Logout = memo(() => {
-  
+
   const { unsubscribeFromEvents } = useSocketStore();
 
-  const { mutate: logoutMutation, isPending } = useApiMutation({
-      keys: ["authUser"],
-      method: "delete",
-      path: "/auth/logout",
-      message: "Logged out Successfully!",
-      cb: () => {
-        unsubscribeFromEvents();
-      }
-    })
+  const { mutate: logoutMutation, isPending: isLoggedOut } = useApiMutation({
+    keys: ["authUser"],
+    method: "delete",
+    path: "/auth/logout",
+    message: "Logged out Successfully!",
+    cb: () => {
+      unsubscribeFromEvents();
+    }
+  });
 
-  const LogOut = navigation.links[2].icon;
   const handleOnClick = useCallback(() => {
     logoutMutation()
-  }, [logoutMutation]);
+  }, []);
+
+  const LogOut = navigation.links[2].icon;
 
   return (
-    <button className="btn btn-sm gap-2" onClick={handleOnClick} disabled={isPending}>
+    <button className="btn btn-sm gap-2" onClick={handleOnClick} disabled={isLoggedOut}>
       {useMemo(() => <LogOut className="size-4" />, [])}
       <span className="hidden sm:inline">{navigation.links[2].title}</span>
     </button>

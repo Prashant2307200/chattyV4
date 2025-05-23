@@ -1,7 +1,10 @@
+import { AppConfig } from "../config/app.config.js";
 import { ChatService } from "../services/chat.service.js";
 import { ExpressError } from "../utils/expressError.util.js";
 import { MessageService } from "../services/message.service.js";
 import { catchAsyncError } from "../utils/catchAsyncError.util.js";
+
+const { Status } = AppConfig;
 
 export const ChatController = {
 
@@ -23,7 +26,7 @@ export const ChatController = {
     if (error)
       return nextFunc(new ExpressError("Error fetching messages", 404));
 
-    return response.status(200).json(messages);
+    return response.status(Status.Success).json(messages);
   },
 
   async createGroupChat(request, response, nextFunc) {
@@ -55,6 +58,6 @@ export const ChatController = {
     if (populateError) 
       return nextFunc(new ExpressError("Failed to populate group chat", 500));
 
-    return response.status(201).json(populatedChat); 
+    return response.status(Status.Created).json(populatedChat); 
   }
 }

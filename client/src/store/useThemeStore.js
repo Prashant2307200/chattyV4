@@ -1,14 +1,11 @@
 import { create } from "zustand";
 
-const isClient = typeof window !== "undefined";
-
 export const useThemeStore = create((set) => ({
-  theme: isClient ? localStorage.getItem("theme") || "dark" : "dark",
 
-  setTheme: (theme) => {
+  theme: localStorage.getItem("chatty-theme") || "coffee",
+
+  setTheme: theme => {
+    localStorage.setItem("chatty-theme", theme);
     set({ theme });
-    if (isClient) {
-      localStorage.setItem("theme", theme);
-    }
   },
 }));

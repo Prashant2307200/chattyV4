@@ -1,7 +1,6 @@
 import { formatDistanceToNow } from "date-fns";
 import { Users, X, UserPlus } from "lucide-react";
-import { useQueryClient } from "@tanstack/react-query";
-import React, { memo, useState, useMemo, useEffect } from "react";
+import { memo, useState, useMemo, useEffect } from "react";
 
 import { useApiQuery } from "../../hooks/useApiQuery";
 import { formatNumber } from "../../utils/formatUtils";
@@ -9,6 +8,8 @@ import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import SidebarAiChat from "../../components/SidebarAiChat";
 import { useSocketStore } from "../../store/useSocketStore";
 import CreateGroupChatButton from "../../components/CreateGroupChatButton";
+
+import { useQueryClient } from "@tanstack/react-query";
 
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
@@ -20,6 +21,7 @@ const Sidebar = memo(({ onChatSelect }) => {
   const queryClient = useQueryClient();
 
   const { data: chats, isLoading: isUsersLoading } = useApiQuery({ keys: ["chats"], path: '/chats' });
+
 
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
@@ -285,7 +287,7 @@ const Sidebar = memo(({ onChatSelect }) => {
                     whileTap={{ scale: 0.98 }}
                     transition={{ delay: .05 * index }}
                     key={chat._id}
-                    onClick={() => {
+                    onClick={() => { ;
                       unsubscribeFromChat();
                       subscribeToChat(chat, queryClient);
                       if (onChatSelect) onChatSelect();

@@ -2,159 +2,124 @@ import { create } from "zustand";
 import { axiosInstance } from "../lib/axios";
 
 import toast from "react-hot-toast";
-import { useSocketStore } from "./useSocketStore";
 
-export const useRequestStore = create((set, get) => ({
-  // State
-  requests: {
-    sent: [],
-    received: []
-  },
+export const useRequestStore = create((set) => ({
+
+  requests: { sent: [], received: [] },
   isLoading: false,
-  error: null,
-  
-  // Actions
+
   fetchRequests: async () => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true });
     try {
       const response = await axiosInstance.get("/requests");
-      set({ 
-        requests: response.data,
-        isLoading: false 
-      });
+      set({ requests: response.data });
       return response.data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Failed to fetch requests";
-      set({ 
-        error: errorMessage,
-        isLoading: false 
-      });
-      toast.error(errorMessage);
-      return null;
+      toast.error(error.response?.data?.message || "Failed to fetch requests");
+    } finally {
+      set({ isLoading: false });
     }
   },
-  
+
   sendRequest: async (receiverId) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true });
     try {
       const response = await axiosInstance.post("/requests", { receiver: receiverId });
-      
-      // Update the sent requests list
+
       set(state => ({
         requests: {
           ...state.requests,
           sent: [...state.requests.sent, response.data]
-        },
-        isLoading: false
+        }
       }));
-      
+
       toast.success("Request sent successfully");
       return response.data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Failed to send request";
-      set({ 
-        error: errorMessage,
-        isLoading: false 
-      });
-      toast.error(errorMessage);
+      toast.error(error.response?.data?.message || "Failed to send request");
       return null;
+    } finally {
+      set({ isLoading: false });
     }
   },
-  
+
   acceptRequest: async (requestId) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true });
     try {
       const response = await axiosInstance.put(`/requests/${requestId}`, { status: "accepted" });
-      
-      // Update the received requests list
-      set(state => {
-        const updatedReceived = state.requests.received.map(req => 
+
+      set(({ requests }) => {
+
+        const updatedReceived = requests.received.map(req =>
           req._id === requestId ? { ...req, status: "accepted" } : req
         );
-        
+
         return {
           requests: {
-            ...state.requests,
+            ...requests,
             received: updatedReceived
-          },
-          isLoading: false
+          }
         };
       });
-      
+
       toast.success("Request accepted");
       return response.data;
-    } catch (error) {
-      const errorMessage = error.response?.data?.message || "Failed to accept request";
-      set({ 
-        error: errorMessage,
-        isLoading: false 
-      });
-      toast.error(errorMessage);
-      return null;
+    } catch (error) { 
+      toast.error(error.response?.data?.message || "Failed to accept request");
+    } finally {
+      set({ isLoading: false });
     }
   },
-  
+
   declineRequest: async (requestId) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true });
     try {
       const response = await axiosInstance.put(`/requests/${requestId}`, { status: "declined" });
-      
-      // Update the received requests list
-      set(state => {
-        const updatedReceived = state.requests.received.map(req => 
+
+      set(({ requests }) => {
+
+        const updatedReceived = requests.received.map(req =>
           req._id === requestId ? { ...req, status: "declined" } : req
         );
-        
+
         return {
           requests: {
-            ...state.requests,
+            ...requests,
             received: updatedReceived
-          },
-          isLoading: false
+          }
         };
       });
-      
+
       toast.success("Request declined");
       return response.data;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Failed to decline request";
-      set({ 
-        error: errorMessage,
-        isLoading: false 
-      });
-      toast.error(errorMessage);
-      return null;
+      toast.error(error.response?.data?.message || "Failed to decline request");
+    } finally {
+      set({ isLoading: false });
     }
   },
-  
+
   cancelRequest: async (requestId) => {
-    set({ isLoading: true, error: null });
+    set({ isLoading: true });
     try {
       await axiosInstance.delete(`/requests/${requestId}`);
-      
-      // Remove the request from the sent list
+
       set(state => ({
         requests: {
           ...state.requests,
           sent: state.requests.sent.filter(req => req._id !== requestId)
-        },
-        isLoading: false
+        }
       }));
-      
+
       toast.success("Request cancelled");
       return true;
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Failed to cancel request";
-      set({ 
-        error: errorMessage,
-        isLoading: false 
-      });
-      toast.error(errorMessage);
-      return null;
+      toast.error(error.response?.data?.message || "Failed to cancel request");
+    } finally {
+      set({ isLoading: false });
     }
   },
-  
-  // Socket event handlers
+
   handleNewRequest: (request) => {
     set(state => ({
       requests: {
@@ -162,16 +127,16 @@ export const useRequestStore = create((set, get) => ({
         received: [...state.requests.received, request]
       }
     }));
-    
+
     toast.success(`New chat request from ${request.sender.username}`);
   },
-  
+
   handleRequestAccepted: (data) => {
     set(state => {
-      const updatedSent = state.requests.sent.map(req => 
+      const updatedSent = state.requests.sent.map(req =>
         req._id === data.request._id ? data.request : req
       );
-      
+
       return {
         requests: {
           ...state.requests,
@@ -179,16 +144,16 @@ export const useRequestStore = create((set, get) => ({
         }
       };
     });
-    
+
     toast.success("Your request was accepted");
   },
-  
+
   handleRequestDeclined: (request) => {
     set(state => {
-      const updatedSent = state.requests.sent.map(req => 
+      const updatedSent = state.requests.sent.map(req =>
         req._id === request._id ? request : req
       );
-      
+
       return {
         requests: {
           ...state.requests,
@@ -196,10 +161,10 @@ export const useRequestStore = create((set, get) => ({
         }
       };
     });
-    
+
     toast.error("Your request was declined");
   },
-  
+
   handleRequestCancelled: (requestId) => {
     set(state => ({
       requests: {
@@ -207,44 +172,5 @@ export const useRequestStore = create((set, get) => ({
         received: state.requests.received.filter(req => req._id !== requestId)
       }
     }));
-  },
-  
-  // Socket subscription
-  subscribeToRequestEvents: () => {
-    const socket = useSocketStore.getState().socket;
-    if (!socket) return;
-    
-    const { 
-      handleNewRequest, 
-      handleRequestAccepted, 
-      handleRequestDeclined,
-      handleRequestCancelled
-    } = get();
-    
-    // Remove existing listeners to prevent duplicates
-    socket.off("newRequest");
-    socket.off("requestAccepted");
-    socket.off("requestDeclined");
-    socket.off("requestCancelled");
-    
-    // Add new listeners
-    socket.on("newRequest", handleNewRequest);
-    socket.on("requestAccepted", handleRequestAccepted);
-    socket.on("requestDeclined", handleRequestDeclined);
-    socket.on("requestCancelled", handleRequestCancelled);
-    
-    console.log("Subscribed to request events");
-  },
-  
-  unsubscribeFromRequestEvents: () => {
-    const socket = useSocketStore.getState().socket;
-    if (!socket) return;
-    
-    socket.off("newRequest");
-    socket.off("requestAccepted");
-    socket.off("requestDeclined");
-    socket.off("requestCancelled");
-    
-    console.log("Unsubscribed from request events");
   }
 }));

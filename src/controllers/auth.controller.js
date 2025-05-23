@@ -15,7 +15,7 @@ export const AuthController = {
 
     const UserExists = await UserService.getUserByEmail(email);
     if (UserExists)
-      return nextFunc(new ExpressError("User already exists", Status.Conflict));
+      return nextFunc(new ExpressError("User already exists with this email", Status.Conflict));
 
     const [error, user] = await catchAsyncError(UserService.createUser({ username, email, password }));
     if (error)

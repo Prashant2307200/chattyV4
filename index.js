@@ -14,15 +14,17 @@ const { PORT, MONGO_URI, NODE_ENV } = AppConfig.env;
 
 server.listen(PORT, async () => {
   try {
+
     await Promise.all([
       mongoose.connect(MONGO_URI),
-      redisClient.connect()
+      redisClient.connect(),
+      createDatabaseIndexes()
     ]);
+
+    logger.info(`Server running... with ${NODE_ENV} environment at port ${PORT}`); 
+    logger.info("Database indexed successfully!");
+    
   } catch (error) {
     logger.error("Server crashed...", error);
-  } finally {
-    logger.info(`Server running... with ${NODE_ENV} environment at port ${PORT}`); 
-    await createDatabaseIndexes();
-    logger.info("Database indexed successfully!");
-  }
-});
+  } 
+});             

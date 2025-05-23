@@ -23,11 +23,9 @@ dist-ssr
 *.sln
 *.sw?
 
-# Million Lint
-.million
-
 .env
-.env.local
+nodemon.json
+cmd.sh
 
 sw.js
 registerSW.js
@@ -36,3 +34,5 @@ webbox-*.js
 
 dev-*
 .well-known
+
+app.exe

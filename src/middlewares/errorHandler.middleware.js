@@ -13,7 +13,7 @@ export function errorHandler(error, _request, response, _next) {
     details
   } = error; 
 
-  AppConfig.env.NODE_ENV !== "production" && console.log(error);
+  // AppConfig.env.NODE_ENV !== "production" && console.log(error);
 
   if (code === 11000) {
     const duplicateField = Object.keys(keyValue).join(", ");

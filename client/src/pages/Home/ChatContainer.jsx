@@ -2,7 +2,6 @@
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
 
-import ChatHeader from "./ChatHeader";
 import MessageInput from "./MessageInput";
 import { formatMessageTime } from "../../lib/util";
 import { useApiQuery } from "../../hooks/useApiQuery";
@@ -20,14 +19,14 @@ const ChatContainer = ({ children }) => {
     path: `/chats/${selectedChat?._id}`,
     enabled: !!selectedChat?._id
   });
-
+  
   const messageEndRef = useRef(null);
-
+  
   useEffect(() => {
     if (messageEndRef.current && messages?.length)
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages?.length]);
-
+  
   if (isMessagesLoading) {
     return (
       <div className="flex-1 flex flex-col h-full">
@@ -82,7 +81,7 @@ const ChatContainer = ({ children }) => {
                 </div>
                 <div className="chat-header mb-1">
                   {message.sender._id === authUser._id ? "You" : message.sender.username}
-                  {message.createdAt ? <time className="text-xs opacity-50 ml-1">{formatMessageTime(message?.createdAt)}</time> : <span>Sending...</span>}
+                  {message?.isSending !== true ? <time className="text-xs opacity-50 ml-1">{formatMessageTime(message?.createdAt)}</time> : <span>Sending...</span>}
                 </div>
                 <div className={`chat-bubble flex flex-col ${(message.sender._id === authUser._id) && "bg-primary text-primary-content"}`}>
                   {message.image && (
@@ -96,7 +95,7 @@ const ChatContainer = ({ children }) => {
               </motion.div>
             </section>
           );
-        })}
+        })} 
       </div>
 
       <div className="mt-auto">

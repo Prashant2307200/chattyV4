@@ -14,9 +14,9 @@ const AiChatPage = lazy(() => import("./pages/AiChat/AiChatPage"));
 
 import Navbar from "./components/ui/Navbar";
 import PageLoader from "./components/ui/PageLoader";
+import { useSocketStore } from "./store/useSocketStore";
  
 import { useThemeStore } from "./store/useThemeStore";
-import { useSocketStore } from "./store/useSocketStore"; 
 
 const App = () => { 
 

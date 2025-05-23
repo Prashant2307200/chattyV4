@@ -9,6 +9,13 @@ const ProfilePage = () => {
 
   const { data: authUser } = useApiQuery({ keys: ["authUser"], path: '/auth/check' });
 
+  const { mutate: updateProfileMutation, isPending: isUpdatingProfile } = useApiMutation({
+    keys: ["authUser"],
+    method: "patch",
+    path: "/auth/profile-update",
+    message: "Profile updated!",
+  })
+
   const [selectedImg, setSelectedImg] = useState(null);
 
   const MemoizedCamera = useMemo(() => (
@@ -21,14 +28,7 @@ const ProfilePage = () => {
 
   const MemoizedMail = useMemo(() => (
     <Mail className="w-4 h-4" />
-  ), []);
-
-  const { mutate: updateProfileMutation, isPending: isUpdatingProfile } = useApiMutation({
-    keys: ["authUser"],
-    method: "patch",
-    path: "/auth/profile-update",
-    message: "Profile updated!",
-  })
+  ), []); 
 
   const handleImageUpload = useCallback(async (e) => {
     setSelectedImg(URL.createObjectURL(e.target.files[0]));

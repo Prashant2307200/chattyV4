@@ -90,7 +90,7 @@ export const AppConfig = {
     credentials: true,  // allow cookie
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    maxAge: 3600
+    maxAge: 3600  // cache to avoid preflight
   },
 
   compressionConfig: {

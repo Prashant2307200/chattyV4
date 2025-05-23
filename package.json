@@ -2,11 +2,22 @@
   "name": "chatty",
   "version": "1.0.0",
   "description": "",
-  "main": "dist/index.cjs",
+  "main": "index.js",
   "scripts": {
-    "start": "node dist/index.cjs",
+    "start": "node ./dist/index.cjs",
     "dev": "nodemon index.js",
-    "build": "npm i && webpack --mode production && npm i --prefix client && npm run build --prefix client"
+    "build": "webpack --mode production && pkg ./dist/index.cjs --targets node18-linux-x64 --output app",
+    "install:app": "npm i && npm i --prefix client && ",
+    "build:app": "webpack --mode production && npm run build --prefix client",
+    "production:app": "pkg ./dist/index.cjs --targets node18-win-x64 --output app"
+  },
+  "pkg": {
+    "assets": [
+      "client/dist/**/*"
+    ],
+    "scripts": [
+      "dist/index.cjs"
+    ]
   },
   "keywords": [],
   "author": "",
@@ -30,15 +41,17 @@
     "openai": "^4.98.0",
     "pino": "^9.6.0",
     "redis": "^5.0.1",
-    "socket.io": "^4.8.1",
-    "@babel/core": "^7.27.1",
-    "@babel/preset-env": "^7.27.2",
-    "babel-loader": "^10.0.0",
-    "webpack": "^5.99.8",
-    "webpack-cli": "^6.0.1",
-    "webpack-node-externals": "^3.0.0"
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "@faker-js/faker": "^9.8.0",
+    "nodemon": "^3.1.10",
+    "pkg": "^5.8.1",
+    "webpack": "^5.99.8",
+    "webpack-cli": "^6.0.1",
+    "webpack-node-externals": "^3.0.0",
+    "@babel/core": "^7.27.1",
+    "@babel/preset-env": "^7.27.2",
+    "babel-loader": "^10.0.0"
   }
 }

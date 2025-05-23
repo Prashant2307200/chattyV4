@@ -10,6 +10,7 @@ import { useSocketStore } from "../../store/useSocketStore";
 const ChatHeader = ({ onMobileBack }) => {
 
   const { selectedChat, socket, unsubscribeFromChat, onlineUsers } = useSocketStore(); 
+  
   const [isTyping, setIsTyping] = useState(false);
   const [lastSeen, setLastSeen] = useState({});
 
@@ -75,6 +76,7 @@ const ChatHeader = ({ onMobileBack }) => {
               // If onMobileBack is provided, use it (for mobile view)
               if (onMobileBack) {
                 onMobileBack();
+                unsubscribeFromChat()
               } else {
                 // Fallback to the default behavior
                 unsubscribeFromChat()

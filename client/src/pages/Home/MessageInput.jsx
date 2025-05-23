@@ -14,7 +14,7 @@ const MessageInput = () => {
   const { mutate: sendMessage, isPending: isMessagesLoading } = useApiMutation({
     keys: ["chats", `${selectedChat?._id}`, "messages"],
     path: `/chats/${selectedChat?._id}/messages`
-  })
+  }) 
 
   const fileInputRef = useRef(null);
   const [text, setText] = useState("");
@@ -148,7 +148,7 @@ const MessageInput = () => {
         </div>
         <button className="btn btn-sm btn-circle bg-primary"
           type="submit"
-          disabled={(!text.trim() && !imagePreview) || isMessagesLoading}
+          disabled={(!text.trim() && !imagePreview || isMessagesLoading)}
         >
           <Send size={22} />
         </button>

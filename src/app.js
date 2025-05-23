@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
 import indexRoute from "./routes/index.route.js";
 
@@ -38,13 +39,16 @@ app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
 
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
   app.set('trust proxy', 1);
 
   app.use(compression(compressionConfig));
 
   app.use(helmet(helmetConfig));
   app.use(rateLimit(rateLimitConfig));
- 
+
   app.use(express.static(path.resolve(__dirname, "../client", "dist"), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
@@ -86,8 +90,8 @@ app.use(errorHandler);
 
 process.on("uncaughtException", (error) => {
 
-  NODE_ENV !== "production" && console.log(error);
+  // NODE_ENV !== "production" && console.log(error);
 
   logger.error("Internal server Error!", error);
-  process.exit(1);
+  // process.exit(1);
 });

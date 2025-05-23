@@ -8,22 +8,13 @@ import { motion, AnimatePresence } from "motion/react";
 const ChatRequestsLink = memo(() => {
   const {
     requests,
-    fetchRequests,
-    subscribeToRequestEvents,
-    unsubscribeFromRequestEvents
+    fetchRequests
   } = useRequestStore();
-
-  // Fetch requests on component mount
+  
   useEffect(() => {
-    fetchRequests();
-    subscribeToRequestEvents();
-
-    return () => {
-      unsubscribeFromRequestEvents();
-    };
-  }, [fetchRequests, subscribeToRequestEvents, unsubscribeFromRequestEvents]);
-
-  // Count pending received requests
+    fetchRequests(); 
+  }, [fetchRequests]);
+ 
   const pendingCount = requests.received.filter(req => req.status === "pending").length;
 
   return (

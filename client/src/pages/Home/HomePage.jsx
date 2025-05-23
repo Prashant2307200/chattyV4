@@ -4,9 +4,9 @@ import Sidebar from "./Sidebar";
 import UsersList from "./UsersList";
 import ChatContainer from "./ChatContainer";
 import NoChatSelected from "./NoChatSelected";
-import { Tabs, Tab } from "../../components/ui/Tabs";
-import { useSocketStore } from "../../store/useSocketStore";
+import { Tabs, Tab } from "../../components/ui/Tabs"; 
 import ChatHeader from "./ChatHeader";
+import { useSocketStore } from "../../store/useSocketStore";
 
 const HomePage = () => {
 

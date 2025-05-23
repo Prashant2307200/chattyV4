@@ -1,5 +1,3 @@
-import React from 'react';
-
 import {
   QueryClient,
   QueryClientProvider,
@@ -8,8 +6,8 @@ import {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      // staleTime: 1000 * 60 * 10, 
-      // gcTime: 1000 * 60 * 10,
+      staleTime: 1000 * 60 * 10, 
+      gcTime: 1000 * 60 * 10,
       // refetchOnMount: true,
       // refetchOnWindowFocus: true,
       // refetchOnReconnect: true,

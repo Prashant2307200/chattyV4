@@ -1,11 +1,14 @@
 import { io } from '../config/socket.config.js';
 import { getUserSocketId } from '../config/socket.config.js';
 
+import { AppConfig } from '../config/app.config.js';
 import { ExpressError } from '../utils/expressError.util.js';
 import { catchAsyncError } from '../utils/catchAsyncError.util.js';
 
 import { ChatService } from '../services/chat.service.js';
 import { RequestService } from '../services/request.service.js';
+
+const { Status } = AppConfig;
 
 export const RequestController = {
 
@@ -18,7 +21,7 @@ export const RequestController = {
     if (error)
       return nextFunc(new ExpressError('Failed to fetch requests', 500));
 
-    return response.status(200).json({
+    return response.status(Status.Created).json({
       sent: sentRequests,
       received: receivedRequests
     });
@@ -57,7 +60,7 @@ export const RequestController = {
     if (receiverSocketId) 
       io.to(receiverSocketId).emit('newRequest', populatedRequest);
 
-    return response.status(201).json(populatedRequest); 
+    return response.status(Status.Created).json(populatedRequest); 
   },
   
   async respondToRequest(request, response, nextFunc) {

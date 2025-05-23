@@ -16,7 +16,7 @@ export async function processAIChat(userMessage, userId) {
   while (1) {
     const chat = await client.chat.completions.create({
       model: "gemini-2.0-flash",
-      messages: messages,
+      messages,
       response_format: { type: "json_object" }
     });
 

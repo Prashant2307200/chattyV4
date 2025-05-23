@@ -4,8 +4,9 @@ import { BrowserRouter } from 'react-router-dom'
 
 import './index.css';
 import App from './App.jsx';
-import { QueryProvider } from './providers/queryProvider';
-import { SocketProvider } from './providers/socketProvider.jsx';
+
+import { QueryProvider } from './providers/QueryProvider';
+import { SocketProvider } from './providers/SocketProvider';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

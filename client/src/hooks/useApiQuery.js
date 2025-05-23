@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import { axiosInstance } from "../lib/axios";
 import { useQuery } from "@tanstack/react-query";
 
-export function useApiQuery({keys=[], path='/', ...props}) {
+export function useApiQuery({ keys=[], path='/', message, ...props }) {
   
   const {
     data,
@@ -17,9 +17,8 @@ export function useApiQuery({keys=[], path='/', ...props}) {
   }); 
 
   useEffect(() => {
-    if (isError) {
-      toast.error(error.response?.data?.message || error?.message || "Something went wrong!");
-    }
+    if (isError) 
+      toast.error(error.response?.data?.message || message || error?.message || "Something went wrong!");
   }, [isError, error]);
 
   return { isLoading, data };

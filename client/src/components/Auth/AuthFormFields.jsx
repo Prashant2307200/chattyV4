@@ -4,20 +4,11 @@ import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { memo, useEffect, useCallback, useState, useMemo } from "react";
 
-import useToggle from '../../hooks/useToggle';
+import useToggle from '../../hooks/useToggle'; 
 import { useApiMutation } from '../../hooks/useApiMutation';
 import { useSocketStore } from '../../store/useSocketStore';
 
 const AuthFormFields = ({ isRegister }) => {
-
-  const [authSchema, setAuthSchema] = useState(null);
-  const [showPassword, toggleShowPassword] = useToggle(false);
-
-  useEffect(() => {
-    import('../../constants/schema.constant').then(module => {
-      setAuthSchema(module[isRegister ? "registerSchema" : "loginSchema"]);
-    })
-  }, [isRegister]);
 
   const { subscribeToEvents } = useSocketStore();
 
@@ -28,12 +19,20 @@ const AuthFormFields = ({ isRegister }) => {
     cb: data => {
       subscribeToEvents(data._id);
     }
-  })
+  });
+
+  const [authSchema, setAuthSchema] = useState(null);
+  const [showPassword, toggleShowPassword] = useToggle(false);
+
+  useEffect(() => {
+    import('../../constants/schema.constant').then(module => {
+      setAuthSchema(module[isRegister ? "registerSchema" : "loginSchema"]);
+    })
+  }, [isRegister]);
 
   const onSubmit = useCallback(data => {
-    console.log(data)
     AuthMutation(data);
-  }, [AuthMutation]);
+  }, [isRegister]);
 
   const {
     register,

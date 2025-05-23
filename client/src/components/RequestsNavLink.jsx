@@ -6,20 +6,13 @@ import { useRequestStore } from "../store/useRequestStore";
 const RequestsNavLink = memo(() => {
   const { 
     requests, 
-    fetchRequests, 
-    subscribeToRequestEvents, 
-    unsubscribeFromRequestEvents 
+    fetchRequests,  
   } = useRequestStore();
 
   // Fetch requests on component mount
   useEffect(() => {
     fetchRequests();
-    subscribeToRequestEvents();
-    
-    return () => {
-      unsubscribeFromRequestEvents();
-    };
-  }, [fetchRequests, subscribeToRequestEvents, unsubscribeFromRequestEvents]);
+  }, [fetchRequests]);
 
   // Count pending received requests
   const pendingCount = requests.received.filter(req => req.status === "pending").length;

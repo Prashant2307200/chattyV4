@@ -11,20 +11,13 @@ const RequestsPage = () => {
   const {
     requests,
     isLoading,
-    fetchRequests,
-    subscribeToRequestEvents,
-    unsubscribeFromRequestEvents
+    fetchRequests
   } = useRequestStore();
 
   // Fetch requests on component mount
   useEffect(() => {
-    fetchRequests();
-    subscribeToRequestEvents();
-
-    return () => {
-      unsubscribeFromRequestEvents();
-    };
-  }, [fetchRequests, subscribeToRequestEvents, unsubscribeFromRequestEvents]);
+    fetchRequests(); 
+  }, [fetchRequests]);
 
   // Memoize components to prevent unnecessary re-renders
   const memoizedNoRequests = useMemo(() => <NoRequests />, []);

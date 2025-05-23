@@ -1,19 +1,18 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
-import { VitePWA } from 'vite-plugin-pwa';
 import tailwindcss from '@tailwindcss/vite';
+import { VitePWA } from 'vite-plugin-pwa';
 
-// https://vitejs.dev/config/
-export default defineConfig({ 
-
+export default defineConfig({
   plugins: [
-    
     react(),
-
     tailwindcss(),
 
     VitePWA({
       registerType: 'autoUpdate',
+      strategies: 'injectManifest',
+      srcDir: 'src',
+      filename: 'sw.js',
       manifest: {
         name: 'Chatty',
         short_name: 'Chatty',
@@ -45,52 +44,42 @@ export default defineConfig({
             src: "/screenshot2.png",
             sizes: "900x565",
             type: "image/png",
-            form_factor: "wide", 
+            form_factor: "wide",
           }
         ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,png,svg,ico,jpg,jpeg,json}'],
-        runtimeCaching: [
-          {
-            urlPattern: /\/api\/ai\//,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'ai-responses',
-              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 },
-              backgroundSync: {
-                name: 'ai-response-queue',
-                options: {
-                  maxRetentionTime: 24 * 60 // Retry for max 24h
-                }
-              }
-            }
-          },
-          {
-            urlPattern: /\/api\//,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              expiration: { maxEntries: 100, maxAgeSeconds: 60 * 60 * 24 },
-              backgroundSync: {
-                name: 'api-queue',
-                options: {
-                  maxRetentionTime: 24 * 60
-                }
-              }
-            }
-          }
-        ]
+        inlineWorkboxRuntime: true,
+        // runtimeCaching: [
+          // {
+          //   urlPattern: /\/api\/.*$/,
+          //   handler: 'NetworkFirst',
+          //   options: {
+          //     cacheName: 'api-cache',
+          //     expiration: {
+          //       maxEntries: 50,
+          //       maxAgeSeconds: 60 * 60 * 24, // 1 day
+          //     },
+          //     cacheableResponse: {
+          //       statuses: [200],
+          //     },
+          //   }
+          // },
+        // ],
+      },
+      injectManifest: {
+        swSrc: 'src/sw.js',
       },
       devOptions: {
         enabled: true,
+        type: 'module',
       },
     }),
-  ], 
+  ],
 
   build: {
     outDir: 'dist',
-    sourcemap: true, // Enable source maps for debugging and best practices
+    sourcemap: true,
   },
 
   server: {
@@ -98,7 +87,7 @@ export default defineConfig({
     proxy: {
       '/api': {
         target: 'http://localhost:8080',
-        changeOrigin: true
+        changeOrigin: true,
       },
     },
   }

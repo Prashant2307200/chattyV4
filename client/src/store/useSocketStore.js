@@ -1,21 +1,24 @@
 import { create } from "zustand";
 import { io } from "socket.io-client";
 
+import { useRequestStore } from "./useRequestStore";
+
 const BASE_URL = import.meta.env.MODE !== "production" ? "http://localhost:8080" : "/";
 
 export const useSocketStore = create((set, get) => ({
 
-  socket: null, 
+  socket: null,
   lastSeen: {},
   onlineUsers: [],
+
   hasAuthUser: null,
   selectedChat: null,
   aiState: {
-    messages: [], 
+    messages: [],
     isLoading: false,
-  }, 
+  },
 
-  sendMessage: async (message) => {
+  sendMessage: async message => {
     if (!message.trim()) return;
 
     const { socket, addMessage } = get();
@@ -29,7 +32,7 @@ export const useSocketStore = create((set, get) => ({
     set(state => ({
       aiState: {
         ...state.aiState,
-        isLoading: true, 
+        isLoading: true,
       }
     }));
 
@@ -58,7 +61,7 @@ export const useSocketStore = create((set, get) => ({
     set(state => ({
       aiState: {
         ...state.aiState,
-        isLoading: false, 
+        isLoading: false,
       }
     }));
   },
@@ -79,7 +82,7 @@ export const useSocketStore = create((set, get) => ({
 
     set(state => ({
       aiState: {
-        ...state.aiState, 
+        ...state.aiState,
         isLoading: false,
       }
     }));
@@ -93,6 +96,7 @@ export const useSocketStore = create((set, get) => ({
     set({ selectedChat });
     socket.emit("joinChat", selectedChat._id);
 
+    socket.off("newMessage");
     socket.on("newMessage", newMessage => {
 
       const { selectedChat } = get();
@@ -125,10 +129,19 @@ export const useSocketStore = create((set, get) => ({
 
     newSocket.on("connect", () => {
 
+      const {
+        handleNewRequest,
+        handleRequestAccepted,
+        handleRequestDeclined,
+        handleRequestCancelled
+      } = useRequestStore.getState();
+
+      newSocket.off("getOnlineUsers");
       newSocket.on("getOnlineUsers", userIds => {
         set({ onlineUsers: userIds });
       });
 
+      newSocket.off("userLastSeen");
       newSocket.on("userLastSeen", ({ userId, timestamp }) => {
         set(({ lastSeen }) => ({
           lastSeen: {
@@ -137,6 +150,18 @@ export const useSocketStore = create((set, get) => ({
           }
         }));
       });
+
+      newSocket.off("newRequest");
+      newSocket.on("newRequest", handleNewRequest);
+
+      newSocket.off("requestAccepted");
+      newSocket.on("requestAccepted", handleRequestAccepted);
+
+      newSocket.off("requestDeclined");
+      newSocket.on("requestDeclined", handleRequestDeclined);
+
+      newSocket.off("requestCancelled");
+      newSocket.on("requestCancelled", handleRequestCancelled);
     });
 
     set({ socket: newSocket });
