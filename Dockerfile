@@ -1,14 +1,14 @@
-FROM node:22 AS client
+FROM node:22-alpine AS client
 
 WORKDIR /client
 
 COPY client/package*.json ./
 
-RUN npm ci --legacy-peer-deps
-
-RUN chmod -R +x ./node_modules/.bin
+RUN npm ci --legacy-peer-deps 
 
 COPY client .
+
+RUN chown -R node:node /client && chmod -R 755 /client
 
 RUN npm run build
 
@@ -25,9 +25,9 @@ COPY . .
 
 COPY --from=client /client/dist ./client/dist
 
-RUN npm run build
+RUN chown -R node:node /client && chmod -R 755 /client
 
-RUN chmod +x ./app
+RUN npm run build 
 
 
 FROM debian:bullseye-slim
