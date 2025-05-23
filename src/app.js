@@ -85,7 +85,7 @@ app.get("/health", (_request, response) => {
 
 app.use("/api/v1", indexRoute);
 
-app.use(pathHandler)
+// app.use(pathHandler)
 app.use(errorHandler);
 
 process.on("uncaughtException", (error) => {
