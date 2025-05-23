@@ -17,9 +17,9 @@ const queryClient = new QueryClient({
       retry: 1
     }
   }
-})
+});
 
-export const QueryProvider = ({ children }) => (
+export const TanStackQueryProvider = ({ children }) => (
   <QueryClientProvider client={queryClient}>
     {children}
   </QueryClientProvider>

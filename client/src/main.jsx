@@ -5,17 +5,17 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css';
 import App from './App.jsx';
 
-import { QueryProvider } from './providers/QueryProvider';
 import { SocketProvider } from './providers/SocketProvider';
+import { TanStackQueryProvider } from './providers/TanstackQueryProvider.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <QueryProvider>
+      <TanStackQueryProvider>
         <SocketProvider>
           <App />
         </SocketProvider>
-      </QueryProvider>
+      </TanStackQueryProvider>
     </BrowserRouter>
   </StrictMode>
 )
