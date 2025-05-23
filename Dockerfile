@@ -6,6 +6,8 @@ COPY client/package*.json ./
 
 RUN npm ci --legacy-peer-deps
 
+RUN chmod -R +x ./node_modules/.bin
+
 COPY client .
 
 RUN npm run build
@@ -32,7 +34,6 @@ FROM debian:bullseye-slim
 
 WORKDIR /app
 
-# Install security updates and remove cache to reduce vulnerabilities
 RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=server /server/app .
