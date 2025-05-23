@@ -37,8 +37,8 @@ WORKDIR /app
 RUN apt-get update && apt-get upgrade -y && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 COPY --from=client /client/dist/ ./client/dist
-COPY --from=server /server/app .
+COPY --from=server /server/ ./dist
 
 EXPOSE 8080
 
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["./dist/app"]
