@@ -25,7 +25,7 @@ COPY . .
 
 COPY --from=client /client/dist ./client/dist
 
-RUN chown -R node:node /client && chmod -R 755 /client
+RUN chown -R node:node /server && chmod -R 755 /server
 
 RUN npm run build 
 
