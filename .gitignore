@@ -41,3 +41,6 @@ manifest.json
 webbox-*.js
 dev-*
 .well-known
+
+node_modules
+dist
