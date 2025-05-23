@@ -12,9 +12,9 @@ createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <TanStackQueryProvider>
-        <SAuthProvide>
+        <AuthProvide>
           <App />
-        </SAuthProvide>
+        </AuthProvide>
       </TanStackQueryProvider>
     </BrowserRouter>
   </StrictMode>
