@@ -49,7 +49,7 @@ if (NODE_ENV === "production") {
   app.use(helmet(helmetConfig));
   app.use(rateLimit(rateLimitConfig));
 
-  app.use(express.static(path.resolve(path.dirname(process.execPath), "../package-lock.jsonclient", "dist"), {
+  app.use(express.static(path.resolve(path.dirname(process.execPath), "../client", "dist"), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html'))
