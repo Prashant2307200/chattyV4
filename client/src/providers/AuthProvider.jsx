@@ -4,7 +4,7 @@ import { useApiQuery } from "../hooks/useApiQuery";
 import PageLoader from "../components/ui/PageLoader";
 import { useSocketStore } from "../store/useSocketStore";
 
-export const SocketProvider = ({ children }) => {
+export const AuthProvider = ({ children }) => {
 
   const { subscribeToEvents, unsubscribeFromEvents } = useSocketStore();
   const { data, isLoading: isCheckingAuth } = useApiQuery({ keys: ["authUser"], path: '/auth/check' });
