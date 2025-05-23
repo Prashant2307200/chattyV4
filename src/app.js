@@ -58,7 +58,7 @@ if (NODE_ENV === "production") {
   }));
 
   app.get('/', (_request, response) => {
-    return response.sendFile(path.resolve(__dirname, "../client", "dist", "index.html"));
+    return response.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
   });
 } else {
 
