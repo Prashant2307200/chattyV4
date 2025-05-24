@@ -27,7 +27,7 @@ COPY --from=client /client/dist ./client/dist
 
 RUN npm run build 
 
-# RUN chmod +x dist/app
+RUN chmod +x app
 
 
 FROM node:22-alpine AS app
