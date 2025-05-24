@@ -6,7 +6,8 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
 import path from "node:path";
-import { fileURLToPath } from "node:url"; 
+import { fileURLToPath } from "node:url";
+import { createRequire } from 'node:module';
 
 import indexRoute from "./routes/index.route.js";
 
@@ -39,23 +40,18 @@ app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
 
-  const __filename = fileURLToPath(import.meta.url);
-  const __dirname = path.dirname(__filename);
-  // const __dirname = path.dirname(process.execPath);
+  // const __filename = fileURLToPath(import.meta.url);
+  // const __dirname = path.dirname(__filename);
+  const __dirname = path.dirname(process.execPath);
 
   app.set('trust proxy', 1);
 
   app.use(compression(compressionConfig));
 
   // app.use(helmet(helmetConfig));
-  app.use(rateLimit(rateLimitConfig)); 
+  app.use(rateLimit(rateLimitConfig)); zzz
 
-  app.use((request, _response, nextFunc) => {
-    logger.info(`request received: ${request.method} ${request.url}`);
-    nextFunc();
-  });
-
-  app.use(express.static(path.join(__dirname, "../client/dist"), {
+  app.use(express.static(path.resolve(__dirname, "../client/dist"), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html'))
@@ -64,27 +60,27 @@ if (NODE_ENV === "production") {
   }));
 
   app.get('/sw.js', (_req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/sw.js"));
+    res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
   });
   app.get('/manifest.webmanifest', (_req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/manifest.webmanifest"));
+    res.sendFile(path.resolve(__dirname, "../client/dist/manifest.webmanifest"));
   });
 
   app.get('/image.png', (_req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/image.png"));
+    res.sendFile(path.resolve(__dirname, "../client/dist/image.png"));
   });
   app.get('/avatar.png', (_req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/avatar.png"));
+    res.sendFile(path.resolve(__dirname, "../client/dist/avatar.png"));
   });
   app.get('/screenshot1.png', (_req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/screenshot1.png"));
+    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot1.png"));
   });
   app.get('/screenshot2.png', (_req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/screenshot2.png"));
+    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot2.png"));
   });
 
   app.get('/', (_req, res) => {
-    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
+    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
   });
 } else {
 
