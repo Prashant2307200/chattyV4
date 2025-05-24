@@ -28,11 +28,16 @@ COPY --from=client /client/dist ./client/dist
 RUN npm run build  
 
 
-FROM node:22-alpine AS app
+FROM alpine:3.19
+
+RUN apk add --no-cache libstdc++ libc6-compat
 
 WORKDIR /app
 
-COPY --from=server /server/dist/app .
+COPY --from=server /server/client/dist ./client/dist
+COPY --from=server /server/dist/app ./dist/app
+
+RUN chmod +x ./dist/app
 
 EXPOSE 8080
 

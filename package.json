@@ -13,17 +13,10 @@
   },
   "pkg": {
     "assets": [
-      "client/dist/**/*",
-      "client/dist/index.html",
-      "client/dist/sw.js",
-      "client/dist/image.png",
-      "client/dist/avatar.png",
-      "client/dist/screenshot1.png",
-      "client/dist/screenshot2.png"
+      "client/dist/**/*"
     ],
     "scripts": [
-      "dist/index.cjs",
-      "client/dist/sw.js"
+      "dist/index.cjs"
     ]
   },
   "keywords": [],
