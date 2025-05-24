@@ -49,7 +49,7 @@ if (NODE_ENV === "production") {
   app.use(compression(compressionConfig));
 
   // app.use(helmet(helmetConfig));
-  app.use(rateLimit(rateLimitConfig)); zzz
+  app.use(rateLimit(rateLimitConfig)); 
 
   app.use(express.static(path.resolve(__dirname, "../client/dist"), {
     maxAge: '1y',
