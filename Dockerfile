@@ -30,7 +30,7 @@ COPY --from=client /client/dist/ ./client/dist
 RUN npm run build 
 
 
-FROM debian:bullseye-slim as app
+FROM gcr.io/distroless/base AS app
 
 WORKDIR /app
 
@@ -40,5 +40,7 @@ COPY --from=client /client/dist/ ./client/dist
 COPY --from=server /server/dist/ ./dist  
 
 EXPOSE 8080
+
+RUN chown -R node:node /app && chmod -R 755 /app
 
 ENTRYPOINT ["./dist/app"]
