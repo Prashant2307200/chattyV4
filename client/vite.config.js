@@ -77,6 +77,23 @@ export default defineConfig({
     }),
   ],
 
+  build: {
+    "outDir": 'dist',
+    "sourcemap": true,
+    "rollupOptions": {
+      "output": {
+        "manualChunks": {
+          "react": ["react", "react-dom"],
+          "tailwindcss": ["tailwindcss"],
+          "axios": ["axios"],
+          "zustand": ["zustand"],
+          "lucide-react": ["lucide-react"],
+          "motion": ["motion/react"]
+        }
+      }
+    }
+  },
+
   server: {
     port: 5173,
     proxy: {
