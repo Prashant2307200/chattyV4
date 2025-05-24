@@ -30,12 +30,12 @@ RUN npm run build
 # RUN chmod +x dist/app
 
 
-FROM gcr.io/distroless/cc AS app
+FROM node:22-alpine AS app
 
 WORKDIR /app
 
 COPY --from=server /server/app .
 
-EXPOSE 8080 
+EXPOSE 8080
 
 ENTRYPOINT ["./app"]
