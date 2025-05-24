@@ -57,6 +57,14 @@ if (NODE_ENV === "production") {
     }
   }));
 
+  app.get('/sw.js', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client", 'dist', 'service-worker.js'));
+  });
+
+  app.get('/manifest.webmanifest', (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../client", 'dist', 'manifest.webmanifest'));
+  });
+
   app.get('/', (_request, response) => {
     return response.sendFile(path.resolve(path.dirname(process.execPath), "../client", "dist", "index.html"));
   });
@@ -85,7 +93,7 @@ app.get("/health", (_request, response) => {
 
 app.use("/api/v1", indexRoute);
 
-// app.use(pathHandler)
+app.use(pathHandler);
 app.use(errorHandler);
 
 process.on("uncaughtException", (error) => {
