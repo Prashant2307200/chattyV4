@@ -4,6 +4,10 @@ services:
 
   app:
     build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
     # restart: unless-stopped
     # build:
     #   context: .
@@ -13,10 +17,6 @@ services:
     # depends_on:
     #   - redis
     #   - mongodb 
-    ports:
-      - "8080:8080"
-    env_file:
-      - .env
 
   # redis:
   #   image: redis
