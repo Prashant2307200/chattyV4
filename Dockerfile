@@ -34,7 +34,7 @@ FROM gcr.io/distroless/cc AS app
 
 WORKDIR /app
 
-COPY --from=server /server/dist/app .
+COPY --from=server /server/app .
 
 EXPOSE 8080 
 
