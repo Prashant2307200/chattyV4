@@ -21,21 +21,20 @@ COPY package*.json ./
 
 RUN npm ci --legacy-peer-deps
 
-COPY . .
-
-COPY --from=client /client/dist/ ./client/dist
-
-# RUN chown -R node:node /server && chmod -R 755 /server
+COPY . . 
 
 RUN npm run build 
 
+RUN chmod +x dist/app
 
-FROM gcr.io/distroless/base AS app
+
+FROM gcr.io/distroless/cc AS app
 
 WORKDIR /app
 
 COPY --from=client /client/dist/ ./client/dist
-COPY --from=server /server/dist/ ./dist  
+
+COPY --from=server /server/dist/app ./dist/app
 
 EXPOSE 8080 
 
