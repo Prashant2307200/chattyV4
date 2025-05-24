@@ -55,7 +55,7 @@ if (NODE_ENV === "production") {
     nextFunc();
   });
 
-  app.use(express.static(path.resolve(__dirname, "../client/dist"), {
+  app.use(express.static(path.join(__dirname, "../client/dist"), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html'))
@@ -64,27 +64,27 @@ if (NODE_ENV === "production") {
   }));
 
   app.get('/sw.js', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
+    res.sendFile(path.join(__dirname, "../client/dist/sw.js"));
   });
   app.get('/manifest.webmanifest', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/manifest.webmanifest"));
+    res.sendFile(path.join(__dirname, "../client/dist/manifest.webmanifest"));
   });
 
   app.get('/image.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/image.png"));
+    res.sendFile(path.join(__dirname, "../client/dist/image.png"));
   });
   app.get('/avatar.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/avatar.png"));
+    res.sendFile(path.join(__dirname, "../client/dist/avatar.png"));
   });
   app.get('/screenshot1.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot1.png"));
+    res.sendFile(path.join(__dirname, "../client/dist/screenshot1.png"));
   });
   app.get('/screenshot2.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot2.png"));
+    res.sendFile(path.join(__dirname, "../client/dist/screenshot2.png"));
   });
 
   app.get('/', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+    res.sendFile(path.join(__dirname, "../client/dist/index.html"));
   });
 } else {
 
