@@ -39,19 +39,15 @@ app.use(express.json(jsonParseConfig));
 app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
-
-  // const __filename = fileURLToPath(import.meta.url);
-  // const __dirname = path.dirname(__filename);
-  const __dirname = path.dirname(process.execPath);
+  
+  const distPath = path.resolve(process.cwd(), 'client', 'dist');
 
   app.set('trust proxy', 1);
-
   app.use(compression(compressionConfig));
-
   app.use(helmet(helmetConfig));
-  app.use(rateLimit(rateLimitConfig)); 
+  app.use(rateLimit(rateLimitConfig));
 
-  app.use(express.static(path.resolve(__dirname, "../client/dist"), {
+  app.use(express.static(distPath, {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html'))
@@ -60,27 +56,26 @@ if (NODE_ENV === "production") {
   }));
 
   app.get('/sw.js', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
+    res.sendFile(path.join(distPath, 'sw.js'));
   });
   app.get('/manifest.webmanifest', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/manifest.webmanifest"));
+    res.sendFile(path.join(distPath, 'manifest.webmanifest'));
   });
-
   app.get('/image.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/image.png"));
+    res.sendFile(path.join(distPath, 'image.png'));
   });
   app.get('/avatar.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/avatar.png"));
+    res.sendFile(path.join(distPath, 'avatar.png'));
   });
   app.get('/screenshot1.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot1.png"));
+    res.sendFile(path.join(distPath, 'screenshot1.png'));
   });
   app.get('/screenshot2.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot2.png"));
+    res.sendFile(path.join(distPath, 'screenshot2.png'));
   });
 
   app.get('/', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+    res.sendFile(path.join(distPath, 'index.html'));
   });
 } else {
 
