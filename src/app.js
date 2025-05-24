@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
 import path from "node:path";
-// import { fileURLToPath } from "node:url";
+import { fileURLToPath } from "node:url";
 
 import indexRoute from "./routes/index.route.js";
 
@@ -39,8 +39,8 @@ app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
 
-  // const __filename = fileURLToPath(import.meta.url);
-  // const __dirname = path.dirname(__filename);
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
 
   app.set('trust proxy', 1);
 
