@@ -36,4 +36,4 @@ COPY --from=server /server/dist/app .
 
 EXPOSE 8080
 
-ENTRYPOINT ["./app"]
+ENTRYPOINT ["./dist/app"]
