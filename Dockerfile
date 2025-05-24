@@ -25,16 +25,14 @@ COPY . .
 
 COPY --from=client /client/dist ./client/dist
 
-RUN npm run build 
-
-RUN chmod +x app
+RUN npm run build  
 
 
 FROM node:22-alpine AS app
 
 WORKDIR /app
 
-COPY --from=server /server/app .
+COPY --from=server /server/dist/app .
 
 EXPOSE 8080
 
