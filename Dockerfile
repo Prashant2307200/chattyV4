@@ -37,8 +37,6 @@ WORKDIR /app
 COPY --from=client /client/dist/ ./client/dist
 COPY --from=server /server/dist/ ./dist  
 
-EXPOSE 8080
-
-RUN chown -R node:node /app && chmod -R 755 /app
+EXPOSE 8080 
 
 ENTRYPOINT ["./dist/app"]
