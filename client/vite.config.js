@@ -16,6 +16,7 @@ export default defineConfig({
       strategies: 'generateSW',
       srcDir: 'src',
       filename: 'sw.js',
+      includeAssets: ['apple-touch-icon.png', 'image.png', 'avatar.png', 'favicon.ico', 'robots.txt', 'screenshot1.png', 'screenshot2.png'],
       manifest: {
         name: 'Chatty',
         short_name: 'Chatty',
@@ -69,6 +70,13 @@ export default defineConfig({
               },
             }
           },
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-stylesheets'
+            }
+          }
         ],
       },
       injectManifest: {

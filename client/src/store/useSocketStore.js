@@ -90,6 +90,11 @@ export const useSocketStore = create((set, get) => ({
 
   subscribeToChat: (selectedChat, queryClient) => {
 
+    if (!navigator?.onLine) {
+      set({ selectedChat });
+      return;
+    }
+
     const { socket } = get();
     if (!selectedChat?._id || !socket?.connected) return;
 
@@ -110,17 +115,28 @@ export const useSocketStore = create((set, get) => ({
   },
 
   unsubscribeFromChat: () => {
+
+    if (!navigator?.onLine) {
+      set({ selectedChat: null });
+      return;
+    }
+
     get()?.socket.off("newMessage");
     set({ selectedChat: null });
   },
 
   subscribeToEvents: id => {
 
+    if (!navigator?.onLine && id) {
+      set({ hasAuthUser: id });
+      return;
+    }
+
     const { socket } = get();
 
     if (socket?.connected || !id) return;
 
-    set({ hasAuthUser: id })
+    set({ hasAuthUser: id });
 
     const newSocket = io(BASE_URL, {
       query: { userId: id },
@@ -170,6 +186,12 @@ export const useSocketStore = create((set, get) => ({
   unsubscribeFromEvents: () => {
 
     const { socket, hasAuthUser } = get();
+
+    if (!navigator?.onLine) {
+      set({ hasAuthUser: null });
+      return;
+    }
+    
     if (!socket?.connected || !hasAuthUser) return;
 
     socket.emit("updateLastSeen", { userId: hasAuthUser });

@@ -9,16 +9,28 @@ const bgSyncPlugin = new BackgroundSyncPlugin('api-queue', {
   maxRetentionTime: 24 * 60,  
 });
 
-registerRoute(({ url, request }) =>
-  url.pathname.startsWith('/api') && ['POST', 'PUT', 'DELETE'].includes(request.method),
+// registerRoute(
+//   ({ request }) => request.mode === 'navigate',
+//   new NetworkFirst({
+//     cacheName: 'pages-cache',
+//     plugins: [
+//       {
+//         cacheWillUpdate: async ({ response }) => {
+//           return response?.status === 200 ? response : null;
+//         }
+//       }
+//     ]
+//   })
+// );
+
+registerRoute(({ url, request }) => url.pathname.startsWith('/api') && ['POST', 'PUT', 'DELETE'].includes(request.method),
   new NetworkOnly({
     plugins: [bgSyncPlugin],
   })
 );
 
 registerRoute(
-  ({ url, request }) =>
-    url.pathname.startsWith('/api') && request.method === 'GET',
+  ({ url, request }) => url.pathname.startsWith('/api') && request.method === 'GET',
   new NetworkFirst({           // <-- now valid
     cacheName: 'api-cache',
     networkTimeoutSeconds: 3,
