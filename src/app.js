@@ -55,8 +55,6 @@ if (NODE_ENV === "production") {
     nextFunc();
   });
 
-  app.use("/assets", express.static(path.resolve(__dirname, "../client/dist/assets"), { maxAge: '1y' }));
-
   app.use(express.static(path.resolve(__dirname, "../client/dist"), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {

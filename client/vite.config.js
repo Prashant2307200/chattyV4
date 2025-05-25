@@ -82,20 +82,20 @@ export default defineConfig({
 
   build: {
     "outDir": 'dist',
-    "assetsDir": 'assets',
     "sourcemap": true,
-    "rollupOptions": {
-      "output": {
-        "manualChunks": {
-          "react": ["react", "react-dom"],
-          "tailwindcss": ["tailwindcss"],
-          "axios": ["axios"],
-          "zustand": ["zustand"],
-          "lucide-react": ["lucide-react"],
-          "motion": ["motion/react"]
-        }
-      }
-    }
+    // "assetsDir": 'assets',
+    // "rollupOptions": {
+    //   "output": {
+    //     "manualChunks": {
+    //       "react": ["react", "react-dom"],
+    //       "tailwindcss": ["tailwindcss"],
+    //       "axios": ["axios"],
+    //       "zustand": ["zustand"],
+    //       "lucide-react": ["lucide-react"],
+    //       "motion": ["motion/react"]
+    //     }
+    //   }
+    // }
   },
 
   server: {
