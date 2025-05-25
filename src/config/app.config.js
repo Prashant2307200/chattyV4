@@ -104,37 +104,38 @@ export const AppConfig = {
     sameSite: "lax",  // csrf: Prevents cross-site request forgery attacks
     signed: true,  // tamper-proof cookie
     // expires in 7 days
-    },
+  },
 
-    helmetConfig: {
-      contentSecurityPolicy: {
-        useDefaults: true,
-        directives: {
-          "default-src": ["'self'"],
-          "script-src": ["'self'", "'unsafe-inline'"],
-          "style-src": ["'self'", "'unsafe-inline'"], // Allow inline styles
-          "img-src": ["'self'", "data:", "https:", "blob:"],
-          "font-src": ["'self'", "https:", "data:"],
-          "connect-src": ["'self'", "ws:", "wss:", "http://localhost:5173"],
-          "manifest-src": ["'self'"],
-          "frame-src": ["'self'"],
-        },
+  helmetConfig: {
+    contentSecurityPolicy: {
+      useDefaults: true,
+      directives: {
+        "default-src": ["'self'"],
+        "script-src": ["'self'", "'unsafe-inline'", "'unsafe-eval'"],  
+        "style-src": ["'self'", "'unsafe-inline'"], 
+        "img-src": ["'self'", "data:", "https:", "blob:"], 
+        "font-src": ["'self'", "https:", "data:"], 
+        "connect-src": ["'self'", "ws:", "wss:", "http://localhost:5173"], 
+        "manifest-src": ["'self'"],
+        "frame-src": ["'self'"],
+        "worker-src": ["'self'", "blob:"],  
       },
     },
+  },
 
-    rateLimitConfig: {
-      windowMs: 15 * 60 * 1000,
-      limit: 1000,
-      standardHeaders: 'draft-7',
-      legacyHeaders: false,
-      skipSuccessfulRequests: false,
-      skipFailedRequests: false,
-      message: 'Too many requests from this IP, please try again later',
-      filter: (request) => request.originalUrl.startsWith('/api/v1'),
-    },
+  rateLimitConfig: {
+    windowMs: 15 * 60 * 1000,
+    limit: 1000,
+    standardHeaders: 'draft-7',
+    legacyHeaders: false,
+    skipSuccessfulRequests: false,
+    skipFailedRequests: false,
+    message: 'Too many requests from this IP, please try again later',
+    filter: (request) => request.originalUrl.startsWith('/api/v1'),
+  },
 
-    jsonParseConfig: {
-      limit: "10mb",
+  jsonParseConfig: {
+    limit: "10mb",
     // extended: true, 
   },
 
