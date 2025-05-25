@@ -22,6 +22,17 @@ registerRoute(
   })
 );
 
+registerRoute(
+  ({ url, request }) => url.pathname.startsWith('/api') && request.method === 'GET',
+  new NetworkFirst({
+    cacheName: 'api-cache',
+    networkTimeoutSeconds: 3,
+    plugins: [
+      // you can add plugins here like cache expiration
+    ],
+  })
+);
+
 // Activate service worker immediately on install/activate
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', () => self.clients.claim());
