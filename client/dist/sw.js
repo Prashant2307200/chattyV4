@@ -3452,7 +3452,7 @@ precacheAndRoute([{
   "revision": null
 }, {
   "url": "index.html",
-  "revision": "83cfd3bc5892cb484026e6a1ab2123d3"
+  "revision": "98dcb0297871c281c8aa7566d1835cd9"
 }, {
   "url": "avatar.png",
   "revision": "1b0cea3ff7730fcd3dc8b3ff39a11f67"

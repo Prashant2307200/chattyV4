@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
 import path from "node:path";
-import { fileURLToPath } from "node:url"; 
+import { fileURLToPath } from "node:url";
 
 import indexRoute from "./routes/index.route.js";
 
@@ -48,7 +48,7 @@ if (NODE_ENV === "production") {
   app.use(compression(compressionConfig));
 
   // app.use(helmet(helmetConfig));
-  app.use(rateLimit(rateLimitConfig)); 
+  app.use(rateLimit(rateLimitConfig));
 
   app.use((request, _response, nextFunc) => {
     logger.info(`request received: ${request.method} ${request.url}`);
@@ -62,6 +62,12 @@ if (NODE_ENV === "production") {
         res.setHeader('Cache-Control', 'no-store');
     }
   }));
+
+  app.use('/assest', (req, res, next) => {
+    const correctedUrl = req.url.replace(/^\/?/, '/'); // ensure leading slash
+    res.redirect(301, '/assets' + correctedUrl);
+  });
+
 
   app.get('/sw.js', (_req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
