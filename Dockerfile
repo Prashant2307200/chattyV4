@@ -43,7 +43,7 @@ RUN npm run build
 # CMD ["npm", "start"]
 
 
-FROM alpine:3.19
+FROM alpine:3.19 AS app
 
 RUN apk add --no-cache libstdc++ libc6-compat
 

@@ -51,36 +51,41 @@ if (NODE_ENV === "production") {
   // app.use(helmet(helmetConfig));
   app.use(rateLimit(rateLimitConfig)); 
 
-  app.use(express.static(path.resolve(__dirname, "../client/dist"), {
+  app.use((request, _response, nextFunc) => {
+    logger.info(`request received: ${request.method} ${request.url}`);
+    nextFunc();
+  });
+
+  app.use(express.static("/app/client/dist"), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html'))
         res.setHeader('Cache-Control', 'no-store');
     }
-  }));
+  });
 
   app.get('/sw.js', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
+    res.sendFile("/app/client/dist/sw.js");
   });
   app.get('/manifest.webmanifest', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/manifest.webmanifest"));
+    res.sendFile("/app/client/dist/manifest.webmanifest");
   });
 
   app.get('/image.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/image.png"));
+    res.sendFile("/app/client/dist/image.png");
   });
   app.get('/avatar.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/avatar.png"));
+    res.sendFile("/app/client/dist/avatar.png");
   });
   app.get('/screenshot1.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot1.png"));
+    res.sendFile("/app/client/dist/screenshot1.png");
   });
   app.get('/screenshot2.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot2.png"));
+    res.sendFile("/app/client/dist/screenshot2.png");
   });
 
   app.get('/', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+    res.sendFile("/app/client/dist/index.html");
   });
 } else {
 
