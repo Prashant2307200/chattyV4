@@ -65,12 +65,6 @@ if (NODE_ENV === "production") {
     }
   }));
 
-  app.use('/assest', (req, res, next) => {
-    const correctedUrl = req.url.replace(/^\/?/, '/'); // ensure leading slash
-    res.redirect(301, '/assets' + correctedUrl);
-  });
-
-
   app.get('/sw.js', (_req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
   });
