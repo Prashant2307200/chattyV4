@@ -30,7 +30,12 @@ FROM node:22-alpine AS app
 
 WORKDIR /app
 
+COPY package*.json ./
+
+RUN npm ci --omit=dev --production
+
 COPY --from=client /client/dist/ ./client/dist
+
 COPY --from=server /server/dist/ ./dist
 
 EXPOSE 8080

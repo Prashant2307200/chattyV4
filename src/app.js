@@ -41,8 +41,11 @@ if (NODE_ENV === "production") {
   const distPath = path.join(process.cwd(), 'client', 'dist');
 
   app.set('trust proxy', 1);
+
   app.use(compression(compressionConfig));
+
   app.use(helmet(helmetConfig));
+
   app.use(rateLimit(rateLimitConfig));
 
   app.use((request, _response, nextFunc) => {
