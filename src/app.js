@@ -38,7 +38,7 @@ app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
   
-  const distPath = path.join(process.cwd(), 'client', 'dist');
+  const distPath = path.join(process.cwd(), '../client', 'dist');
 
   app.set('trust proxy', 1);
 
