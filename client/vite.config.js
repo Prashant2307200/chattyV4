@@ -21,6 +21,7 @@ export default defineConfig({
         short_name: 'Chatty',
         description: 'A real-time chat application built with React and Socket.io.',
         start_url: '.',
+        scope: '/',
         display: 'standalone',
         background_color: '#333',
         theme_color: '#333',
