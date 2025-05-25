@@ -6,8 +6,6 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
 import path from "node:path";
-import { fileURLToPath } from "node:url";
-import { createRequire } from 'node:module';
 
 import indexRoute from "./routes/index.route.js";
 
@@ -39,19 +37,15 @@ app.use(express.json(jsonParseConfig));
 app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
-
-  // const __filename = fileURLToPath(import.meta.url);
-  // const __dirname = path.dirname(__filename);
-  const __dirname = path.dirname(process.execPath);
+  
+  const distPath = path.join(process.cwd(), 'client', 'dist');
 
   app.set('trust proxy', 1);
-
   app.use(compression(compressionConfig));
+  app.use(helmet(helmetConfig));
+  app.use(rateLimit(rateLimitConfig));
 
-  // app.use(helmet(helmetConfig));
-  app.use(rateLimit(rateLimitConfig)); 
-
-  app.use(express.static(path.resolve(__dirname, "../client/dist"), {
+  app.use(express.static(distPath, {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html'))
@@ -59,28 +53,43 @@ if (NODE_ENV === "production") {
     }
   }));
 
+  function safeSendFile(res, filePath, fallback404 = true) {
+    import('fs').then(fs => {
+      fs.access(filePath, fs.constants.F_OK, (err) => {
+        if (err) {
+          if (fallback404) {
+            res.status(404).send('Not Found');
+          } else {
+            res.end();
+          }
+        } else {
+          res.sendFile(filePath);
+        }
+      });
+    });
+  }
+
   app.get('/sw.js', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
+    safeSendFile(res, path.join(distPath, 'sw.js'));
   });
   app.get('/manifest.webmanifest', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/manifest.webmanifest"));
+    safeSendFile(res, path.join(distPath, 'manifest.webmanifest'));
   });
-
   app.get('/image.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/image.png"));
+    safeSendFile(res, path.join(distPath, 'image.png'));
   });
   app.get('/avatar.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/avatar.png"));
+    safeSendFile(res, path.join(distPath, 'avatar.png'));
   });
   app.get('/screenshot1.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot1.png"));
+    safeSendFile(res, path.join(distPath, 'screenshot1.png'));
   });
   app.get('/screenshot2.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot2.png"));
+    safeSendFile(res, path.join(distPath, 'screenshot2.png'));
   });
 
   app.get('/', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+    safeSendFile(res, path.join(distPath, 'index.html'));
   });
 } else {
 
