@@ -82,7 +82,7 @@ export default defineConfig({
 
   build: {
     "outDir": 'dist',
-    "assetsDir": 'assest',
+    "assetsDir": 'assets',
     "sourcemap": true,
     "rollupOptions": {
       "output": {
