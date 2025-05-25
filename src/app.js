@@ -38,7 +38,7 @@ app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
   
-  const distPath = path.join(process.cwd(), 'client', 'dist');
+  const distPath = path.join(process.cwd(), '../client', 'dist');
 
   app.set('trust proxy', 1);
 
@@ -76,7 +76,7 @@ if (NODE_ENV === "production") {
       });
     });
   }
-
+  
   app.get('/sw.js', (_req, res) => {
     safeSendFile(res, path.join(distPath, 'sw.js'));
   });
