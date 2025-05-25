@@ -45,6 +45,11 @@ if (NODE_ENV === "production") {
   app.use(helmet(helmetConfig));
   app.use(rateLimit(rateLimitConfig));
 
+  app.use((request, _response, nextFunc) => {
+    logger.info(`request received: ${request.method} ${request.url}`);
+    nextFunc();
+  });
+
   app.use(express.static(distPath, {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
