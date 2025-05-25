@@ -3388,65 +3388,71 @@ clientsClaim();
  * See https://goo.gl/S9QRab
  */
 precacheAndRoute([{
-  "url": "assets/AiChat-CFBHjij_.js",
+  "url": "assets/AiChat-BvtWY2UM.js",
   "revision": null
 }, {
-  "url": "assets/AiChatPage-BCZOoNUb.js",
+  "url": "assets/AiChatPage-Dp5cHdqn.js",
   "revision": null
 }, {
   "url": "assets/auth.constant-BTqmpk7l.js",
   "revision": null
 }, {
-  "url": "assets/AuthPage-Bgx8TbPJ.js",
+  "url": "assets/AuthPage-BbZ0cYD1.js",
   "revision": null
 }, {
-  "url": "assets/check-BFv3-fgR.js",
+  "url": "assets/axios-Bmm_Is_E.js",
   "revision": null
 }, {
-  "url": "assets/HomePage-ByFCjUYR.js",
+  "url": "assets/HomePage-D4TfEZGO.js",
   "revision": null
 }, {
-  "url": "assets/index-BJS4NuY7.js",
+  "url": "assets/index-BwaezK0E.js",
   "revision": null
 }, {
   "url": "assets/index-C63GjgNF.css",
   "revision": null
 }, {
-  "url": "assets/List-C10ITE2p.js",
+  "url": "assets/List-By1rxFlt.js",
   "revision": null
 }, {
-  "url": "assets/loader-circle-Sn0QkiX5.js",
+  "url": "assets/lucide-react-BhcP_KDW.js",
   "revision": null
 }, {
-  "url": "assets/mail-BBe0EZa-.js",
+  "url": "assets/motion-qN9JnHi1.js",
   "revision": null
 }, {
-  "url": "assets/ProfilePage-BNJ6stmi.js",
+  "url": "assets/ProfilePage-DEN563fi.js",
   "revision": null
 }, {
-  "url": "assets/RequestsPage-CLlPYE3s.js",
+  "url": "assets/react-CLyQEj53.js",
+  "revision": null
+}, {
+  "url": "assets/RequestsPage-y3EinGbn.js",
   "revision": null
 }, {
   "url": "assets/schema.constant-BJz4GsVQ.js",
   "revision": null
 }, {
-  "url": "assets/send-kgFwfibK.js",
-  "revision": null
-}, {
-  "url": "assets/SettingsPage-DOzTNslh.js",
+  "url": "assets/SettingsPage-C5j9A6KT.js",
   "revision": null
 }, {
   "url": "assets/style.constant-BOmyPDgc.js",
   "revision": null
 }, {
-  "url": "assets/util-DwcpIgc1.js",
+  "url": "assets/tailwindcss-l0sNRNKZ.js",
+  "revision": null
+}, {
+  "url": "assets/util-o7N8JaN-.js",
   "revision": null
 }, {
   "url": "assets/workbox-window.prod.es5-B9K5rw8f.js",
   "revision": null
 }, {
+  "url": "assets/zustand-cYCuOjRP.js",
+  "revision": null
+}, {
   "url": "index.html",
-  "revision": "f30e71fded1e65377ec1edaadfbaa0a7"
+  "revision": "b0af1fcb83193784072b6efd73d4027b"
 }, {
   "url": "avatar.png",
   "revision": "1b0cea3ff7730fcd3dc8b3ff39a11f67"

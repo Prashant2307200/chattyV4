@@ -23,7 +23,7 @@ import { errorHandler } from "./middlewares/errorHandler.middleware.js";
 const {
   env,
   corsConfig,
-  // helmetConfig,
+  helmetConfig,
   rateLimitConfig,
   jsonParseConfig,
   urlencodedConfig,
@@ -41,13 +41,13 @@ if (NODE_ENV === "production") {
 
   // const __filename = fileURLToPath(import.meta.url);
   // const __dirname = path.dirname(__filename);
-  const __dirname = path.dirname(process.execPath);
+  const __dirname = process.cwd();
 
   app.set('trust proxy', 1);
 
   app.use(compression(compressionConfig));
 
-  // app.use(helmet(helmetConfig));
+  app.use(helmet(helmetConfig));
   app.use(rateLimit(rateLimitConfig));
 
   app.use((request, _response, nextFunc) => {
@@ -55,41 +55,16 @@ if (NODE_ENV === "production") {
     nextFunc();
   });
 
-  app.use(express.static(path.resolve(__dirname, "../client/dist"), {
+  app.use(express.static(path.resolve(__dirname, "client", "dist"), {
     maxAge: '1y',
     setHeaders: (res, filePath) => {
       if (filePath.endsWith('index.html'))
         res.setHeader('Cache-Control', 'no-store');
     }
-  }));
-
-  app.use('/assets', express.static(path.resolve(__dirname, '../client/dist/assets'), {
-    maxAge: '1y',
-  }));
-
-
-  app.get('/sw.js', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
-  });
-  app.get('/manifest.webmanifest', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/manifest.webmanifest"));
-  });
-
-  app.get('/image.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/image.png"));
-  });
-  app.get('/avatar.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/avatar.png"));
-  });
-  app.get('/screenshot1.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot1.png"));
-  });
-  app.get('/screenshot2.png', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/screenshot2.png"));
-  });
+  })); 
 
   app.get('/', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "../client/dist/index.html"));
+    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
   });
 } else {
 
