@@ -50,22 +50,22 @@ export default defineConfig({
       },
       workbox: {
         inlineWorkboxRuntime: true,
-        // runtimeCaching: [
-          // {
-          //   urlPattern: /\/api\/.*$/,
-          //   handler: 'NetworkFirst',
-          //   options: {
-          //     cacheName: 'api-cache',
-          //     expiration: {
-          //       maxEntries: 50,
-          //       maxAgeSeconds: 60 * 60 * 24, // 1 day
-          //     },
-          //     cacheableResponse: {
-          //       statuses: [200],
-          //     },
-          //   }
-          // },
-        // ],
+        runtimeCaching: [
+          {
+            urlPattern: /\/api\/.*$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24, // 1 day
+              },
+              cacheableResponse: {
+                statuses: [200],
+              },
+            }
+          },
+        ],
       },
       injectManifest: {
         swSrc: 'src/sw.js',
