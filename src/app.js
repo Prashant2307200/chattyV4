@@ -5,7 +5,7 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
-import path from "node:path"; 
+import path from "node:path";
 
 import indexRoute from "./routes/index.route.js";
 
@@ -44,7 +44,7 @@ if (NODE_ENV === "production") {
   app.use(compression(compressionConfig));
 
   app.use(helmet(helmetConfig));
-  
+
   app.use(rateLimit(rateLimitConfig));
 
   app.use(express.static(path.resolve(__dirname, "client", "dist"), {
@@ -54,6 +54,7 @@ if (NODE_ENV === "production") {
         res.setHeader('Cache-Control', 'no-store');
     }
   }));
+
 } else {
 
   app.use(cors(corsConfig));
@@ -66,11 +67,6 @@ if (NODE_ENV === "production") {
     await seedDB();
     return response.json({ message: "Database seeded successfully." });
   });
-
-  app.use((request, _response, nextFunc) => {
-    logger.info(`request received: ${request.method} ${request.url}`);
-    nextFunc();
-  });
 }
 
 app.get("/health", (_request, response) => {
@@ -79,12 +75,17 @@ app.get("/health", (_request, response) => {
 
 app.use("/api/v1", indexRoute);
 
-app.use((_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "index.html")))
+if (NODE_ENV === "production") {
+  app.use((_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "index.html")))
+} else {
+  app.use(pathHandler);
+}
+
 app.use(errorHandler);
 
 process.on("uncaughtException", (error) => {
 
-  // NODE_ENV !== "production" && console.log(error);
+  NODE_ENV !== "production" && console.log(error);
 
   logger.error("Internal server Error!", error);
   // process.exit(1);
