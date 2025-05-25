@@ -63,6 +63,8 @@ if (NODE_ENV === "production") {
     }
   })); 
 
+  app.use(express.static(path.resolve(__dirname, "client", "dist", "assets"), { maxAge: '1y' }));
+
   app.get('/', (_req, res) => {
     res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
   });
