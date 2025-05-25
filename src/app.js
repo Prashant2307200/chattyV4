@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+// import { fileURLToPath } from "node:url";
 
 import indexRoute from "./routes/index.route.js";
 
@@ -62,6 +62,11 @@ if (NODE_ENV === "production") {
         res.setHeader('Cache-Control', 'no-store');
     }
   }));
+
+  app.use('/assets', express.static(path.resolve(__dirname, '../client/dist/assets'), {
+    maxAge: '1y',
+  }));
+
 
   app.get('/sw.js', (_req, res) => {
     res.sendFile(path.resolve(__dirname, "../client/dist/sw.js"));
