@@ -5,8 +5,7 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
-import path from "node:path";
-// import { fileURLToPath } from "node:url";
+import path from "node:path"; 
 
 import indexRoute from "./routes/index.route.js";
 
@@ -30,6 +29,7 @@ const {
   compressionConfig
 } = AppConfig;
 
+const __dirname = process.cwd();
 const { NODE_ENV, COOKIE_SECRET } = env;
 
 app.use(cookieParser(COOKIE_SECRET));
@@ -39,21 +39,13 @@ app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
 
-  // const __filename = fileURLToPath(import.meta.url);
-  // const __dirname = path.dirname(__filename);
-  const __dirname = process.cwd();
-
   app.set('trust proxy', 1);
 
   app.use(compression(compressionConfig));
 
   app.use(helmet(helmetConfig));
+  
   app.use(rateLimit(rateLimitConfig));
-
-  app.use((request, _response, nextFunc) => {
-    logger.info(`request received: ${request.method} ${request.url}`);
-    nextFunc();
-  });
 
   app.use(express.static(path.resolve(__dirname, "client", "dist"), {
     maxAge: '1y',
@@ -62,10 +54,6 @@ if (NODE_ENV === "production") {
         res.setHeader('Cache-Control', 'no-store');
     }
   }));
-
-  app.get('/', (_req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
-  });
 } else {
 
   app.use(cors(corsConfig));
@@ -91,7 +79,7 @@ app.get("/health", (_request, response) => {
 
 app.use("/api/v1", indexRoute);
 
-app.use(pathHandler);
+app.use((_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "index.html")))
 app.use(errorHandler);
 
 process.on("uncaughtException", (error) => {
