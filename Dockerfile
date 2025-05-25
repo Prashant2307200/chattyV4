@@ -49,7 +49,7 @@ RUN apk add --no-cache libstdc++ libc6-compat
 
 WORKDIR /app
 
-COPY --from=server /server/client/dist ./client/dist
+COPY --from=client /client/dist ./client/dist
 COPY --from=server /server/dist/app ./dist/app
 
 RUN chmod +x ./dist/app

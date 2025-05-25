@@ -47,7 +47,7 @@ if (NODE_ENV === "production") {
 
   app.use(compression(compressionConfig));
 
-  // app.use(helmet(helmetConfig));
+  app.use(helmet(helmetConfig));
   app.use(rateLimit(rateLimitConfig));
 
   app.use((request, _response, nextFunc) => {
@@ -61,15 +61,6 @@ if (NODE_ENV === "production") {
       if (filePath.endsWith('index.html'))
         res.setHeader('Cache-Control', 'no-store');
     }
-  }));
-
-  app.use("/assets", express.static(path.resolve(__dirname, "client", "dist", "assets"), {
-    maxAge: '1y',
-    setHeaders: (res, filePath) => {
-      if (filePath.endsWith('.css')) {
-        res.setHeader('Content-Type', 'text/css');
-      }
-    },
   }));
 
   app.get('/', (_req, res) => {
