@@ -76,6 +76,12 @@ app.get("/health", (_request, response) => {
 app.use("/api/v1", indexRoute);
 
 if (NODE_ENV === "production") {
+
+  app.get("/image.png", (_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "image.png")));
+  app.get("/avatar.png", (_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "avatar.png")));
+  app.get("/screenshot1.png", (_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "screenshot1.png")));
+  app.get("/screenshot2.png", (_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "screenshot2.png")));
+
   app.use((_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "index.html")))
 } else {
   app.use(pathHandler);
