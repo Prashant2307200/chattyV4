@@ -6,7 +6,7 @@ COPY ./client/package*.json ./
 
 RUN npm ci --legacy-peer-deps
 
-COPY . .
+COPY ./client .
 
 RUN chown -R node:node /client && chmod -R 755 /client
 
