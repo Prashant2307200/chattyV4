@@ -41,6 +41,11 @@ if (NODE_ENV === "production") {
 
   app.set('trust proxy', 1);
 
+  app.use((request, response, next) => {
+      logger.info(`request received: ${request.method} ${request.url}`);
+      next();
+  });
+
   app.use(cors(corsConfig));
 
   app.use(compression(compressionConfig));
