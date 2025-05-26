@@ -4777,31 +4777,31 @@ clientsClaim();
  * See https://goo.gl/S9QRab
  */
 precacheAndRoute([{
-  "url": "assets/AiChat-C-NkbQZS.js",
+  "url": "assets/AiChat-CWNTxC5t.js",
   "revision": null
 }, {
-  "url": "assets/AiChatPage-CIHQk30_.js",
+  "url": "assets/AiChatPage-DtRIvvRv.js",
   "revision": null
 }, {
   "url": "assets/auth.constant-BTqmpk7l.js",
   "revision": null
 }, {
-  "url": "assets/AuthPage-RNG7fFKI.js",
+  "url": "assets/AuthPage-DV076e9p.js",
   "revision": null
 }, {
   "url": "assets/axios-Bmm_Is_E.js",
   "revision": null
 }, {
-  "url": "assets/HomePage-Czn8aAx5.js",
+  "url": "assets/HomePage-Dh6cCloA.js",
   "revision": null
 }, {
-  "url": "assets/index-BsIPNj1M.js",
+  "url": "assets/index-BlKDQ5fI.css",
   "revision": null
 }, {
-  "url": "assets/index-C63GjgNF.css",
+  "url": "assets/index-ifhlJbQR.js",
   "revision": null
 }, {
-  "url": "assets/List-DBj4G-k4.js",
+  "url": "assets/List-CWtf8IyQ.js",
   "revision": null
 }, {
   "url": "assets/lucide-react-BhcP_KDW.js",
@@ -4810,19 +4810,19 @@ precacheAndRoute([{
   "url": "assets/motion-qN9JnHi1.js",
   "revision": null
 }, {
-  "url": "assets/ProfilePage-G6FXNuot.js",
+  "url": "assets/ProfilePage-CW6sKYQM.js",
   "revision": null
 }, {
   "url": "assets/react-CLyQEj53.js",
   "revision": null
 }, {
-  "url": "assets/RequestsPage-ChPKi_Dj.js",
+  "url": "assets/RequestsPage-7o9QgYVH.js",
   "revision": null
 }, {
   "url": "assets/schema.constant-BJz4GsVQ.js",
   "revision": null
 }, {
-  "url": "assets/SettingsPage-DVwJbrEt.js",
+  "url": "assets/SettingsPage-Cifw-Zqn.js",
   "revision": null
 }, {
   "url": "assets/style.constant-BOmyPDgc.js",
@@ -4841,7 +4841,7 @@ precacheAndRoute([{
   "revision": null
 }, {
   "url": "index.html",
-  "revision": "d36cba5d497ec3c3210b6348aa98a460"
+  "revision": "ad8587d67edc4083182b02b2fab2c70f"
 }, {
   "url": "avatar.png",
   "revision": "1b0cea3ff7730fcd3dc8b3ff39a11f67"

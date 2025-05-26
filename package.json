@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./dist/index.cjs",
     "dev": "nodemon index.js",
-    "build": "webpack --mode production && pkg ./dist/index.cjs --targets node18-linux-x64 --output ./dist/app",
+    "build": "npx webpack --mode production && npx pkg ./dist/index.cjs --targets node18-linux-x64 --output ./dist/app",
     "install:app": "npm i && npm i --prefix client && ",
     "build:app": "webpack --mode production && npm run build --prefix client",
     "production:app": "pkg ./dist/index.cjs --targets node18-win-x64 --output ./dist/app"
