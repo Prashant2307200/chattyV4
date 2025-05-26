@@ -3,7 +3,7 @@ import { io } from "socket.io-client";
 
 import { useRequestStore } from "./useRequestStore";
 
-const BASE_URL = import.meta.env.MODE === "production" ? "https://chattyv4-api.onrender.com" : "/";
+const BASE_URL = import.meta.env.MODE !== "production" ? "http://localhost:8080" : "/";
 
 export const useSocketStore = create((set, get) => ({
 
