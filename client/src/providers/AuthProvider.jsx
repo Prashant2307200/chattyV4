@@ -15,7 +15,7 @@ export const AuthProvider = ({ children }) => {
 
     subscribeToEvents(data._id);
     return () => unsubscribeFromEvents();
-  }, [navigator.onLine, subscribeToEvents, unsubscribeFromEvents, data?._id]);
+  }, [subscribeToEvents, unsubscribeFromEvents, data?._id]);
 
   if (isCheckingAuth) 
     return <PageLoader />
