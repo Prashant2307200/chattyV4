@@ -5,7 +5,7 @@ import compression from "compression";
 import cookieParser from "cookie-parser";
 import rateLimit from "express-rate-limit";
 
-import path from "node:path";
+// import path from "node:path";
 
 import indexRoute from "./routes/index.route.js";
 
@@ -29,7 +29,7 @@ const {
   compressionConfig
 } = AppConfig;
 
-const __dirname = process.cwd();
+// const __dirname = process.cwd();
 const { NODE_ENV, COOKIE_SECRET } = env;
 
 app.use(cookieParser(COOKIE_SECRET));
@@ -41,19 +41,21 @@ if (NODE_ENV === "production") {
 
   app.set('trust proxy', 1);
 
+  app.use(cors(corsConfig));
+
   app.use(compression(compressionConfig));
 
   app.use(helmet(helmetConfig));
 
   app.use(rateLimit(rateLimitConfig));
 
-  app.use(express.static(path.resolve(__dirname, "client", "dist"), {
-    maxAge: '1y',
-    setHeaders: (res, filePath) => {
-      if (filePath.endsWith('index.html'))
-        res.setHeader('Cache-Control', 'no-store');
-    }
-  }));
+  // app.use(express.static(path.resolve(__dirname, "client", "dist"), {
+  //   maxAge: '1y',
+  //   setHeaders: (res, filePath) => {
+  //     if (filePath.endsWith('index.html'))
+  //       res.setHeader('Cache-Control', 'no-store');
+  //   }
+  // }));
 
 } else {
 
@@ -75,12 +77,13 @@ app.get("/health", (_request, response) => {
 
 app.use("/api/v1", indexRoute);
 
-if (NODE_ENV === "production") {
-  app.use((_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "index.html")))
-} else {
-  app.use(pathHandler);
-}
+// if (NODE_ENV === "production") {
+//   app.use((_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "index.html")))
+// } else {
+//   app.use(pathHandler);
+// }
 
+app.use(pathHandler);
 app.use(errorHandler);
 
 process.on("uncaughtException", (error) => {

@@ -10,9 +10,12 @@ export const AuthProvider = ({ children }) => {
   const { data, isLoading: isCheckingAuth } = useApiQuery({ keys: ["authUser"], path: '/auth/check' });
 
   useEffect(() => {
-    subscribeToEvents(data?._id);
+    
+    if (!navigator.onLine || !data?._id) return;
+
+    subscribeToEvents(data._id);
     return () => unsubscribeFromEvents();
-  }, [subscribeToEvents, unsubscribeFromEvents, data?._id]);
+  }, [navigator.onLine, subscribeToEvents, unsubscribeFromEvents, data?._id]);
 
   if (isCheckingAuth) 
     return <PageLoader />

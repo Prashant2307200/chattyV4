@@ -1,21 +1,6 @@
-FROM node:22-alpine AS client
+FROM node:22-alpine AS builder
 
-WORKDIR /client
-
-COPY client/package*.json ./
-
-RUN npm ci --legacy-peer-deps 
-
-COPY client/ .
-
-RUN chown -R node:node /client && chmod -R 755 /client
-
-RUN npm run build
-
-
-FROM node:22-alpine AS server
-
-WORKDIR /server
+WORKDIR /builder
 
 COPY package*.json ./
 
@@ -26,31 +11,13 @@ COPY . .
 RUN npm run build  
 
 
-# FROM node:22-alpine AS app
-
-# WORKDIR /app
-
-# COPY package*.json ./
-
-# RUN npm ci --omit=dev --production
-
-# COPY --from=client /client/dist/ ./client/dist
-
-# COPY --from=server /server/dist/ ./dist
-
-# EXPOSE 8080
-
-# CMD ["npm", "start"]
-
-
-FROM alpine:3.19 AS app
+FROM alpine:3.19 AS runner
 
 RUN apk add --no-cache libstdc++ libc6-compat
 
-WORKDIR /app
+WORKDIR /runner
 
-COPY --from=client /client/dist ./client/dist
-COPY --from=server /server/dist/app ./dist/app
+COPY --from=builder /builder/dist/app ./dist/app
 
 RUN chmod +x ./dist/app
 

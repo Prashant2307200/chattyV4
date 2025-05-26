@@ -86,7 +86,7 @@ export const AppConfig = {
   },
 
   corsConfig: {
-    origin: NODE_ENV === "production" ? '/' : "http://localhost:5173",
+    origin: NODE_ENV === "production" ? (process.env.ORIGIN_URL || '/') : "http://localhost:5173",
     credentials: true,  // allow cookie
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],

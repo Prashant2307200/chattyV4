@@ -2,7 +2,20 @@
 
 services: 
 
-  app:
+  client:
+    build: ./client
+    ports:
+      - "80:80" 
+    depends_on:
+      - server
+    # restart: unless-stopped
+    # build:
+    #   context: ./client
+    #   dockerfile: Dockerfile
+    # networks:
+    #   - my-network
+
+  server:
     build: .
     ports:
       - "8080:8080"
