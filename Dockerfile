@@ -8,7 +8,7 @@ RUN npm ci --legacy-peer-deps
 
 COPY . .
 
-RUN chown -R node:node /builder && chmod -R 755 /builder
+RUN chown -R node:node /client && chmod -R 755 /client
 
 RUN npm run build
 
