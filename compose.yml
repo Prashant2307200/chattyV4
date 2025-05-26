@@ -8,6 +8,7 @@ services:
       - "80:80" 
     depends_on:
       - server
+    image: prashantdobariya276813/chatty-client:latest
     # restart: unless-stopped
     # build:
     #   context: ./client
@@ -21,6 +22,7 @@ services:
       - "8080:8080"
     env_file:
       - .env
+    image: prashantdobariya276813/chatty-server:latest
     # restart: unless-stopped
     # build:
     #   context: .

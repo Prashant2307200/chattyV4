@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     
-    if (!navigator.onLine || !data?._id) return;
+    if (!data?._id) return;
 
     subscribeToEvents(data._id);
     return () => unsubscribeFromEvents();

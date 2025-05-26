@@ -38,6 +38,8 @@ export const AppConfig = {
     CLOUD_API_SECRET,
 
     GEMINI_API_KEY,
+
+    ORIGIN_URL: process.env.ORIGIN_URL || "http://localhost:5173",
   },
 
   Paths: {

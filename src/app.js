@@ -49,6 +49,10 @@ if (NODE_ENV === "production") {
 
   app.use(rateLimit(rateLimitConfig));
 
+  app.get('/', (_request, response) => {
+    response.json({ message: "Hello World" });
+  });
+
   // app.use(express.static(path.resolve(__dirname, "client", "dist"), {
   //   maxAge: '1y',
   //   setHeaders: (res, filePath) => {

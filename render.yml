@@ -1,16 +1,12 @@
 services:
   - type: web
     name: server
-    env: docker
-    plan: free
-    repo: https://github.com/your-repo
+    env: docker 
     dockerfilePath: ./Dockerfile 
     autoDeploy: true
 
   - type: web
     name: client
-    env: docker
-    plan: free
-    repo: https://github.com/your-repo
+    env: docker 
     dockerfilePath: ./client/Dockerfile
     autoDeploy: true

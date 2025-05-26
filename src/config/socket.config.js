@@ -10,7 +10,7 @@ const server = createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: [AppConfig.env.NODE_ENV !== "production" ? "http://localhost:5173":'/']
+    origin: [AppConfig.env.NODE_ENV !== "production" ? "http://localhost:5173":AppConfig.env.ORIGIN_URL || '/']
   }
 });
 
