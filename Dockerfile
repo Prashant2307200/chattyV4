@@ -1,5 +1,3 @@
-### Stage 1: Client Build
-
 FROM node:22-alpine AS client
 
 WORKDIR /client
@@ -14,30 +12,30 @@ RUN chown -R node:node /client && chmod -R 755 /client
 
 RUN npm run build
 
-
-### Stage 2: Server Build (Static Binary)
-
-FROM node:14.15.3-alpine AS server
+FROM node:22-alpine AS server
 
 WORKDIR /server
-
-RUN apk add --no-cache build-base python3 make g++ musl-dev git
 
 COPY package*.json ./
 
 RUN npm ci --legacy-peer-deps
 
-COPY . .
+COPY . . 
+
+RUN npm run build  
+
+FROM alpine:3.19 AS app
+
+RUN apk add --no-cache libstdc++ libc6-compat
+
+WORKDIR /app
 
 COPY --from=client /client/dist ./client/dist
 
-RUN npm run build
+COPY --from=server /server/dist/app ./dist/app
 
+RUN chmod +x ./dist/app
 
-### Stage 3: Final Image (Scratch)
+EXPOSE 8080
 
-FROM scratch AS app
-
-COPY --from=server /server/dist/app .
-
-ENTRYPOINT ["/app"]
+ENTRYPOINT ["./dist/app"]
