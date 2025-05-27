@@ -15,7 +15,7 @@ RUN npm run build
 
 ### Stage 2: Server Build (Static Binary)
 
-FROM alpine:3.19 AS server
+FROM node:22-alpine AS server
 
 WORKDIR /server
 
