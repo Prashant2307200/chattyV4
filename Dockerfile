@@ -24,9 +24,12 @@ COPY . .
 
 RUN npm run build  
 
-FROM scratch AS app  
+FROM alpine AS app
 
 COPY --from=client /client/dist /client/dist
-COPY --from=server /server/dist/app /dist/app  
+
+COPY --from=server /server/dist/app /dist/app
+
+RUN chmod +x /dist/app
 
 ENTRYPOINT ["/dist/app"]
