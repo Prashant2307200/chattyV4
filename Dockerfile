@@ -10,6 +10,8 @@ RUN npm ci --legacy-peer-deps
 
 COPY ./client .
 
+COPY --from=client /client/dist ./client/dist
+
 RUN chown -R node:node /client && chmod -R 755 /client
 
 RUN npm run build
@@ -36,10 +38,6 @@ RUN npm run build
 
 FROM scratch AS app
 
-WORKDIR /app
+COPY --from=server /server/dist/app .
 
-COPY --from=client /client/dist ./client/dist
-
-COPY --from=server /server/dist/app ./dist/app
-
-ENTRYPOINT ["./dist/app"]
+ENTRYPOINT ["/app"]
