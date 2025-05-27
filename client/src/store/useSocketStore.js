@@ -187,10 +187,7 @@ export const useSocketStore = create((set, get) => ({
 
     const { socket, hasAuthUser } = get();
 
-    if (!navigator?.onLine) {
-      set({ hasAuthUser: null });
-      return;
-    }
+    if (!navigator?.onLine) return;
     
     if (!socket?.connected || !hasAuthUser) return;
 

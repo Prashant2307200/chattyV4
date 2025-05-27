@@ -12,7 +12,6 @@ RUN chown -R node:node /builder && chmod -R 755 /builder
 
 RUN npm run build
 
-
 FROM nginx:alpine AS runner
 
 COPY --from=builder /builder/dist /usr/share/nginx/html
