@@ -24,13 +24,17 @@ COPY . .
 
 RUN npm run build  
 
-FROM gcr.io/distroless/base-debian11 as app
+FROM alpine:3.19 AS app
+
+RUN apk add --no-cache libstdc++ libc6-compat
 
 WORKDIR /app
 
 COPY --from=client /client/dist ./client/dist
 
 COPY --from=server /server/dist/app ./dist/app
+
+RUN chmod +x ./dist/app
 
 EXPOSE 8080
 
