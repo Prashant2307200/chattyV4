@@ -1,3 +1,5 @@
+### Stage 1: Client Build
+
 FROM node:22-alpine AS client
 
 WORKDIR /client
@@ -8,28 +10,34 @@ RUN npm ci --legacy-peer-deps
 
 COPY ./client .
 
-RUN chown -R node:node /client && chmod -R 755 /client
-
 RUN npm run build
 
-FROM node:22-alpine AS server
+
+### Stage 2: Server Build (Static Binary)
+
+FROM alpine:3.19 AS server
 
 WORKDIR /server
+
+RUN apk add --no-cache build-base python3 make g++ musl-dev git
 
 COPY package*.json ./
 
 RUN npm ci --legacy-peer-deps
 
-COPY . . 
+COPY . .
 
-RUN npm run build  
+RUN npm run build
 
-FROM alpine AS app
 
-COPY --from=client /client/dist /client/dist
+### Stage 3: Final Image (Scratch)
 
-COPY --from=server /server/dist/app /dist/app
+FROM scratch AS app
 
-RUN chmod +x /dist/app
+WORKDIR /app
 
-ENTRYPOINT ["/dist/app"]
+COPY --from=client /client/dist ./client/dist
+
+COPY --from=server /server/dist/app ./dist/app
+
+ENTRYPOINT ["./dist/app"]
