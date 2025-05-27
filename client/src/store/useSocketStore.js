@@ -126,12 +126,7 @@ export const useSocketStore = create((set, get) => ({
   },
 
   subscribeToEvents: id => {
-
-    if (!navigator?.onLine && id) {
-      set({ hasAuthUser: id });
-      return;
-    }
-
+    
     const { socket } = get();
 
     if (socket?.connected || !id) return;
@@ -186,8 +181,6 @@ export const useSocketStore = create((set, get) => ({
   unsubscribeFromEvents: () => {
 
     const { socket, hasAuthUser } = get();
-
-    if (!navigator?.onLine) return;
     
     if (!socket?.connected || !hasAuthUser) return;
 
