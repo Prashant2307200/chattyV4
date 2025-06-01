@@ -26,21 +26,5 @@ Editor directories and files
 .env
 nodemon.json
 cmd.sh
- 
-registerSW.js
-manifest.json
-webbox-*.js
 
-dev-*
-.well-known
-
-app.exe 
-
-registerSW.js
-manifest.json
-webbox-*.js
-dev-*
-.well-known
-
-node_modules
-dist
+dev-dist

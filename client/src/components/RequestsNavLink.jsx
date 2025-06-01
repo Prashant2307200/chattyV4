@@ -1,21 +1,16 @@
-import { memo, useEffect } from "react";
+import { memo } from "react";
 import { Link } from "react-router-dom";
 import { MessageSquarePlus } from "lucide-react";
-import { useRequestStore } from "../store/useRequestStore";
+import { useApiQuery } from "../hooks/useApiQuery";
 
 const RequestsNavLink = memo(() => {
-  const { 
-    requests, 
-    fetchRequests,  
-  } = useRequestStore();
+  
+  const { data: requests } = useApiQuery({
+    keys: ['requests'],
+    path: "/requests"
+  });
 
-  // Fetch requests on component mount
-  useEffect(() => {
-    fetchRequests();
-  }, [fetchRequests]);
-
-  // Count pending received requests
-  const pendingCount = requests.received.filter(req => req.status === "pending").length;
+  const pendingCount = requests?.received.filter(req => req.status === "pending").length;
 
   return (
     <Link to="/requests" className="btn btn-sm gap-2">

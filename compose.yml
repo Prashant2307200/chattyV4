@@ -2,6 +2,13 @@
 
 services: 
 
+  # app: 
+  #   image: prashantdobariya276813/chatty
+  #   ports:
+  #     - "8080:8080"
+  #   env_file:
+  #     - .env
+
   # client:
   #   build: ./client
   #   ports:
@@ -22,6 +29,7 @@ services:
       - "8080:8080"
     env_file:
       - .env
+    image: prashantdobariya276813/chatty:latest
     # image: prashantdobariya276813/chatty-server:latest
     # restart: unless-stopped
     # build:

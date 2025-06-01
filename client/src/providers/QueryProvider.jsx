@@ -1,11 +1,11 @@
-import toast from "react-hot-toast";
-import { useEffect, useState } from "react";
+import { toast } from "react-hot-toast";
+import { useEffect, cloneElement } from "react";
 import { useQuery } from "@tanstack/react-query";
 
 import { axiosInstance } from "../lib/axios";
 
-export function useApiQuery({ keys = [], path = "/", errorMessage, ...props }) {
-  
+export function QueryProvider({ path, keys, errorMessage, children, props = {}}) {
+
   const isOffline = !navigator.onLine;
 
   const { data, isError, isLoading, error } = useQuery({
@@ -27,5 +27,5 @@ export function useApiQuery({ keys = [], path = "/", errorMessage, ...props }) {
       toast.error(error?.response?.data?.message || errorMessage || error?.message || "Something went wrong!");
   }, [isError, error]);
 
-  return { isLoading, data };
+  return cloneElement(children, { isLoading, data });
 }

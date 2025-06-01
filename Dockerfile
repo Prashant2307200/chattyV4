@@ -12,6 +12,7 @@ RUN chown -R node:node /client && chmod -R 755 /client
 
 RUN npm run build
 
+
 FROM node:22-alpine AS server
 
 WORKDIR /server
@@ -20,13 +21,19 @@ COPY package*.json ./
 
 RUN npm ci --legacy-peer-deps
 
-COPY . . 
+COPY ./src ./src
+
+COPY ./index.js .
+
+COPY .babelrc .
+
+COPY webpack.config.cjs .
 
 RUN npm run build  
 
 FROM alpine:3.19 AS app
 
-RUN apk add --no-cache libstdc++ libc6-compat
+RUN apk add --no-cache libstdc++
 
 WORKDIR /app
 

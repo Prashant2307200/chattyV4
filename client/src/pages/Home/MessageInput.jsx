@@ -2,19 +2,13 @@ import { toFormData } from "axios";
 import toast from "react-hot-toast";
 import { Image, Send, X } from "lucide-react";
 import { useRef, useState, useEffect, useCallback } from "react";
-import { useDebouncedCallback, useThrottledCallback } from "../../hooks/useDebouncedCallback";
 
 import { useSocketStore } from "../../store/useSocketStore";
-import { useApiMutation } from "../../hooks/useApiMutation";
+import { useDebouncedCallback, useThrottledCallback } from "../../hooks/useDebouncedCallback";
 
-const MessageInput = () => {
+const MessageInput = ({ mutation: SendMessageMutation }) => {
 
   const { hasAuthUser, socket, selectedChat } = useSocketStore(); 
-
-  const { mutate: sendMessage, isPending: isMessagesLoading } = useApiMutation({
-    keys: ["chats", `${selectedChat?._id}`, "messages"],
-    path: `/chats/${selectedChat?._id}/messages`
-  }) 
 
   const fileInputRef = useRef(null);
   const [text, setText] = useState("");
@@ -97,13 +91,12 @@ const MessageInput = () => {
       image: fileInputRef.current?.files?.[0] || imagePreview,
     }
     const formData = toFormData(newMessage);
-    sendMessage(formData);
+    SendMessageMutation.mutate(formData);
 
     setText("");
     setImagePreview(null);
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
-
 
   return (
     <div className="p-4 w-full border-t border-base-300 h-auto">
@@ -148,7 +141,7 @@ const MessageInput = () => {
         </div>
         <button className="btn btn-sm btn-circle bg-primary"
           type="submit"
-          disabled={(!text.trim() && !imagePreview || isMessagesLoading)}
+          disabled={(!text.trim() && !imagePreview || SendMessageMutation.isPending)}
         >
           <Send size={22} />
         </button>
@@ -156,4 +149,5 @@ const MessageInput = () => {
     </div>
   );
 };
+
 export default MessageInput;

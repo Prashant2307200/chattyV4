@@ -1,26 +1,26 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
-import { registerSW } from 'virtual:pwa-register'; 
+import { registerSW } from 'virtual:pwa-register';
 
 import './index.css';
 import App from './App.jsx';
 
-import { AuthProvider } from './providers/AuthProvider.jsx';
+import { SocketProvider } from './providers/socketProvider.jsx';
 import { TanStackQueryProvider } from './providers/TanstackQueryProvider.jsx';
 
 const updateSW = registerSW({
-  onNeedRefresh() {},
-  onOfflineReady() {}
-}); 
+  onNeedRefresh() { },
+  onOfflineReady() { }
+});
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <TanStackQueryProvider>
-        <AuthProvider>
+        <SocketProvider>
           <App />
-        </AuthProvider>
+        </SocketProvider>
       </TanStackQueryProvider>
     </BrowserRouter>
   </StrictMode>

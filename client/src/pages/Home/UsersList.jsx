@@ -1,25 +1,24 @@
 import { memo } from "react";
-import { List } from "../../components/ui/List";
-import SendRequestButton from "../../components/SendRequestButton";
-import SearchBar from "../../components/SearchBar";
-import { useUserSearch } from "../../hooks/useUserSearch";
 import { Users, UserPlus } from "lucide-react";
-import { styles } from "../../constants/style.constant";
-import { formatNumber } from "../../utils/formatUtils";
 
-// eslint-disable-next-line no-unused-vars
+import { List } from "../../components/ui/List";
+import SearchBar from "../../components/SearchBar";
+import { formatNumber } from "../../utils/formatUtils";
+import { styles } from "../../constants/style.constant";
+import { useUserSearch } from "../../hooks/useUserSearch";
+import SendRequestButton from "../../components/SendRequestButton";
+
 import { motion, AnimatePresence } from "motion/react";
 
 const UsersList = memo(() => {
-  // Use the custom hook for searching users with debounce
+
   const {
     searchTerm,
     users,
-    isLoading,
     error,
     handleSearchChange,
     clearSearch
-  } = useUserSearch(500); // 500ms debounce delay
+  } = useUserSearch(500);  
 
   if (error) {
     return (
@@ -37,7 +36,7 @@ const UsersList = memo(() => {
   }
 
   // Render loading state
-  if (isLoading) {
+  if (users === undefined) {
     return (
       <div className="flex flex-col items-center justify-center p-8">
         <motion.div

@@ -26,7 +26,7 @@ export const userSchema = Joi.object({
     .pattern(/^[a-zA-Z_]{3,18}$/)
     .required()
     .messages({
-      'string.pattern.base': 'Username must be 3–18 characters and contain only letters and underscore.'
+      'string.pattern.base': 'Username must be 3-18 characters and contain only letters and underscore.'
     }),
   email,
   password,

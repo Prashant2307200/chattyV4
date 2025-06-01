@@ -1,3 +1,4 @@
+import { logger } from "../utils/logger.util.js";
 import { AppConfig } from "../config/app.config.js"; 
 import { UserService } from "../services/user.service.js";
 
@@ -70,6 +71,7 @@ export const AuthController = {
       user = await Token.verifyAuthTokens(request, response);
     } catch (error) {
       user = {};
+      logger.error(`Error verifying auth tokens: ${error.message}`, Status.Unauthorized);
     } finally {
       return response.status(Status.Success).json(user);
     }

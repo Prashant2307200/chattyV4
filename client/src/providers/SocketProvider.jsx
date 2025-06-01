@@ -2,23 +2,27 @@ import { useEffect } from "react";
 
 import { useApiQuery } from "../hooks/useApiQuery";
 import PageLoader from "../components/ui/PageLoader";
+
 import { useSocketStore } from "../store/useSocketStore";
 
-export const AuthProvider = ({ children }) => {
+export const SocketProvider = ({ children }) => {
+
+  const { data } = useApiQuery({
+    keys: ["auth"],
+    path: "/auth/check",
+    errorMessage: "Failed to fetch authentication status",
+  });
 
   const { subscribeToEvents, unsubscribeFromEvents } = useSocketStore();
-  const { data, isLoading: isCheckingAuth } = useApiQuery({ keys: ["authUser"], path: '/auth/check' });
 
   useEffect(() => {
-    
     if (!data?._id) return;
-
     subscribeToEvents(data._id);
     return () => unsubscribeFromEvents();
   }, [subscribeToEvents, unsubscribeFromEvents, data?._id]);
 
-  if (isCheckingAuth) 
-    return <PageLoader />
+  if (!data) 
+    return <PageLoader />;
 
   return children;
 }

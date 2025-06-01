@@ -3,10 +3,8 @@ import bcrypt from "bcryptjs";
 export const Hash = {
 
   hsh: async (model, field) => {
-    if (model.isModified(field)) {
-      const salt = await bcrypt.genSalt(10);
-      model[field] = await bcrypt.hash(model[field], salt);
-    }
+    const salt = await bcrypt.genSalt(10);
+    model[field] = await bcrypt.hash(model[field], salt);
   },
 
   validate: (current, hashed) => {

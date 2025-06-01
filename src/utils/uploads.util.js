@@ -14,11 +14,12 @@ cloudinary.config({
 
 const storage = new CloudinaryStorage({
   cloudinary,
-  params: async (_req, _file) => ({
+  params: async (_req, file) => ({
     folder: "chatty_profilePic",
-    format: "jpg",
+    format: "jpg",  // auto
     transformation: [{ width: 500, height: 500, crop: "limit" }],
+    public_id: file.originalname.split(".")[0],
   }),
 });
 
-export const uploads= multer({ storage });
+export const uploads = multer({ storage });

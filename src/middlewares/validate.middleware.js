@@ -1,4 +1,5 @@
 import { AppConfig } from "../config/app.config.js";
+import { ExpressError } from "../utils/expressError.util.js";
 
 export function validate (schema) {
   return function (request, _response, nextFunc) {

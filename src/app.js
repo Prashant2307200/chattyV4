@@ -39,25 +39,30 @@ app.use(express.urlencoded(urlencodedConfig));
 
 if (NODE_ENV === "production") {
 
-  app.set('trust proxy', 1);  
+  app.set('trust proxy', 1);
 
   app.use(compression(compressionConfig));
 
   app.use(helmet(helmetConfig));
 
-  app.use(rateLimit(rateLimitConfig)); 
+  app.use(rateLimit(rateLimitConfig));
 
-  app.use(express.static(path.resolve(__dirname, "client", "dist"), {
-    maxAge: '1y',
-    setHeaders: (res, filePath) => {
-      if (filePath.endsWith('index.html'))
-        res.setHeader('Cache-Control', 'no-store');
-    }
-  }));
+  // app.use(express.static(path.resolve(__dirname, "client", "dist"), {
+  //   maxAge: '1y',
+  //   setHeaders: (res, filePath) => {
+  //     if (filePath.endsWith('index.html'))
+  //       res.setHeader('Cache-Control', 'no-store');
+  //   }
+  // }));
 
 } else {
 
   app.use(cors(corsConfig));
+
+  app.use((request, _response, nextFunc) => {
+    logger.info(`request received: ${request.method} ${request.url}`);
+    return nextFunc();
+  })
 
   app.get('/', (_request, response) => {
     response.json({ message: "Hello World" });

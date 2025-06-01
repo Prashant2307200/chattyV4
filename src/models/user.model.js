@@ -1,7 +1,8 @@
-import { Schema, model } from "mongoose"; 
+import { Schema, model } from "mongoose";
 
 import { Hash } from "../utils/Hash.util.js";
 import { Token } from "../utils/Token.util.js";
+import Parallism from "../utils/parallism.util.js";
 
 const userSchema = new Schema(
   {
@@ -35,17 +36,19 @@ const userSchema = new Schema(
 );
 
 userSchema.pre("save", async function (nextFunc) {
-  await Hash.hsh(this, "password");
+  const hashPasswordWorker = new Parallism();
+  if (this.isModified("password"))
+    await hashPasswordWorker.run(Hash.hsh, { model: this, field: "password" });
   return nextFunc();
 });
 
-userSchema.methods = { 
+userSchema.methods = {
   comparePassword: async function (password) {
     return await Hash.validate(password, this.password);
-  }, 
+  },
   generateAuthTokens: async function (response) {
     return await Token.generateAuthTokens(response, this._id);
-  }, 
+  },
   clearAuthTokens: async function (response) {
     await Token.clearAuthTokens(response, this._id);
   }

@@ -14,21 +14,17 @@ import { useQueryClient } from "@tanstack/react-query";
 // eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 
-const Sidebar = memo(({ onChatSelect }) => {
+const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
 
   const { onlineUsers, subscribeToChat, unsubscribeFromChat, selectedChat, socket } = useSocketStore();
 
   const queryClient = useQueryClient();
-
-  const { data: chats, isLoading: isUsersLoading } = useApiQuery({ keys: ["chats"], path: '/chats' });
-
 
   const [showOnlineOnly, setShowOnlineOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [lastSeen, setLastSeen] = useState({});
   const [typingUsers, setTypingUsers] = useState({});
 
-  // Listen for typing events and last seen updates
   useEffect(() => {
     if (!socket) return;
 
@@ -148,7 +144,7 @@ const Sidebar = memo(({ onChatSelect }) => {
     });
   }, [processedChats, showOnlineOnly, onlineUsers, searchQuery]);
 
-  if (isUsersLoading) return <SidebarSkeleton />;
+  if (isLoading) return <SidebarSkeleton />;
   return (
     <div className="h-full overflow-hidden">
       <aside className="h-full w-full lg:w-72 flex flex-col transition-all duration-200 overflow-hidden flex-shrink-0">

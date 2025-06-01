@@ -1,25 +1,12 @@
 import { useForm } from 'react-hook-form'
-import { Mail, Lock, User } from 'lucide-react'; 
+import { Mail, Lock, User } from 'lucide-react';
 import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { zodResolver } from '@hookform/resolvers/zod'
 import { memo, useEffect, useCallback, useState, useMemo } from "react";
 
-import useToggle from '../../hooks/useToggle'; 
-import { useApiMutation } from '../../hooks/useApiMutation';
-import { useSocketStore } from '../../store/useSocketStore';
+import useToggle from '../../hooks/useToggle';
 
-const AuthFormFields = ({ isRegister }) => {
-
-  const { subscribeToEvents } = useSocketStore();
-
-  const { mutate: AuthMutation } = useApiMutation({
-    keys: ["authUser"],
-    path: isRegister ? "/auth/register" : "/auth/login",
-    message: isRegister ? "User successfully registered!" : "User login successfull!",
-    cb: data => {
-      subscribeToEvents(data._id);
-    }
-  });
+const AuthFormFields = ({ isRegister, mutation: AuthMutation }) => {
 
   const [authSchema, setAuthSchema] = useState(null);
   const [showPassword, toggleShowPassword] = useToggle(false);
@@ -30,8 +17,8 @@ const AuthFormFields = ({ isRegister }) => {
     })
   }, [isRegister]);
 
-  const onSubmit = useCallback(data => {
-    AuthMutation(data);
+  const onSubmit = useCallback((data) => {
+    AuthMutation.mutate(data);
   }, [isRegister]);
 
   const {
@@ -56,33 +43,33 @@ const AuthFormFields = ({ isRegister }) => {
     <>
       <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
 
-          {isRegister && (
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text font-medium">Username</span>
-              </label>
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  {MemoizedUser}
-                </div>
-                <input className={`input input-bordered w-full pl-10`} placeholder='johndoe' {...register('username')} autoComplete="off" autoCapitalize="words" disabled={!authSchema} />
-              </div>
-              {errors.username && <span className="text-error">{errors.username.message}</span>}
-            </div>
-          )}
-
+        {isRegister && (
           <div className="form-control">
             <label className="label">
-              <span className="label-text font-medium">Email</span>
+              <span className="label-text font-medium">Username</span>
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                {MemoizedMail}
+                {MemoizedUser}
               </div>
-              <input className={`input input-bordered w-full pl-10`} placeholder='you@example.com' type="email" {...register('email')} autoComplete="off" disabled={!authSchema} />
+              <input className={`input input-bordered w-full pl-10`} placeholder='johndoe' {...register('username')} autoComplete="off" autoCapitalize="words" disabled={!authSchema} />
             </div>
-            {errors.email && <span className="text-error">{errors.email.message}</span>}
+            {errors.username && <span className="text-error">{errors.username.message}</span>}
           </div>
+        )}
+
+        <div className="form-control">
+          <label className="label">
+            <span className="label-text font-medium">Email</span>
+          </label>
+          <div className="relative">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              {MemoizedMail}
+            </div>
+            <input className={`input input-bordered w-full pl-10`} placeholder='you@example.com' type="email" {...register('email')} autoComplete="off" disabled={!authSchema} />
+          </div>
+          {errors.email && <span className="text-error">{errors.email.message}</span>}
+        </div>
 
         <div className="form-control">
           <label className="label">

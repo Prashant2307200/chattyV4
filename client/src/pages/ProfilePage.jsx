@@ -3,18 +3,14 @@ import { useState, useMemo, useCallback } from "react";
 
 import { toFormData } from "axios";
 import { useApiQuery } from "../hooks/useApiQuery";
-import { useApiMutation } from "../hooks/useApiMutation";
 
-const ProfilePage = () => {
+const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
 
-  const { data: authUser } = useApiQuery({ keys: ["authUser"], path: '/auth/check' });
-
-  const { mutate: updateProfileMutation, isPending: isUpdatingProfile } = useApiMutation({
-    keys: ["authUser"],
-    method: "patch",
-    path: "/auth/profile-update",
-    message: "Profile updated!",
-  })
+  const { data: authUser } = useApiQuery({
+    keys: ["auth"],
+    path: "/auth/check",
+    errorMessage: "Failed to fetch authentication status",
+  });
 
   const [selectedImg, setSelectedImg] = useState(null);
 
@@ -28,12 +24,12 @@ const ProfilePage = () => {
 
   const MemoizedMail = useMemo(() => (
     <Mail className="w-4 h-4" />
-  ), []); 
+  ), []);
 
   const handleImageUpload = useCallback(async (e) => {
     setSelectedImg(URL.createObjectURL(e.target.files[0]));
-    updateProfileMutation(toFormData({ profilePic: e.target.files[0] }));
-  }, [setSelectedImg, updateProfileMutation])
+    UpdateProfileMutation.mutate(toFormData({ profilePic: e.target.files[0] }));
+  }, [setSelectedImg, UpdateProfileMutation])
 
 
   return (
@@ -55,19 +51,19 @@ const ProfilePage = () => {
                   src={selectedImg || authUser?.profilePic || "/avatar.png"}
                   alt="Profile"
                 />
-                <label className={`absolute bottom-0 right-0 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200 ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}`} htmlFor="avatar-upload">
+                <label className={`absolute bottom-0 right-0 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200 ${UpdateProfileMutation.isPending ? "animate-pulse pointer-events-none" : ""}`} htmlFor="avatar-upload">
                   {MemoizedCamera}
                   <input className="hidden"
                     type="file"
                     id="avatar-upload"
                     accept="image/*"
                     onChange={handleImageUpload}
-                    disabled={isUpdatingProfile}
+                    disabled={UpdateProfileMutation.isPending}
                   />
                 </label>
               </div>
               <p className="text-sm">
-                {isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
+                {UpdateProfileMutation.isPending ? "Uploading..." : "Click the camera icon to update your photo"}
               </p>
             </div>
 

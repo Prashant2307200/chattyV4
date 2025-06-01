@@ -2,22 +2,16 @@
 import { motion } from "motion/react";
 import { useEffect, useRef } from "react";
 
-import MessageInput from "./MessageInput";
 import { formatMessageTime } from "../../lib/util";
 import { useApiQuery } from "../../hooks/useApiQuery";
 import MessageSkeleton from "./skeletons/MessageSkeleton";
-import { useSocketStore } from "../../store/useSocketStore";
 
-const ChatContainer = ({ children }) => {
+const ChatContainer = ({ children, data: messages, isLoading }) => {
 
-  const { selectedChat } = useSocketStore();
-
-  const { data: authUser } = useApiQuery({ keys: ["authUser"], path: '/auth/check' });
-
-  const { data: messages, isLoading: isMessagesLoading } = useApiQuery({
-    keys: ["chats", `${selectedChat?._id}`],
-    path: `/chats/${selectedChat?._id}`,
-    enabled: !!selectedChat?._id
+  const { data: authUser } = useApiQuery({
+    keys: ["auth"],
+    path: "/auth/check",
+    errorMessage: "Failed to fetch authentication status",
   });
   
   const messageEndRef = useRef(null);
@@ -27,7 +21,7 @@ const ChatContainer = ({ children }) => {
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages?.length]);
   
-  if (isMessagesLoading) {
+  if (isLoading) {
     return (
       <div className="flex-1 flex flex-col h-full">
         <div className="mb-auto">
@@ -37,7 +31,7 @@ const ChatContainer = ({ children }) => {
           <MessageSkeleton />
         </div>
         <div className="mt-auto">
-          <MessageInput />
+          {children[1]}
         </div>
       </div>
     );
@@ -47,7 +41,7 @@ const ChatContainer = ({ children }) => {
     <div className="flex-1 flex flex-col h-full">
 
       <div className="mb-auto">  
-        {children}
+        {children[0]}
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -99,7 +93,7 @@ const ChatContainer = ({ children }) => {
       </div>
 
       <div className="mt-auto">
-        <MessageInput />
+        {children[1]}
       </div>
     </div>
   );

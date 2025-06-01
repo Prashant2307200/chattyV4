@@ -4,12 +4,25 @@ import { motion } from "motion/react";
 import { memo, useState } from "react";
 import { MessageSquarePlus, UserCheck, Clock, Send } from "lucide-react";
 
-import { useRequestStore } from "../store/useRequestStore";
+import { useApiQuery } from "../hooks/useApiQuery";
+import { useApiMutation } from "../hooks/useApiMutation";
 
 const SendRequestButton = memo(({ userId, username, disabled = false }) => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const { sendRequest, requests } = useRequestStore();  
+
+  const { data: requests } = useApiQuery({
+    keys: ["requests"],
+    path: "/requests",
+    errorMessage: "Failed to load requests"
+  });
+
+  const { mutate: sendRequest } = useApiMutation({
+    keys: ["requests"],
+    path: `/requests`,
+    message: "Request sent successfully",
+    errorMessage: "Failed to send request",
+  });
 
   const hasSentRequest = requests.sent.some((req) => req.receiver._id === userId && req.status === "pending" );
   const hasPendingRequest = requests.received.some((req) => req.sender._id === userId && req.status === "pending");
@@ -39,7 +52,7 @@ const SendRequestButton = memo(({ userId, username, disabled = false }) => {
 
     setIsLoading(true);
     try {
-      await sendRequest(userId);
+      sendRequest({ data: { receiver: userId }, path: "/requests"});
     } finally {
       setIsLoading(false);
     }

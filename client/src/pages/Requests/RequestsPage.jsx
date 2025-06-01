@@ -1,23 +1,20 @@
-import { useEffect, useMemo } from "react";
-import { useRequestStore } from "../../store/useRequestStore";
-import { styles } from "../../constants/style.constant";
+import { useMemo } from "react";
 import { MessageSquarePlus } from "lucide-react";
-import ReceivedRequests from "./ReceivedRequests";
-import SentRequests from "./SentRequests";
-import RequestsSkeleton from "./skeletons/RequestsSkeleton";
+
 import NoRequests from "./NoRequests";
+import SentRequests from "./SentRequests";
+import ReceivedRequests from "./ReceivedRequests";
+import { styles } from "../../constants/style.constant";
+import RequestsSkeleton from "./skeletons/RequestsSkeleton";
+import { useApiQuery } from "../../hooks/useApiQuery";
 
 const RequestsPage = () => {
-  const {
-    requests,
-    isLoading,
-    fetchRequests
-  } = useRequestStore();
 
-  // Fetch requests on component mount
-  useEffect(() => {
-    fetchRequests(); 
-  }, [fetchRequests]);
+  const { data: requests, isLoading } = useApiQuery({
+    keys: ["requests"],
+    path: "/requests",
+    errorMessage: "Failed to load requests"
+  });
 
   // Memoize components to prevent unnecessary re-renders
   const memoizedNoRequests = useMemo(() => <NoRequests />, []);
@@ -25,11 +22,10 @@ const RequestsPage = () => {
   const memoizedSentRequests = useMemo(() => <SentRequests />, []);
 
   // Check if there are any requests
-  const hasRequests = requests.received.length > 0 || requests.sent.length > 0;
+  const hasRequests = requests?.received.length > 0 || requests?.sent.length > 0;
 
-  if (isLoading) {
+  if (isLoading)
     return <RequestsSkeleton />;
-  }
 
   return (
     <main className="h-screen bg-base-200">
@@ -56,7 +52,7 @@ const RequestsPage = () => {
                   {/* Received Requests */}
                   <div className="space-y-4">
                     <h2 className="text-xl font-semibold">Received Requests</h2>
-                    {requests.received.length === 0 ? (
+                    {requests?.received?.length === 0 ? (
                       <p className={styles.subtitle}>No received requests</p>
                     ) : (
                       memoizedReceivedRequests
@@ -66,7 +62,7 @@ const RequestsPage = () => {
                   {/* Sent Requests */}
                   <div className="space-y-4">
                     <h2 className="text-xl font-semibold">Sent Requests</h2>
-                    {requests.sent.length === 0 ? (
+                    {requests?.sent?.length === 0 ? (
                       <p className={styles.subtitle}>No sent requests</p>
                     ) : (
                       memoizedSentRequests

@@ -105,7 +105,7 @@ export const AppConfig = {
     secure: NODE_ENV === "production",  // cookie only sent over https
     sameSite: "lax",  // csrf: Prevents cross-site request forgery attacks
     signed: true,  // tamper-proof cookie
-    // expires in 7 days
+    maxAge: 1000 * 60 * 60 * 24 * 7  // expires in 7 days
   },
 
   helmetConfig: {

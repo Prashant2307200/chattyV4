@@ -8,12 +8,14 @@ import { List } from '../components/ui/List';
 import PageLoader from '../components/ui/PageLoader';
 import { styles } from '../constants/style.constant';
 import MotionLines from '../components/ui/MotionLines';
-
+import { MutationProvider } from '../providers/MutationProvider';
+import { useSocketStore } from '../store/useSocketStore';
 
 const AuthPage = () => {
 
   const [isRegister, toggleIsRegister] = useToggle();
   const [isPending, startTransition] = useTransition();
+  const { subscribeToEvents } = useSocketStore();
 
   const [authForm, setAuthForm] = useState(null)
 
@@ -34,7 +36,7 @@ const AuthPage = () => {
   const { form, authImagePattern } = authForm;
 
   return (
-    <main className="h-[100svh] grid lg:grid-cols-2 overflow-hidden"> 
+    <main className="h-[100svh] grid lg:grid-cols-2 overflow-hidden">
 
       {/* auth form  */}
       <section className="relative flex flex-col justify-center items-center p-6 sm:p-12">
@@ -56,7 +58,15 @@ const AuthPage = () => {
           </div>
 
           {/* form */}
-          <AuthFormFields isRegister={isRegister} />
+          <MutationProvider
+            path={isRegister ? "/auth/register" : "/auth/login"}
+            keys={["authUser"]}
+            message={isRegister ? "User successfully registered!" : "User login successful!"}
+            errorMessage="Failed to authenticate user"
+            cb={data => subscribeToEvents(data._id)}
+          >
+            <AuthFormFields isRegister={isRegister} />
+          </MutationProvider>
 
           {/* footer */}
           <div className="text-center">

@@ -107,10 +107,7 @@ export const useSocketStore = create((set, get) => ({
       const { selectedChat } = get();
       if (newMessage.chat !== selectedChat._id) return;
 
-      queryClient.setQueryData(
-        ['chats', selectedChat._id],
-        (prev = []) => [...prev, newMessage]
-      );
+      queryClient.setQueryData(['chats', selectedChat._id], (prev = []) => [...prev, newMessage]);
     });
   },
 

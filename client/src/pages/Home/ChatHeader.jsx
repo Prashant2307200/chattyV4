@@ -75,10 +75,9 @@ const ChatHeader = ({ onMobileBack }) => {
             onClick={() => {
               // If onMobileBack is provided, use it (for mobile view)
               if (onMobileBack) {
-                onMobileBack();
                 unsubscribeFromChat()
+                onMobileBack();
               } else {
-                // Fallback to the default behavior
                 unsubscribeFromChat()
               }
             }}
