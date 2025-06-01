@@ -6,7 +6,7 @@ import { registerSW } from 'virtual:pwa-register';
 import './index.css';
 import App from './App.jsx';
 
-import { SocketProvider } from './providers/socketProvider.jsx';
+import { SocketProvider } from './providers/SocketProvider.jsx';
 import { TanStackQueryProvider } from './providers/TanstackQueryProvider.jsx';
 
 const updateSW = registerSW({
