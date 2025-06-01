@@ -39,9 +39,7 @@
     "openai": "^4.98.0",
     "pino": "^9.6.0",
     "redis": "^5.0.1",
-    "socket.io": "^4.8.1"
-  },
-  "devDependencies": {
+    "socket.io": "^4.8.1",
     "@faker-js/faker": "^9.8.0",
     "nodemon": "^3.1.10",
     "pkg": "^5.8.1",
@@ -51,5 +49,7 @@
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.2",
     "babel-loader": "^10.0.0"
+  },
+  "devDependencies": {
   }
 }
