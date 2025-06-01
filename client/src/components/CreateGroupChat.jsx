@@ -20,7 +20,6 @@ const CreateGroupChat = ({ onClose }) => {
 
   const { mutate: createGroupChat, isLoading: isCreating } = useApiMutation({
     keys: ["chats"], // Use the same key as the chat list query
-    path: "/chats/group",
     method: "POST",
     message: "Group chat created successfully!",
     onSuccess: () => {
@@ -60,7 +59,7 @@ const CreateGroupChat = ({ onClose }) => {
       participants: selectedUsers.map(user => user._id)
     };
 
-    createGroupChat(groupChatData);
+    createGroupChat({ data: groupChatData, path: "/chats/group" });
   };
 
   const toggleUserSelection = (user) => {
