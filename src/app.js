@@ -80,12 +80,13 @@ app.get("/health", (_request, response) => {
 
 app.use("/api/v1", indexRoute);
 
-if (NODE_ENV === "production") {
-  app.use((_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "index.html")))
-} else {
-  app.use(pathHandler);
-}
+// if (NODE_ENV === "production") {
+//   app.use((_request, response) => response.sendFile(path.resolve(__dirname, "client", "dist", "index.html")))
+// } else {
+//   app.use(pathHandler);
+// }
 
+app.use(pathHandler);
 app.use(errorHandler);
 
 process.on("uncaughtException", (error) => {
