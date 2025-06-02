@@ -1,17 +1,9 @@
-import { memo, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { MessageSquarePlus } from "lucide-react";
 // eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from "motion/react"; 
-import { useApiQuery } from "../hooks/useApiQuery";
 
-const ChatRequestsLink = memo(() => {
-
-  const { data: requests } = useApiQuery({
-    keys: ["requests"],
-    path: "/requests",
-    errorMessage: "Failed to load requests"
-  });
+const ChatRequestsLink = ({ data: requests }) => {
 
   const pendingCount = requests?.received.filter(req => req.status === "pending").length;
 
@@ -50,6 +42,6 @@ const ChatRequestsLink = memo(() => {
       </Link>
     </motion.div>
   );
-});
+};
 
 export default ChatRequestsLink;

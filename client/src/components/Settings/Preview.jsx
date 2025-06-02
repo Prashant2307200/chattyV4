@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { Send } from "lucide-react";
 
 const PREVIEW_MESSAGES = [
@@ -7,8 +6,6 @@ const PREVIEW_MESSAGES = [
 ];
 
 export default function Preview() {
-
-  const MemoizedSend = useMemo(() => <Send size={18} />, []);
 
   return (
     <>
@@ -34,14 +31,10 @@ export default function Preview() {
               {/* Chat Messages */}
               <div className="p-4 space-y-4 h-[200px] overflow-y-auto bg-base-100">
                 {PREVIEW_MESSAGES.map((message) => (
-                  <div className={`flex ${message.isSent ? "justify-end" : "justify-start"}`}
-                    key={message.id}
-                  >
+                  <div className={`flex ${message.isSent ? "justify-end" : "justify-start"}`} key={message.id}>
                     <div className={`max-w-[80%] rounded-xl p-3 shadow-sm ${message.isSent ? "bg-primary text-primary-content" : "bg-base-200"}`}>
                       <p className="text-sm">{message.content}</p>
-                      <p className={`text-[10px] mt-1.5 ${message.isSent ? "text-primary-content/70" : "text-base-content/70"}`}>
-                        12:00 PM
-                      </p>
+                      <p className={`text-[10px] mt-1.5 ${message.isSent ? "text-primary-content/70" : "text-base-content/70"}`}>12:00 PM</p>
                     </div>
                   </div>
                 ))}
@@ -57,7 +50,7 @@ export default function Preview() {
                     readOnly
                   />
                   <button className="btn btn-primary h-10 min-h-0">
-                    {MemoizedSend}
+                    <Send size={18} />
                   </button>
                 </div>
               </div>

@@ -3,12 +3,22 @@ import react from '@vitejs/plugin-react';
 import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
+const ReactCompilerConfig = { /* ... */ };
+
 export default defineConfig({
 
   base: '/',
 
   plugins: [
-    react(),
+
+    react({
+      babel: {
+        plugins: [
+          ["babel-plugin-react-compiler", ReactCompilerConfig],
+        ],
+      },
+    }),
+
     tailwindcss(),
 
     VitePWA({

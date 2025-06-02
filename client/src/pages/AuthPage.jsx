@@ -1,45 +1,26 @@
-import { useEffect, useState, useTransition, useCallback } from 'react';
-
-import Logo from '../components/ui/AppLogo';
 import useToggle from '../hooks/useToggle';
+import Logo from '../components/ui/AppLogo';
 import AuthFormFields from '../components/Auth/AuthFormFields';
 
 import { List } from '../components/ui/List';
-import PageLoader from '../components/ui/PageLoader';
 import { styles } from '../constants/style.constant';
+import { authForm } from "../constants/auth.constant"
 import MotionLines from '../components/ui/MotionLines';
-import { MutationProvider } from '../providers/MutationProvider';
 import { useSocketStore } from '../store/useSocketStore';
+import { MutationProvider } from '../providers/MutationProvider';
 
 const AuthPage = () => {
 
   const [isRegister, toggleIsRegister] = useToggle();
-  const [isPending, startTransition] = useTransition();
   const { subscribeToEvents } = useSocketStore();
 
-  const [authForm, setAuthForm] = useState(null)
-
-  const handleOnClick = useCallback(() => {
-    startTransition(() => {
-      toggleIsRegister()
-    })
-  }, [startTransition, toggleIsRegister])
-
-  useEffect(() => {
-    import("../constants/auth.constant").then(module => {
-      setAuthForm(module[isRegister ? "register" : "login"]);
-    });
-  }, [isRegister]);
-
-  if (!authForm) return <PageLoader />
-
-  const { form, authImagePattern } = authForm;
+  const { form, authImagePattern } = authForm[isRegister ? "register":"login"];
 
   return (
     <main className="h-[100svh] grid lg:grid-cols-2 overflow-hidden">
 
       {/* auth form  */}
-      <section className="relative flex flex-col justify-center items-center p-6 sm:p-12">
+      <section className="flex flex-col justify-center items-center p-6 sm:p-12">
 
         <MotionLines />
 
@@ -72,10 +53,8 @@ const AuthPage = () => {
           <div className="text-center">
             <p className={styles.subtitle}>
               {form?.suggestion}{" "}
-              <span className="link link-primary"
-                disabled={isPending}
-                onClick={handleOnClick}>
-                {isPending ? "Loading..." : form?.suggestionHighlight}
+              <span className="link link-primary" onClick={toggleIsRegister}>
+                {form?.suggestionHighlight}
               </span>
             </p>
           </div>

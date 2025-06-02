@@ -1,4 +1,4 @@
-export const register = {
+const register = {
   form: {
     title: "Create Account",
     subtitle: "Get started with your free account",
@@ -11,7 +11,7 @@ export const register = {
   }
 }
 
-export const login = {
+const login = {
   form: {
     title: "Welcome Back",
     subtitle: "Sign in to your account",
@@ -23,3 +23,5 @@ export const login = {
     subtitle: "Sign in to continue your conversations and catch up with your messages.",
   }
 }
+
+export const authForm = { register, login };

@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import Sidebar from "./Sidebar";
 import UsersList from "./UsersList";
@@ -13,24 +13,20 @@ import { QueryProvider } from "../../providers/QueryProvider";
 import { MutationProvider } from "../../providers/MutationProvider";
 
 const RenderChatView = ({ selectedChatId }) => {
-  
+
   if (!selectedChatId) return null;
 
   return (
     <QueryProvider keys={["chats", `${selectedChatId}`]} path={`/chats/${selectedChatId}`} enabled={false}>
       <ChatContainer>
         <ChatHeader />
-        <MutationProvider
-          path={`/chats/${selectedChatId}/messages`}
-          keys={["chats", `${selectedChatId}`, "messages"]}
-        >
+        <MutationProvider path={`/chats/${selectedChatId}/messages`} keys={["chats", `${selectedChatId}`, "messages"]}>
           <MessageInput />
         </MutationProvider>
       </ChatContainer>
     </QueryProvider>
   );
 };
-
 
 const HomePage = () => {
 
@@ -40,18 +36,9 @@ const HomePage = () => {
   const [showChatOnMobile, setShowChatOnMobile] = useState(false);
 
   useEffect(() => {
-    if (selectedChat)
-      setShowChatOnMobile(true);
-    else
-      setShowChatOnMobile(false);
-  }, [selectedChat]);
-
-  const handleMobileBack = () => {
-    setShowChatOnMobile(false);
-  };
-
-  const memoizedNoChatSelected = useMemo(() => <NoChatSelected />, []);
-  const memoizedUsersList = useMemo(() => <UsersList />, []);
+    if (selectedChat) setShowChatOnMobile(true);
+    else setShowChatOnMobile(false);
+  }, [selectedChat]); 
 
   return (
     <main className="h-[100svh] bg-base-200">
@@ -75,7 +62,7 @@ const HomePage = () => {
                   <QueryProvider keys={["chats"]} path="/chats" >
                     <Sidebar onChatSelect={() => setShowChatOnMobile(true)} />
                   </QueryProvider>
-                ) : memoizedUsersList
+                ) : <UsersList />
               )}
             </div>
           </div>
@@ -92,14 +79,12 @@ const HomePage = () => {
                     <Sidebar />
                   </QueryProvider>
                 ) : (
-                  memoizedUsersList
+                  <UsersList />
                 )}
               </div>
             </div>
             <div className="flex-1 overflow-hidden">
-              {!selectedChat || !selectedChat?._id ? (
-                memoizedNoChatSelected
-              ) : <RenderChatView selectedChatId={selectedChat._id} />}
+              {!selectedChat?._id ? <NoChatSelected /> : <RenderChatView selectedChatId={selectedChat._id} />}
             </div>
           </div>
         </div>

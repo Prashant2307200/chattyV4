@@ -5,9 +5,7 @@ export default function ThemePallet({ t }) {
   const { theme, setTheme } = useThemeStore();
 
   return (
-    <button className={`group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors ${theme === t ? "bg-base-300" : "hover:bg-base-300/50"}`}
-      onClick={() => setTheme(t)}
-    >
+    <button className={`group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors ${theme === t ? "bg-base-300" : "hover:bg-base-300/50"}`} onClick={() => setTheme(t)}>
       <div className="relative h-8 w-full rounded-md overflow-hidden" data-theme={t}>
         <div className="absolute inset-0 grid grid-cols-4 gap-px p-1">
           <div className="rounded bg-primary"></div>

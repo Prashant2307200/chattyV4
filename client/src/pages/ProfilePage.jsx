@@ -1,7 +1,7 @@
-import { Camera, Mail, User } from "lucide-react";
-import { useState, useMemo, useCallback } from "react";
-
+import { useState } from "react";
 import { toFormData } from "axios";
+import { Camera, Mail, User } from "lucide-react";
+
 import { useApiQuery } from "../hooks/useApiQuery";
 
 const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
@@ -12,25 +12,14 @@ const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
     errorMessage: "Failed to fetch authentication status",
   });
 
-  const [selectedImg, setSelectedImg] = useState(null);
+  console.log(authUser)
 
-  const MemoizedCamera = useMemo(() => (
-    <Camera className="w-5 h-5 text-base-200" />
-  ), []);
+  const [selectedImg, setSelectedImg] = useState(null); 
 
-  const MemoizedUser = useMemo(() => (
-    <User className="w-4 h-4" />
-  ), []);
-
-  const MemoizedMail = useMemo(() => (
-    <Mail className="w-4 h-4" />
-  ), []);
-
-  const handleImageUpload = useCallback(async (e) => {
+  const handleImageUpload = async e => {
     setSelectedImg(URL.createObjectURL(e.target.files[0]));
     UpdateProfileMutation.mutate(toFormData({ profilePic: e.target.files[0] }));
-  }, [setSelectedImg, UpdateProfileMutation])
-
+  }
 
   return (
     <div className="overflow-auto">
@@ -52,7 +41,7 @@ const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
                   alt="Profile"
                 />
                 <label className={`absolute bottom-0 right-0 bg-base-content hover:scale-105 p-2 rounded-full cursor-pointer transition-all duration-200 ${UpdateProfileMutation.isPending ? "animate-pulse pointer-events-none" : ""}`} htmlFor="avatar-upload">
-                  {MemoizedCamera}
+                  <Camera className="w-5 h-5 text-base-200" />
                   <input className="hidden"
                     type="file"
                     id="avatar-upload"
@@ -70,7 +59,7 @@ const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
             <div className="space-y-6">
               <div className="space-y-1.5">
                 <div className="text-sm flex items-center gap-2">
-                  {MemoizedUser}
+                  <User className="w-4 h-4" />
                   Full Name
                 </div>
                 <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.username}</p>
@@ -78,7 +67,7 @@ const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
 
               <div className="space-y-1.5">
                 <div className="text-sm flex items-center gap-2">
-                  {MemoizedMail}
+                  <Mail className="w-4 h-4" />
                   Email Address
                 </div>
                 <p className="px-4 py-2.5 bg-base-200 rounded-lg border">{authUser?.email}</p>
@@ -86,11 +75,11 @@ const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
             </div>
 
             <div className="mt-6 bg-base-300 rounded-xl p-6">
-              <h2 className="text-lg font-medium  mb-4">Account Information</h2>
+              <h2 className="text-lg font-medium mb-4">Account Information</h2>
               <div className="space-y-3 text-sm">
                 <div className="flex items-center justify-between py-2 border-b border-base-content/20">
                   <span>Member Since</span>
-                  <span>{authUser.createdAt?.split("T")[0]}</span>
+                  <span>{authUser?.createdAt?.split("T")[0] || "2024-02-06"}</span>
                 </div>
                 <div className="flex items-center justify-between py-2">
                   <span>Account Status</span>

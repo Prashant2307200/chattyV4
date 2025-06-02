@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import { memo, useMemo, useCallback } from "react";
 
 import ChatRequestsLink from "../ChatRequestsLink";
 import { navigation } from "../../constants/navigation.constant";
 
 import { useSocketStore } from "../../store/useSocketStore";
 import { MutationProvider } from "../../providers/MutationProvider";
+import { QueryProvider } from "../../providers/QueryProvider";
 
-const Navbar = memo(() => {
+const Navbar = () => {
+
   const Logo = navigation.logo;
   const Settings = navigation.links[0].icon;
 
@@ -37,18 +38,20 @@ const Navbar = memo(() => {
       </div>
     </header>
   );
-});
+};
 
 export default Navbar;
 
 const AuthNavigation = () => {
 
   const { hasAuthUser } = useSocketStore();
-  const User = useMemo(() => navigation.links[1].icon, []);
+  const User = navigation.links[1].icon
 
   return hasAuthUser && (
     <>
-      <ChatRequestsLink />
+      <QueryProvider path='/requests' keys={['requests']} errorMessage="Failed to fetch requests.">
+        <ChatRequestsLink />
+      </QueryProvider>
       <Link to={navigation.links[1].href} className={`btn btn-sm gap-2`}>
         <User className="size-5" />
         <span className="hidden sm:inline">{navigation.links[1].title}</span>
@@ -66,18 +69,14 @@ const AuthNavigation = () => {
   )
 }
 
-const Logout = memo(({ mutation: LogoutMutation }) => {
-
-  const handleOnClick = useCallback(() => {
-    LogoutMutation.mutate()
-  }, []);
+const Logout = ({ mutation: LogoutMutation }) => {
 
   const LogOut = navigation.links[2].icon;
 
   return (
-    <button className="btn btn-sm gap-2" onClick={handleOnClick} disabled={LogoutMutation.isPending}>
-      {useMemo(() => <LogOut className="size-4" />, [])}
+    <button className="btn btn-sm gap-2" onClick={LogoutMutation.mutate} disabled={LogoutMutation.isPending}>
+      <LogOut className="size-4" />
       <span className="hidden sm:inline">{navigation.links[2].title}</span>
     </button>
   )
-})
+}

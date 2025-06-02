@@ -1,43 +1,23 @@
 import { useForm } from 'react-hook-form'
-import { Mail, Lock, User } from 'lucide-react';
-import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { zodResolver } from '@hookform/resolvers/zod'
-import { memo, useEffect, useCallback, useState, useMemo } from "react";
+import { Mail, Lock, User, Eye, EyeOff, Loader2 } from 'lucide-react';
+
+import { authSchema } from '../../constants/schema.constant';
 
 import useToggle from '../../hooks/useToggle';
 
 const AuthFormFields = ({ isRegister, mutation: AuthMutation }) => {
 
-  const [authSchema, setAuthSchema] = useState(null);
   const [showPassword, toggleShowPassword] = useToggle(false);
 
-  useEffect(() => {
-    import('../../constants/schema.constant').then(module => {
-      setAuthSchema(module[isRegister ? "registerSchema" : "loginSchema"]);
-    })
-  }, [isRegister]);
-
-  const onSubmit = useCallback((data) => {
+  const onSubmit = data => {
     AuthMutation.mutate(data);
-  }, [isRegister]);
+  };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isSubmitting },
-  } = useForm({
-    resolver: zodResolver(authSchema),
+  const { register, handleSubmit, formState: { errors, isSubmitting }} = useForm({
+    resolver: zodResolver(authSchema[isRegister ? "registerSchema":"loginSchema"]),
     mode: 'onChange',
   });
-
-  const MemoizedMail = useMemo(() => <Mail className="z-10 size-5 text-base-content/40" />, []);
-  const MemoizedLock = useMemo(() => <Lock className="z-10 size-5 text-base-content/40" />, []);
-  const MemoizedUser = useMemo(() => <User className="z-10 size-5 text-base-content/40" />, []);
-  const MemoizedLoader = useMemo(() => <Loader2 className="h-5 w-5 animate-spin" />, []);
-  const MemoizedPasswordIcon = useMemo(
-    () => showPassword ? <EyeOff className="h-5 w-5 text-base-content/40 z-10" /> : <Eye className="h-5 w-5 text-base-content/40 z-10" />,
-    [showPassword]
-  );
 
   return (
     <>
@@ -50,9 +30,9 @@ const AuthFormFields = ({ isRegister, mutation: AuthMutation }) => {
             </label>
             <div className="relative">
               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                {MemoizedUser}
+                <User className="z-10 size-5 text-base-content/40" />
               </div>
-              <input className={`input input-bordered w-full pl-10`} placeholder='johndoe' {...register('username')} autoComplete="off" autoCapitalize="words" disabled={!authSchema} />
+              <input className={`input input-bordered w-full pl-10`} placeholder='johndoe' {...register('username')} autoComplete="off" autoCapitalize="words" />
             </div>
             {errors.username && <span className="text-error">{errors.username.message}</span>}
           </div>
@@ -64,9 +44,9 @@ const AuthFormFields = ({ isRegister, mutation: AuthMutation }) => {
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              {MemoizedMail}
+              <Mail className="z-10 size-5 text-base-content/40" />
             </div>
-            <input className={`input input-bordered w-full pl-10`} placeholder='you@example.com' type="email" {...register('email')} autoComplete="off" disabled={!authSchema} />
+            <input className={`input input-bordered w-full pl-10`} placeholder='you@example.com' type="email" {...register('email')} autoComplete="off" />
           </div>
           {errors.email && <span className="text-error">{errors.email.message}</span>}
         </div>
@@ -77,11 +57,11 @@ const AuthFormFields = ({ isRegister, mutation: AuthMutation }) => {
           </label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              {MemoizedLock}
+              <Lock className="z-10 size-5 text-base-content/40" />
             </div>
-            <input className={`input input-bordered w-full pl-10`} placeholder="••••••••" {...register('password')} type={showPassword ? "text" : "password"} autoComplete="off" disabled={!authSchema} />
+            <input className={`input input-bordered w-full pl-10`} placeholder="••••••••" {...register('password')} type={showPassword ? "text" : "password"} autoComplete="off" />
             <button className="absolute inset-y-0 right-0 pr-3 flex items-center" type="button" onClick={toggleShowPassword}>
-              {MemoizedPasswordIcon}
+              {showPassword ? <EyeOff className="h-5 w-5 text-base-content/40 z-10" /> : <Eye className="h-5 w-5 text-base-content/40 z-10" />}
             </button>
           </div>
           {errors.password && <span className="text-error">{errors.password.message}</span>}
@@ -90,7 +70,7 @@ const AuthFormFields = ({ isRegister, mutation: AuthMutation }) => {
         <button className="btn btn-primary w-full" type="submit" disabled={isSubmitting}>
           {isSubmitting ? (
             <>
-              {MemoizedLoader}
+              <Loader2 className="h-5 w-5 animate-spin" />
               Loading...
             </>
           ) : isRegister ? "Sign up" : "Sign in"}
@@ -100,4 +80,4 @@ const AuthFormFields = ({ isRegister, mutation: AuthMutation }) => {
   )
 }
 
-export default memo(AuthFormFields);
+export default AuthFormFields;

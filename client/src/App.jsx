@@ -27,7 +27,7 @@ const App = () => {
   const location = useLocation();
 
   return (
-    <div className="flex flex-col h-[100dvh]" data-theme={theme}>
+    <div className="flex flex-col h-[100svh]" data-theme={theme}>
       <Navbar />
       <div className="flex-1 overflow-hidden">
         <AnimatePresence mode="wait">
@@ -84,7 +84,7 @@ const App = () => {
                 path="/requests"
                 element={hasAuthUser ? (
                   <PageWrapper>
-                    <RequestsPage />
+                    <RequestsPage />z
                   </PageWrapper>
                 ) : (
                   <Navigate to="/auth" />
