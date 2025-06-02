@@ -34,7 +34,7 @@ const SentRequests = memo(() => {
           return (
             <div className="card bg-base-200 shadow-sm hover:shadow-md transition-all">
               <div className="card-body p-4">
-                <div className="flex flex-wrap items-center gap-4">
+                <div className="flex items-center gap-4">
                   <div className="avatar">
                     <div className="w-12 h-12 rounded-full border">
                       <img

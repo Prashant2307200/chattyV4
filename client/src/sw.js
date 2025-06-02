@@ -31,7 +31,7 @@ registerRoute(({ url, request }) => url.pathname.startsWith('/api') && ['POST', 
 
 registerRoute(
   ({ url, request }) => url.pathname.startsWith('/api') && request.method === 'GET',
-  new NetworkFirst({           // <-- now valid
+  new NetworkFirst({           
     cacheName: 'api-cache',
     networkTimeoutSeconds: 3,
     plugins: [
@@ -41,7 +41,7 @@ registerRoute(
       }),
       {
         cacheableResponse: {
-          statuses: [200],
+          statuses: [200, 201],
         },
       },
     ],

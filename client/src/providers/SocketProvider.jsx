@@ -7,7 +7,7 @@ import { useSocketStore } from "../store/useSocketStore";
 
 export const SocketProvider = ({ children }) => {
 
-  const { data } = useApiQuery({
+  const { data, isLoading } = useApiQuery({
     keys: ["auth"],
     path: "/auth/check",
     errorMessage: "Failed to fetch authentication status",
@@ -21,7 +21,7 @@ export const SocketProvider = ({ children }) => {
     return () => unsubscribeFromEvents();
   }, [subscribeToEvents, unsubscribeFromEvents, data?._id]);
 
-  if (!data) 
+  if (isLoading) 
     return <PageLoader />;
 
   return children;
