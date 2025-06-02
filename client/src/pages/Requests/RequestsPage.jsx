@@ -1,4 +1,3 @@
-import { useMemo } from "react";
 import { MessageSquarePlus } from "lucide-react";
 
 import NoRequests from "./NoRequests";
@@ -16,12 +15,6 @@ const RequestsPage = () => {
     errorMessage: "Failed to load requests"
   });
 
-  // Memoize components to prevent unnecessary re-renders
-  const memoizedNoRequests = useMemo(() => <NoRequests />, []);
-  const memoizedReceivedRequests = useMemo(() => <ReceivedRequests />, []);
-  const memoizedSentRequests = useMemo(() => <SentRequests />, []);
-
-  // Check if there are any requests
   const hasRequests = requests?.received.length > 0 || requests?.sent.length > 0;
 
   if (isLoading)
@@ -46,7 +39,7 @@ const RequestsPage = () => {
             {/* Content */}
             <div className="flex-1 overflow-auto p-6">
               {!hasRequests ? (
-                memoizedNoRequests
+                <NoRequests />
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Received Requests */}
@@ -55,7 +48,7 @@ const RequestsPage = () => {
                     {requests?.received?.length === 0 ? (
                       <p className={styles.subtitle}>No received requests</p>
                     ) : (
-                      memoizedReceivedRequests
+                      <ReceivedRequests />
                     )}
                   </div>
 
@@ -65,7 +58,7 @@ const RequestsPage = () => {
                     {requests?.sent?.length === 0 ? (
                       <p className={styles.subtitle}>No sent requests</p>
                     ) : (
-                      memoizedSentRequests
+                      <SentRequests />
                     )}
                   </div>
                 </div>

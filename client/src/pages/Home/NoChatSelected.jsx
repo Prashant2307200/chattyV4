@@ -1,8 +1,6 @@
-import { memo } from "react";
 import Logo from "../../components/ui/AppLogo"
 
-const NoChatSelected = memo(() => {
-  return (
+const NoChatSelected = () => (
     <div className="w-full h-full flex flex-col items-center justify-center p-4 sm:p-8 md:p-16 bg-base-100/50">
       <div className="max-w-md text-center space-y-6 -mt-16">
         {/* Icon Display */}
@@ -21,7 +19,6 @@ const NoChatSelected = memo(() => {
         </p>
       </div>
     </div>
-  );
-});
+  )
 
 export default NoChatSelected;

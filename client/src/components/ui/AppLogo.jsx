@@ -1,7 +1,7 @@
-import React, { memo, useMemo } from "react";
 import { MessageSquare } from "lucide-react";
 
-function Logo(props) {
-  return useMemo(() => <MessageSquare {...props} />, [props]);
+function Logo(props) { 
+  return <MessageSquare {...props} />
 }
-export default memo(Logo); 
+
+export default Logo; 

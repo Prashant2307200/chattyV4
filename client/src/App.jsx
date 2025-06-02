@@ -36,7 +36,7 @@ const App = () => {
 
               <Route
                 path="/"
-                element={hasAuthUser ? (
+                element={!!hasAuthUser ? (
                   <PageWrapper>
                     <HomePage />
                   </PageWrapper>
@@ -64,7 +64,7 @@ const App = () => {
 
               <Route
                 path="/profile"
-                element={hasAuthUser ? (
+                element={!!hasAuthUser ? (
                   <PageWrapper>
                     <MutationProvider
                       keys={["authUser"]}
@@ -82,7 +82,7 @@ const App = () => {
 
               <Route
                 path="/requests"
-                element={hasAuthUser ? (
+                element={!!hasAuthUser ? (
                   <PageWrapper>
                     <RequestsPage />z
                   </PageWrapper>
@@ -92,7 +92,7 @@ const App = () => {
 
               <Route
                 path="/ai-chat"
-                element={hasAuthUser ? (
+                element={!!hasAuthUser ? (
                   <PageWrapper>
                     <AiChatPage />
                   </PageWrapper>

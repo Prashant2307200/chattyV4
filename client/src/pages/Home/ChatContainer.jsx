@@ -13,14 +13,14 @@ const ChatContainer = ({ children, data: messages, isLoading }) => {
     path: "/auth/check",
     errorMessage: "Failed to fetch authentication status",
   });
-  
+
   const messageEndRef = useRef(null);
-  
+
   useEffect(() => {
     if (messageEndRef.current && messages?.length)
       messageEndRef.current.scrollIntoView({ behavior: "smooth" });
   }, [messages?.length]);
-  
+
   if (isLoading) {
     return (
       <div className="flex-1 flex flex-col h-full">
@@ -38,11 +38,9 @@ const ChatContainer = ({ children, data: messages, isLoading }) => {
   }
 
   return (
-    <div className="flex-1 flex flex-col h-full">
+    <div className="flex flex-col h-full">
 
-      <div className="mb-auto">  
-        {children[0]}
-      </div>
+      {children[0]}
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages?.map((message, index) => {
@@ -89,12 +87,10 @@ const ChatContainer = ({ children, data: messages, isLoading }) => {
               </motion.div>
             </section>
           );
-        })} 
+        })}
       </div>
 
-      <div className="mt-auto">
-        {children[1]}
-      </div>
+      {children[1]}
     </div>
   );
 };

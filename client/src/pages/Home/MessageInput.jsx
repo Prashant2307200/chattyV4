@@ -119,7 +119,7 @@ const MessageInput = ({ mutation: SendMessageMutation }) => {
 
       <form onSubmit={handleSendMessage} className="flex items-center gap-2">
         <div className="flex-1 flex gap-2">
-          <input className="w-full input input-bordered rounded-lg input-sm sm:input-md"
+          <input className="w-full input input-bordered rounded-lg"
             type="text"
             placeholder="Type a message..."
             value={text}
@@ -132,7 +132,7 @@ const MessageInput = ({ mutation: SendMessageMutation }) => {
             onChange={handleImageChange}
           />
 
-          <button className={`hidden sm:flex btn btn-circle ${imagePreview ? "text-emerald-500" : "text-base-content/50"}`}
+          <button className={`flex btn btn-circle ${imagePreview ? "text-emerald-500" : "text-base-content/50"}`}
             type="button"
             onClick={() => fileInputRef.current?.click()}
           >

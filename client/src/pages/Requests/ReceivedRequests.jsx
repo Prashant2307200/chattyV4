@@ -1,14 +1,14 @@
-import { memo, use } from "react";
 import { Check, X } from "lucide-react";
 
 import { List } from "../../components/ui/List";
 import { formatDistanceToNow } from "../../lib/util";
 import { useApiMutation } from "../../hooks/useApiMutation";
 import { useApiQuery } from "../../hooks/useApiQuery";
+import RequestsSkeleton from "./skeletons/RequestsSkeleton";
 
-const ReceivedRequests = memo(() => {
+const ReceivedRequests = () => {
 
-  const { data: requests } = useApiQuery({
+  const { data: requests, isLoading } = useApiQuery({
     keys: ["requests"],
     path: "/requests",
     errorMessage: "Failed to fetch requests data"
@@ -28,6 +28,7 @@ const ReceivedRequests = memo(() => {
     errorMessage: "Failed to decline request",
   })
 
+  if (isLoading) <RequestsSkeleton />
 
   return (
     <div className="space-y-4">
@@ -98,6 +99,6 @@ const ReceivedRequests = memo(() => {
       />
     </div>
   );
-});
+};
 
 export default ReceivedRequests;

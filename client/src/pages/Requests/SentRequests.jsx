@@ -5,10 +5,11 @@ import { List } from "../../components/ui/List";
 import { formatDistanceToNow } from "../../lib/util";
 import { useApiMutation } from "../../hooks/useApiMutation";
 import { useApiQuery } from "../../hooks/useApiQuery";
+import RequestsSkeleton from "./skeletons/RequestsSkeleton";
 
 const SentRequests = memo(() => {
 
-  const { data: requests } = useApiQuery({
+  const { data: requests, isLoading } = useApiQuery({
     keys: ["requests"],
     path: "/requests",
     errorMessage: "Failed to fetch requests data"
@@ -24,6 +25,8 @@ const SentRequests = memo(() => {
   const handleCancelRequest = id => {
     cancelRequest({ path: `/requests/${id}` });
   }
+
+  if (isLoading) <RequestsSkeleton />
 
   return (
     <div className="space-y-4">
