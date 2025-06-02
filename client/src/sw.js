@@ -1,37 +1,19 @@
 import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { NetworkOnly, NetworkFirst } from 'workbox-strategies';  
+import { NetworkOnly, NetworkFirst } from 'workbox-strategies';
 import { BackgroundSyncPlugin } from 'workbox-background-sync';
+import { ExpirationPlugin } from 'workbox-expiration';  
+import { CacheableResponsePlugin } from 'workbox-cacheable-response'; 
 
 precacheAndRoute(self.__WB_MANIFEST || []);
 
 const bgSyncPlugin = new BackgroundSyncPlugin('api-queue', {
-  maxRetentionTime: 24 * 60,  
+  maxRetentionTime: 24 * 60,
 });
-
-// registerRoute(
-//   ({ request }) => request.mode === 'navigate',
-//   new NetworkFirst({
-//     cacheName: 'pages-cache',
-//     plugins: [
-//       {
-//         cacheWillUpdate: async ({ response }) => {
-//           return response?.status === 200 ? response : null;
-//         }
-//       }
-//     ]
-//   })
-// );
-
-registerRoute(({ url, request }) => url.pathname.startsWith('/api') && ['POST', 'PUT', 'DELETE'].includes(request.method),
-  new NetworkOnly({
-    plugins: [bgSyncPlugin],
-  })
-);
 
 registerRoute(
   ({ url, request }) => url.pathname.startsWith('/api') && request.method === 'GET',
-  new NetworkFirst({           
+  new NetworkFirst({
     cacheName: 'api-cache',
     networkTimeoutSeconds: 3,
     plugins: [
@@ -39,12 +21,17 @@ registerRoute(
         maxEntries: 50,
         maxAgeSeconds: 60 * 60 * 24,
       }),
-      {
-        cacheableResponse: {
-          statuses: [200, 201],
-        },
-      },
+      new CacheableResponsePlugin({
+        statuses: [200],
+      }),
     ],
+  })
+);
+
+registerRoute(
+  ({ url, request }) => url.pathname.startsWith('/api') && ['POST', 'PUT', 'DELETE'].includes(request.method),
+  new NetworkOnly({
+    plugins: [bgSyncPlugin],
   })
 );
 

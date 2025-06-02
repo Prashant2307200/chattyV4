@@ -1,8 +1,6 @@
 import { create } from "zustand";
 import { io } from "socket.io-client";
 
-import { useRequestStore } from "./useRequestStore";
-
 const BASE_URL = import.meta.env.MODE !== "production" ? "http://localhost:8080" : "/";
 
 export const useSocketStore = create((set, get) => ({
@@ -137,13 +135,6 @@ export const useSocketStore = create((set, get) => ({
 
     newSocket.on("connect", () => {
 
-      const {
-        handleNewRequest,
-        handleRequestAccepted,
-        handleRequestDeclined,
-        handleRequestCancelled
-      } = useRequestStore.getState();
-
       newSocket.off("getOnlineUsers");
       newSocket.on("getOnlineUsers", userIds => {
         set({ onlineUsers: userIds });
@@ -158,18 +149,6 @@ export const useSocketStore = create((set, get) => ({
           }
         }));
       });
-
-      newSocket.off("newRequest");
-      newSocket.on("newRequest", handleNewRequest);
-
-      newSocket.off("requestAccepted");
-      newSocket.on("requestAccepted", handleRequestAccepted);
-
-      newSocket.off("requestDeclined");
-      newSocket.on("requestDeclined", handleRequestDeclined);
-
-      newSocket.off("requestCancelled");
-      newSocket.on("requestCancelled", handleRequestCancelled);
     });
 
     set({ socket: newSocket });

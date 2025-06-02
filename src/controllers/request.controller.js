@@ -21,7 +21,7 @@ export const RequestController = {
     if (error)
       return nextFunc(new ExpressError('Failed to fetch requests', 500));
 
-    return response.status(Status.Created).json({
+    return response.json({
       sent: sentRequests,
       received: receivedRequests
     });
