@@ -23,7 +23,8 @@ export default defineConfig({
 
     VitePWA({
       registerType: 'autoUpdate',
-      strategies: 'generateSW',
+      strategies: 'injectManifest',
+      // strategies: 'generateSW',
       srcDir: 'src',
       filename: 'sw.js',
       includeAssets: ['apple-touch-icon.png', 'image.png', 'avatar.png', 'favicon.ico', 'robots.txt', 'screenshot1.png', 'screenshot2.png'],
@@ -63,32 +64,32 @@ export default defineConfig({
           }
         ]
       },
-      workbox: {
-        inlineWorkboxRuntime: true,
-        runtimeCaching: [
-          {
-            urlPattern: /\/api\/.*$/,
-            handler: 'NetworkFirst',
-            options: {
-              cacheName: 'api-cache',
-              expiration: {
-                maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24, // 1 day
-              },
-              cacheableResponse: {
-                statuses: [200],
-              },
-            }
-          },
-          {
-            urlPattern: /^https:\/\/fonts\.googleapis\.com/,
-            handler: 'CacheFirst',
-            options: {
-              cacheName: 'google-fonts-stylesheets'
-            }
-          }
-        ],
-      },
+      // workbox: {
+      //   inlineWorkboxRuntime: true,
+      //   runtimeCaching: [
+      //     {
+      //       urlPattern: /\/api\/.*$/,
+      //       handler: 'NetworkFirst',
+      //       options: {
+      //         cacheName: 'api-cache',
+      //         expiration: {
+      //           maxEntries: 50,
+      //           maxAgeSeconds: 60 * 60 * 24, // 1 day
+      //         },
+      //         cacheableResponse: {
+      //           statuses: [200],
+      //         },
+      //       }
+      //     },
+      //     {
+      //       urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+      //       handler: 'CacheFirst',
+      //       options: {
+      //         cacheName: 'google-fonts-stylesheets'
+      //       }
+      //     }
+      //   ],
+      // },
       injectManifest: {
         swSrc: 'src/sw.js',
       },
