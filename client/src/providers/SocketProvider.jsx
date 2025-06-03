@@ -16,10 +16,9 @@ export const SocketProvider = ({ children }) => {
   const { subscribeToEvents, unsubscribeFromEvents } = useSocketStore();
 
   useEffect(() => {
-    if (!data?._id) return;
     subscribeToEvents(data._id);
     return () => unsubscribeFromEvents();
-  }, [subscribeToEvents, unsubscribeFromEvents, data?._id]);
+  }, [subscribeToEvents, unsubscribeFromEvents, data]);
 
   if (isLoading) 
     return <PageLoader />;

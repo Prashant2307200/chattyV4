@@ -43,7 +43,7 @@ if (NODE_ENV === "production") {
 
   app.use(compression(compressionConfig));
 
-  app.use(helmet(helmetConfig));
+  // app.use(helmet(helmetConfig));
 
   app.use(rateLimit(rateLimitConfig));
 
