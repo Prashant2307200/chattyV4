@@ -12,6 +12,20 @@ const bgSyncPlugin = new BackgroundSyncPlugin('api-queue', {
 });
 
 registerRoute(
+  ({ url }) => url.origin === 'https://randomuser.me',
+  new CacheFirst({
+    cacheName: 'cdn-images',
+    plugins: [
+      new ExpirationPlugin({
+        maxEntries: 50,
+        maxAgeSeconds: 7 * 24 * 60 * 60, // 1 week
+      }),
+    ],
+  })
+);
+
+
+registerRoute(
   ({ url, request }) => url.pathname.startsWith('/api') && request.method === 'GET',
   new NetworkFirst({
     cacheName: 'api-cache',
