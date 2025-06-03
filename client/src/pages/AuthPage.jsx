@@ -14,15 +14,14 @@ const AuthPage = () => {
   const [isRegister, toggleIsRegister] = useToggle();
   const { subscribeToEvents } = useSocketStore();
 
-  const { form, authImagePattern } = authForm[isRegister ? "register":"login"];
+  const { form, authImagePattern } = authForm[isRegister ? "register" : "login"];
 
   return (
-    <main className="h-[100svh] grid lg:grid-cols-2 overflow-hidden">
+    <main className="h-[100svh] grid grid-cols-1 lg:grid-cols-2">
 
       {/* auth form  */}
       <section className="flex flex-col justify-center items-center p-6 sm:p-12">
 
-        <MotionLines />
 
         {/* container */}
         <div className="w-full max-w-md space-y-8">

@@ -162,7 +162,9 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
                 <span className="text-xs text-zinc-400">{formatNumber(filteredChats?.length || 0, true)}</span>
               </div>
             </div>
-            <CreateGroupChatButton />
+            <div className="m">
+              <CreateGroupChatButton />
+            </div>
           </div>
           {/* Online filter toggle */}
           <div className="mt-3 flex items-center justify-between">
@@ -226,7 +228,7 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
         </div>
 
         <div className="flex-1 overflow-y-auto w-full py-3">
-          
+
           <div className="px-3 mb-3">
             <SidebarAiChat />
           </div>
@@ -283,7 +285,8 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
                     whileTap={{ scale: 0.98 }}
                     transition={{ delay: .05 * index }}
                     key={chat._id}
-                    onClick={() => { ;
+                    onClick={() => {
+                      ;
                       unsubscribeFromChat();
                       subscribeToChat(chat, queryClient);
                       if (onChatSelect) onChatSelect();
@@ -316,7 +319,7 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
                         />
                         {onlineUsers.includes(user._id) && (
                           <span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-base-100" />
-                        )} 
+                        )}
                       </div>
                     )}
 
@@ -340,7 +343,7 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
                               <div className="size-2 bg-green-500 rounded-full"></div>
                             )}
                           </div>
-                          
+
                           <div className="text-xs text-zinc-400 h-4 flex items-center">
                             {typingUsers && typingUsers[user._id]?.isTyping && typingUsers[user._id]?.chatId === chat._id ? (
                               <span className="text-primary animate-pulse">typing...</span>
@@ -353,7 +356,7 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
                         </>
                       )}
                     </div>
- 
+
                     <div className="hidden lg:block text-xs text-zinc-500 ml-auto">
                       {new Date(chat.updatedAt || chat.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </div>
