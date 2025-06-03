@@ -1,9 +1,16 @@
 import { precacheAndRoute } from 'workbox-precaching';
 import { registerRoute } from 'workbox-routing';
-import { NetworkOnly, NetworkFirst } from 'workbox-strategies';
+import { NetworkOnly, NetworkFirst, CacheFirst } from 'workbox-strategies';
 import { BackgroundSyncPlugin } from 'workbox-background-sync';
 import { ExpirationPlugin } from 'workbox-expiration';  
 import { CacheableResponsePlugin } from 'workbox-cacheable-response'; 
+
+const cdnImageOrigins = [
+  'https://randomuser.me',
+  'https://i.pinimg.com',
+  'https://th.bing.com',
+  'https://images.pexels.com'
+];
 
 precacheAndRoute(self.__WB_MANIFEST || []);
 
@@ -12,18 +19,20 @@ const bgSyncPlugin = new BackgroundSyncPlugin('api-queue', {
 });
 
 registerRoute(
-  ({ url }) => url.origin === 'https://randomuser.me',
+  ({ url }) => cdnImageOrigins.includes(url.origin),
   new CacheFirst({
     cacheName: 'cdn-images',
     plugins: [
       new ExpirationPlugin({
-        maxEntries: 50,
-        maxAgeSeconds: 7 * 24 * 60 * 60, // 1 week
+        maxEntries: 100,
+        maxAgeSeconds: 30 * 24 * 60 * 60, // 30 days
+      }),
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
       }),
     ],
   })
 );
-
 
 registerRoute(
   ({ url, request }) => url.pathname.startsWith('/api') && request.method === 'GET',
