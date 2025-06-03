@@ -112,8 +112,7 @@ export default defineConfig({
           "axios": ["axios"],
           "zustand": ["zustand"],
           "lucide-react": ["lucide-react"],
-          "motion": ["motion/react"],
-          "toast": ["react-hot-toast"]
+          "motion": ["motion/react"]
         }
       }
     }
