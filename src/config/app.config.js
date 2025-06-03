@@ -121,6 +121,7 @@ export const AppConfig = {
           "'self'",
           "ws:",
           "wss:",
+          "https:",
           "http://localhost:5173",
           "https://th.bing.com",
           "https://images.pexels.com",
