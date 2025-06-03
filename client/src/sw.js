@@ -5,12 +5,29 @@ import { BackgroundSyncPlugin } from 'workbox-background-sync';
 import { ExpirationPlugin } from 'workbox-expiration';  
 import { CacheableResponsePlugin } from 'workbox-cacheable-response'; 
 
-const cdnImageOrigins = [
-  'https://randomuser.me',
-  'https://i.pinimg.com',
-  'https://th.bing.com',
-  'https://images.pexels.com'
-];
+// const cdnImageOrigins = [
+//   'https://randomuser.me',
+//   'https://i.pinimg.com',
+//   'https://th.bing.com',
+//   'https://images.pexels.com'
+// ];
+
+// registerRoute(
+//   ({ url }) => cdnImageOrigins.includes(url.origin),
+//   new NetworkFirst({
+//     cacheName: 'cdn-images',
+//     networkTimeoutSeconds: 3,
+//     plugins: [
+//       new ExpirationPlugin({
+//         maxEntries: 50,
+//         maxAgeSeconds: 60 * 60 * 24,
+//       }),
+//       new CacheableResponsePlugin({
+//         statuses: [200],
+//       }),
+//     ],
+//   })
+// );
 
 precacheAndRoute(self.__WB_MANIFEST || []);
 
@@ -18,22 +35,6 @@ const bgSyncPlugin = new BackgroundSyncPlugin('api-queue', {
   maxRetentionTime: 24 * 60,
 });
 
-registerRoute(
-  ({ url }) => cdnImageOrigins.includes(url.origin),
-  new NetworkFirst({
-    cacheName: 'cdn-images',
-    networkTimeoutSeconds: 3,
-    plugins: [
-      new ExpirationPlugin({
-        maxEntries: 50,
-        maxAgeSeconds: 60 * 60 * 24,
-      }),
-      new CacheableResponsePlugin({
-        statuses: [200],
-      }),
-    ],
-  })
-);
 
 registerRoute(
   ({ url, request }) => url.pathname.startsWith('/api') && request.method === 'GET',

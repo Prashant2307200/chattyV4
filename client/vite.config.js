@@ -64,32 +64,32 @@ export default defineConfig({
           }
         ]
       },
-      // workbox: {
-      //   inlineWorkboxRuntime: true,
-      //   runtimeCaching: [
-      //     {
-      //       urlPattern: /\/api\/.*$/,
-      //       handler: 'NetworkFirst',
-      //       options: {
-      //         cacheName: 'api-cache',
-      //         expiration: {
-      //           maxEntries: 50,
-      //           maxAgeSeconds: 60 * 60 * 24, // 1 day
-      //         },
-      //         cacheableResponse: {
-      //           statuses: [200],
-      //         },
-      //       }
-      //     },
-      //     {
-      //       urlPattern: /^https:\/\/fonts\.googleapis\.com/,
-      //       handler: 'CacheFirst',
-      //       options: {
-      //         cacheName: 'google-fonts-stylesheets'
-      //       }
-      //     }
-      //   ],
-      // },
+      workbox: {
+        inlineWorkboxRuntime: true,
+        runtimeCaching: [
+          {
+            urlPattern: /\/api\/.*$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 60 * 60 * 24, // 1 day
+              },
+              cacheableResponse: {
+                statuses: [200],
+              },
+            }
+          },
+          {
+            urlPattern: /^https:\/\/fonts\.googleapis\.com/,
+            handler: 'CacheFirst',
+            options: {
+              cacheName: 'google-fonts-stylesheets'
+            }
+          }
+        ],
+      },
       injectManifest: {
         swSrc: 'src/sw.js',
       },
@@ -112,7 +112,8 @@ export default defineConfig({
           "axios": ["axios"],
           "zustand": ["zustand"],
           "lucide-react": ["lucide-react"],
-          "motion": ["motion/react"]
+          "motion": ["motion/react"],
+          "toast": ["react-hot-toast"]
         }
       }
     }
