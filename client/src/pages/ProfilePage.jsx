@@ -7,7 +7,7 @@ import { useApiQuery } from "../hooks/useApiQuery";
 const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
 
   const { data: authUser } = useApiQuery({
-    keys: ["auth"],
+    keys: ["authUser"],
     path: "/auth/check",
     errorMessage: "Failed to fetch authentication status"
   });

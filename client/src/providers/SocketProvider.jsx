@@ -9,7 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 export const SocketProvider = ({ children }) => {
 
   const { data, isLoading } = useApiQuery({
-    keys: ["auth"],
+    keys: ["authCheck"],
     path: "/auth/check",
     errorMessage: "Failed to fetch authentication status"
   });
