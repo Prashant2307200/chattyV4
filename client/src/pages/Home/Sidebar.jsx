@@ -339,9 +339,9 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
                         <>
                           <div className="font-medium truncate flex items-center gap-1">
                             {user.username}
-                            {onlineUsers.includes(user._id) && (
+                            {/* {onlineUsers.includes(user._id) && (
                               <div className="size-2 bg-green-500 rounded-full"></div>
-                            )}
+                            )} */}
                           </div>
 
                           <div className="text-xs text-zinc-400 h-4 flex items-center">

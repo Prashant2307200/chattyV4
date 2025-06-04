@@ -9,8 +9,8 @@ import { useSocketStore } from "../../store/useSocketStore";
 
 const ChatHeader = ({ onMobileBack }) => {
 
-  const { selectedChat, socket, unsubscribeFromChat, onlineUsers } = useSocketStore(); 
-  
+  const { selectedChat, socket, unsubscribeFromChat, onlineUsers } = useSocketStore();
+
   const [isTyping, setIsTyping] = useState(false);
   const [lastSeen, setLastSeen] = useState({});
 
@@ -120,10 +120,10 @@ const ChatHeader = ({ onMobileBack }) => {
             <div className="avatar">
               <div className="size-10 rounded-full relative">
                 <img src={user?.profilePic || "/avatar.png"} alt={user?.username} />
-                {user && onlineUsers.includes(user._id) && (
-                  <span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-base-100" />
-                )}
               </div>
+              {user && onlineUsers.includes(user._id) && (
+                <span className="z-10 absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-base-100" />
+              )}
             </div>
           )}
 

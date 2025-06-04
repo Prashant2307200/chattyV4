@@ -5,6 +5,8 @@ import { BackgroundSyncPlugin } from 'workbox-background-sync';
 import { ExpirationPlugin } from 'workbox-expiration';
 import { CacheableResponsePlugin } from 'workbox-cacheable-response';
 
+precacheAndRoute(self.__WB_MANIFEST || []);
+
 const cdnImageOrigins = [
   'https://randomuser.me',
   'https://i.pinimg.com',
@@ -13,22 +15,19 @@ const cdnImageOrigins = [
 ];
 
 registerRoute(
-  ({ url }) => cdnImageOrigins.some(origin => url.href.startsWith(origin)),
+  ({ url }) => cdnImageOrigins.includes(url.origin),
   new CacheFirst({
     cacheName: 'cdn-images',
     plugins: [
-      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 86400 }),
+      new ExpirationPlugin({ maxEntries: 50, maxAgeSeconds: 86400 }),  
       new CacheableResponsePlugin({ statuses: [0, 200] }),
-    ]
+    ],
   })
 );
 
-precacheAndRoute(self.__WB_MANIFEST || []);
-
 const bgSyncPlugin = new BackgroundSyncPlugin('api-queue', {
-  maxRetentionTime: 24 * 60,
+  maxRetentionTime: 24 * 60,  
 });
-
 
 registerRoute(
   ({ url, request }) => url.pathname.startsWith('/api') && request.method === 'GET',
@@ -38,7 +37,7 @@ registerRoute(
     plugins: [
       new ExpirationPlugin({
         maxEntries: 50,
-        maxAgeSeconds: 60 * 60 * 24,
+        maxAgeSeconds: 60 * 60 * 24, // 1 day
       }),
       new CacheableResponsePlugin({
         statuses: [200],
@@ -53,6 +52,14 @@ registerRoute(
     plugins: [bgSyncPlugin],
   })
 );
+
+self.addEventListener('fetch', (event) => {
+  if (event.request.destination === 'image') {
+    event.respondWith(
+      fetch(event.request).catch(() => caches.match('/fallback-image.png'))
+    );
+  }
+});
 
 self.addEventListener('install', () => self.skipWaiting());
 self.addEventListener('activate', () => self.clients.claim());

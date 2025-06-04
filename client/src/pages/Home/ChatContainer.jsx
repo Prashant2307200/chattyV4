@@ -53,7 +53,7 @@ const ChatContainer = ({ children, data: messages, isLoading }) => {
               key={message._id || `temp-${index}`}
               ref={isLastMessage ? messageEndRef : null}
             >
-              <motion.div className={`chat ${message.sender._id === authUser._id ? "chat-end" : "chat-start"} overflow-hidden`}
+              <motion.div className={`chat ${message?.sender?._id === authUser?._id ? "chat-end" : "chat-start"} overflow-hidden`}
                 initial={{
                   opacity: 0,
                   x: message.sender._id === authUser._id ? "100%" : "-100%"

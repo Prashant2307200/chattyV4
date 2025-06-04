@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { axiosInstance } from "../lib/axios";
 
-export function useApiMutation({ keys = [], method = 'post', path = '/', message = null, errorMessage, cb = () => { }, props = {} }) {
+export function useApiMutation({ method = 'post', message = null, errorMessage, cb = () => { }, props = {} }) {
 
   const queryClient = useQueryClient();
 

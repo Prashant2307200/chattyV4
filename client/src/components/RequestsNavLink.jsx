@@ -7,7 +7,9 @@ const RequestsNavLink = memo(() => {
   
   const { data: requests } = useApiQuery({
     keys: ['requests'],
-    path: "/requests"
+    path: "/requests",
+    staleTime: 1000 * 60 * 10,
+    gcTime: 1000 * 60 * 10,
   });
 
   const pendingCount = requests?.received.filter(req => req.status === "pending").length;

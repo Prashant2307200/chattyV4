@@ -9,10 +9,8 @@ const ProfilePage = ({ mutation: UpdateProfileMutation }) => {
   const { data: authUser } = useApiQuery({
     keys: ["auth"],
     path: "/auth/check",
-    errorMessage: "Failed to fetch authentication status",
+    errorMessage: "Failed to fetch authentication status"
   });
-
-  console.log(authUser)
 
   const [selectedImg, setSelectedImg] = useState(null); 
 

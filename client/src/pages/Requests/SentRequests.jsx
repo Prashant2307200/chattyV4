@@ -16,7 +16,6 @@ const SentRequests = memo(() => {
   })
 
   const { mutate: cancelRequest } = useApiMutation({
-    keys: ["requests"],
     method: "delete",
     message: "Request cancelled successfully",
     errorMessage: "Failed to cancel request",

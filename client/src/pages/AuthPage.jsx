@@ -8,11 +8,13 @@ import { authForm } from "../constants/auth.constant"
 import MotionLines from '../components/ui/MotionLines';
 import { useSocketStore } from '../store/useSocketStore';
 import { MutationProvider } from '../providers/MutationProvider';
+import { useQueryClient } from '@tanstack/react-query';
 
 const AuthPage = () => {
 
   const [isRegister, toggleIsRegister] = useToggle();
   const { subscribeToEvents } = useSocketStore();
+  const queryClient = useQueryClient();
 
   const { form, authImagePattern } = authForm[isRegister ? "register" : "login"];
 
@@ -43,7 +45,7 @@ const AuthPage = () => {
             keys={["authUser"]}
             message={isRegister ? "User successfully registered!" : "User login successful!"}
             errorMessage="Failed to authenticate user"
-            cb={data => subscribeToEvents(data._id)}
+            cb={data => subscribeToEvents(data._id, queryClient)}
           >
             <AuthFormFields isRegister={isRegister} />
           </MutationProvider>
