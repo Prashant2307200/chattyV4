@@ -20,7 +20,7 @@ const RenderChatView = ({ selectedChatId }) => {
     <QueryProvider keys={["chats", `${selectedChatId}`]} path={`/chats/${selectedChatId}`} enabled={false}>
       <ChatContainer>
         <ChatHeader />
-        <MutationProvider path={`/chats/${selectedChatId}/messages`} keys={["chats", `${selectedChatId}`, "messages"]}>
+        <MutationProvider path={`/chats/${selectedChatId}/messages`} keys={["chats", `${selectedChatId}`]}>
           <MessageInput />
         </MutationProvider>
       </ChatContainer>
@@ -43,7 +43,7 @@ const HomePage = () => {
   return (
     <main className="h-[100svh] bg-base-200">
 
-      <section className="flex items-center justify-center pt-15 sm:px-4 sm:pt-20">
+      <section className="flex items-centerf justify-center pt-15 sm:px-4 sm:pt-20">
 
         <div className="bg-base-100 sm:rounded-lg shadow-cl w-full max-w-6xl h-[calc(100vh-4rem)] sm:h-[calc(100vh-8rem)] shadow">
 

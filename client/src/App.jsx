@@ -67,7 +67,7 @@ const App = () => {
                 element={!!hasAuthUser ? (
                   <PageWrapper>
                     <MutationProvider
-                      keys={["authUser"]}
+                      keys={["auth"]}
                       method="patch"
                       path="/auth/profile-update"
                       errorMessage="Failed to update profile"

@@ -1,36 +1,23 @@
 import { useState } from "react";
+import toast from "react-hot-toast";
 import { motion } from "motion/react";
 import { Users, X, Check, UserPlus } from "lucide-react";
-import toast from "react-hot-toast";
 
-import { useApiQuery } from "../hooks/useApiQuery";
-import { useQueryClient } from "@tanstack/react-query";
+import { useApiQuery } from "../hooks/useApiQuery"; 
 import { useApiMutation } from "../hooks/useApiMutation";
 
 const CreateGroupChat = ({ onClose }) => {
   const [selectedUsers, setSelectedUsers] = useState([]);
-  const [groupName, setGroupName] = useState("");
-
-  const queryClient = useQueryClient();
+  const [groupName, setGroupName] = useState(""); 
 
   const { data: chatUsers, isLoading } = useApiQuery({
-    keys: ["chatUsers"],
+    keys: ["chats"],
     path: "/chats"
   });
 
-  const { mutate: createGroupChat, isLoading: isCreating } = useApiMutation({
-    keys: ["chats"], // Use the same key as the chat list query
-    method: "POST",
-    message: "Group chat created successfully!",
-    onSuccess: () => {
-      queryClient.invalidateQueries(["chats"]);
-      queryClient.refetchQueries(["chats"]);
-      onClose();
-    },
-    onError: (error) => {
-      console.error("Error creating group chat:", error);
-      toast.error(error?.response?.data?.message || "Failed to create group chat");
-    }
+  const { mutate: createGroupChat, isLoading: isCreating } = useApiMutation({ 
+    keys: ["chats"],
+    message: "Group chat created successfully!"
   });
 
   // Extract unique users from all chats
@@ -60,6 +47,8 @@ const CreateGroupChat = ({ onClose }) => {
     };
 
     createGroupChat({ data: groupChatData, path: "/chats/group" });
+
+    onClose();
   };
 
   const toggleUserSelection = (user) => {
@@ -71,86 +60,87 @@ const CreateGroupChat = ({ onClose }) => {
   };
 
   return (
-    <div className="overflow-hidden">
 
+    <motion.div
+      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      onClick={onClose}
+    >
       <motion.div
-        className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        onClick={onClose}
+        className="bg-base-100 rounded-lg shadow-xl w-full max-w-md"
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ duration: 0.2 }}
+        onClick={e => e.stopPropagation()}
       >
-        <motion.div
-          className="bg-base-100 rounded-lg shadow-xl w-full max-w-md"
-          initial={{ scale: 0.9, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.9, opacity: 0 }}
-          transition={{ duration: 0.2 }}
-          onClick={e => e.stopPropagation()}
-        >
-          <div className="p-4 border-b border-base-300 flex justify-between items-center">
-            <h2 className="text-xl font-semibold flex items-center gap-2">
-              <Users className="w-5 h-5" />
-              Create Group Chat
-            </h2>
-            <button
-              className="btn btn-sm btn-ghost btn-circle"
-              onClick={onClose}
-            >
-              <X className="w-5 h-5" />
-            </button>
+        <div className="p-4 border-b border-base-300 flex justify-between items-center overflow-hidden">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
+            <Users className="w-5 h-5" />
+            Create Group Chat
+          </h2>
+          <button
+            className="btn btn-sm btn-ghost btn-circle"
+            onClick={onClose}
+          >
+            <X className="w-5 h-5" />
+          </button>
+        </div>
+
+        <form onSubmit={handleSubmit} className="p-4">
+          <div className="form-control mb-4">
+            <label className="label">
+              <span className="label-text">Group Name</span>
+            </label>
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              placeholder="Enter group name"
+              value={groupName}
+              onChange={e => setGroupName(e.target.value)}
+              required
+            />
           </div>
 
-          <form onSubmit={handleSubmit} className="p-4">
-            <div className="form-control mb-4">
-              <label className="label">
-                <span className="label-text">Group Name</span>
-              </label>
-              <input
-                type="text"
-                className="input input-bordered w-full"
-                placeholder="Enter group name"
-                value={groupName}
-                onChange={e => setGroupName(e.target.value)}
-                required
-              />
-            </div>
+          <div className="form-control mb-4">
+            <label className="label">
+              <span className="label-text">Select Users (min 2)</span>
+            </label>
 
-            <div className="form-control mb-4">
-              <label className="label">
-                <span className="label-text">Select Users (min 2)</span>
-              </label>
-
-              {selectedUsers.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-3">
-                  {selectedUsers.map(user => (
-                    <div
-                      key={user._id}
-                      className="badge badge-primary gap-1"
+            {selectedUsers.length > 0 && (
+              <div className="flex flex-wrap gap-2 mb-3">
+                {selectedUsers.map(user => (
+                  <div
+                    key={user._id}
+                    className="badge badge-primary gap-1"
+                  >
+                    {user.username}
+                    <button
+                      type="button"
+                      onClick={() => toggleUserSelection(user)}
                     >
-                      {user.username}
-                      <button
-                        type="button"
-                        onClick={() => toggleUserSelection(user)}
-                      >
-                        <X className="w-3 h-3" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              )}
+                      <X className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+              </div>
+            )}
 
-              <div className="bg-base-200 rounded-lg max-h-60 overflow-y-auto">
-                {isLoading ? (
-                  <div className="flex justify-center items-center p-4">
-                    <span className="loading loading-spinner loading-md"></span>
-                  </div>
-                ) : uniqueUsers.length === 0 ? (
-                  <div className="p-4 text-center text-base-content/70">
-                    No users found. Start chatting with someone first!
-                  </div>
-                ) : (
-                  uniqueUsers.map(user => (
+            <div className="bg-base-200 rounded-lg max-h-60 overflow-y-auto">
+              {isLoading ? (
+                <div className="flex justify-center items-center p-4">
+                  <span className="loading loading-spinner loading-md"></span>
+                </div>
+              ) : uniqueUsers.length === 0 ? (
+                <div className="p-4 text-center text-base-content/70">
+                  No users found. Start chatting with someone first!
+                </div>
+              ) : (
+                uniqueUsers.map(user => (
+                  <div className="overflow-hidden">
+
                     <motion.div
                       key={user._id}
                       className={`flex items-center gap-3 p-3 hover:bg-base-300 cursor-pointer ${selectedUsers.some(u => u._id === user._id) ? "bg-base-300" : ""
@@ -179,39 +169,39 @@ const CreateGroupChat = ({ onClose }) => {
                         )}
                       </div>
                     </motion.div>
-                  ))
-                )}
-              </div>
+                  </div>
+                ))
+              )}
             </div>
+          </div>
 
-            <div className="flex justify-end gap-2 mt-4">
-              <button
-                type="button"
-                className="btn btn-ghost"
-                onClick={onClose}
-                disabled={isCreating}
-              >
-                Cancel
-              </button>
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={selectedUsers.length < 2 || !groupName.trim() || isCreating}
-              >
-                {isCreating ? (
-                  <>
-                    <span className="loading loading-spinner loading-xs"></span>
-                    Creating...
-                  </>
-                ) : (
-                  "Create Group"
-                )}
-              </button>
-            </div>
-          </form>
-        </motion.div>
+          <div className="flex justify-end gap-2 mt-4">
+            <button
+              type="button"
+              className="btn btn-ghost"
+              onClick={onClose}
+              disabled={isCreating}
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={selectedUsers.length < 2 || !groupName.trim() || isCreating}
+            >
+              {isCreating ? (
+                <>
+                  <span className="loading loading-spinner loading-xs"></span>
+                  Creating...
+                </>
+              ) : (
+                "Create Group"
+              )}
+            </button>
+          </div>
+        </form>
       </motion.div>
-    </div>
+    </motion.div> 
   );
 };
 

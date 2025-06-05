@@ -153,26 +153,26 @@ export const useSocketStore = create((set, get) => ({
     });
 
     newSocket.off("newRequest");
-    newSocket.on("newRequest", newReceivedRequest => {
+    newSocket.on("newRequest", newReceivedRequest => { 
       queryClient.setQueryData(['requests'], (prev = []) => ({ ...prev, received: [...prev.received, newReceivedRequest] }));
       toast.success(`New chat request from ${newReceivedRequest.sender.username}`);
     });
 
     newSocket.off("requestCancelled");
-    newSocket.on("requestCancelled", cancelledRequestId => {
+    newSocket.on("requestCancelled", cancelledRequestId => { 
       queryClient.setQueryData(['requests'], (prev = []) => ({ ...prev, received: prev.received.filter(({ _id: receivedRequestId }) => (receivedRequestId !== cancelledRequestId)) }));
     });
 
     newSocket.off("requestAccepted");
-    newSocket.on("requestAccepted", ({ request, chat }) => {
+    newSocket.on("requestAccepted", ({ request, chat }) => { 
       queryClient.setQueryData(['requests'], (prev = []) => ({ ...prev, sent: prev.sent.map(prevRequest => (prevRequest._id === request._id ? request : prevRequest)) }));
       queryClient.setQueryData(['chats'], (prev = []) => ([...prev, chat]));
       toast.success(`Your request was accepted by ${request.receiver.username}`);
     });
 
     newSocket.off("requestDeclined");
-    newSocket.on("requestDeclined", ({ request }) => {
-      queryClient.setQueryData(['requests'], (prev = []) => ({ ...prev, sent: prev.sent.map(prevRequest => (prevRequest._id === request._id ? request : prevRequest)) }))
+    newSocket.on("requestDeclined", request => { 
+      queryClient.setQueryData(['requests'], (prev = []) => ({ ...prev, sent: prev.sent.map(prevRequest => (prevRequest._id === request._id ? request : prevRequest)) }));
       toast.error(`Your request was declined by ${request.receiver.username}`);
     });
 

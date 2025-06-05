@@ -8,6 +8,7 @@ import App from './App.jsx';
 
 import { SocketProvider } from './providers/SocketProvider.jsx';
 import { TanStackQueryProvider } from './providers/TanstackQueryProvider.jsx';
+import { QueryProvider } from './providers/QueryProvider.jsx';
 
 const updateSW = registerSW({
   onNeedRefresh() { },

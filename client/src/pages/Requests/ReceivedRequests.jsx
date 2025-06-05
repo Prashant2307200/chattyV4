@@ -16,12 +16,14 @@ const ReceivedRequests = () => {
 
   const { mutate: acceptRequest } = useApiMutation({
     method: "put",
+    keys: ["requests"],
     message: "Request accepted successfully",
     errorMessage: "Failed to accept request"
   })
 
   const { mutate: declineRequest } = useApiMutation({
     method: "put",
+    keys: ["requests"],
     message: "Request declined successfully",
     errorMessage: "Failed to decline request",
   })

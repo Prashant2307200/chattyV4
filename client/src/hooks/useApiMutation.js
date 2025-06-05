@@ -3,13 +3,13 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 import { axiosInstance } from "../lib/axios";
 
-export function useApiMutation({ method = 'post', message = null, errorMessage, cb = () => { }, props = {} }) {
+export function useApiMutation({ keys, method = 'post', message = null, errorMessage, cb = () => { }, props = {} }) {
 
   const queryClient = useQueryClient();
 
   return useMutation({
 
-    mutationFn: async ({ data=null, path='/'}) => {
+    mutationFn: async ({ data = null, path = '/' }) => {
       if (!navigator.onLine)
         toast.success("You're offline. Your action will be completed once you're back online.");
       const response = await axiosInstance[method](path, data);
@@ -51,6 +51,7 @@ export function useApiMutation({ method = 'post', message = null, errorMessage, 
 
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: keys });
+      queryClient.refetchQueries(keys);
     },
 
     onSuccess: data => {

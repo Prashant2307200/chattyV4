@@ -6,6 +6,7 @@ import { navigation } from "../../constants/navigation.constant";
 import { useSocketStore } from "../../store/useSocketStore";
 import { MutationProvider } from "../../providers/MutationProvider";
 import { QueryProvider } from "../../providers/QueryProvider";
+import { useQueryClient } from "@tanstack/react-query";
 
 const Navbar = () => {
 
@@ -57,7 +58,7 @@ const AuthNavigation = () => {
         <span className="hidden sm:inline">{navigation.links[1].title}</span>
       </Link>
       <MutationProvider
-        keys={["authUser"]}
+        keys={["auth"]}
         method="delete"
         path="/auth/logout"
         message="Logged out Successfully!"
@@ -72,9 +73,15 @@ const AuthNavigation = () => {
 const Logout = ({ mutation: LogoutMutation }) => {
 
   const LogOut = navigation.links[2].icon;
+  const queryClient = useQueryClient();
+
+  const handleOnLogout = () => {
+    queryClient.clear();
+    LogoutMutation.mutate();
+  }
 
   return (
-    <button className="btn btn-sm gap-2" onClick={LogoutMutation.mutate} disabled={LogoutMutation.isPending}>
+    <button className="btn btn-sm gap-2" onClick={handleOnLogout} disabled={LogoutMutation.isPending}>
       <LogOut className="size-4" />
       <span className="hidden sm:inline">{navigation.links[2].title}</span>
     </button>
