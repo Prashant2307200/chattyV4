@@ -40,6 +40,9 @@ export const MessageService = {
             profilePic: "$sender.profilePic"
           }
         }
+      },
+      {
+        $sort: { createdAt: 1 }
       }
     ]); 
   },
