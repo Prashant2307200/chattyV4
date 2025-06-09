@@ -24,6 +24,7 @@ Editor directories and files
 *.sw?
 
 .env
+*.env
 nodemon.json
 cmd.sh
 

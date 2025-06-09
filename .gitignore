@@ -23,7 +23,8 @@ Editor directories and files
 *.sln
 *.sw?
 
-.env
 nodemon.json
 cmd.sh
 .github
+.env
+*.env

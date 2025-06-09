@@ -17,7 +17,7 @@ const SearchBar = memo(({
       transition={{ duration: 0.3 }}
     >
       <div className="relative">
-        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none z-10">
           <motion.div
             initial={{ scale: 0.8 }}
             animate={{ scale: 1 }}
@@ -35,7 +35,7 @@ const SearchBar = memo(({
         />
         {searchTerm && (
           <motion.button
-            className="absolute inset-y-0 right-0 flex items-center pr-3"
+            className="absolute inset-y-0 right-0 flex items-center pr-3 z-10"
             onClick={clearSearch}
             aria-label="Clear search"
             initial={{ opacity: 0, scale: 0.5 }}

@@ -70,7 +70,7 @@ const UsersList = memo(() => {
           transition={{ duration: 0.3 }}
         >
           <div className="flex items-center justify-between">
-            <h2 className="font-semibold">Find Users to Chat With</h2>
+            <h2 className="font-semibold text-xs sm:text-xl md:text-xs">Find Users to Chat With</h2>
             <div className="flex items-center gap-2">
               <UserPlus size={16} className="text-primary" />
               <span className="badge badge-primary">0 friends</span>

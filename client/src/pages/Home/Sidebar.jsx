@@ -1,20 +1,18 @@
 import { formatDistanceToNow } from "date-fns";
 import { Users, X, UserPlus } from "lucide-react";
-import { memo, useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 
-import { useApiQuery } from "../../hooks/useApiQuery";
 import { formatNumber } from "../../utils/formatUtils";
 import SidebarSkeleton from "./skeletons/SidebarSkeleton";
 import SidebarAiChat from "../../components/SidebarAiChat";
 import { useSocketStore } from "../../store/useSocketStore";
 import CreateGroupChatButton from "../../components/CreateGroupChatButton";
 
-import { useQueryClient } from "@tanstack/react-query";
-
 // eslint-disable-next-line no-unused-vars
+import { useQueryClient } from "@tanstack/react-query";
 import { motion } from "motion/react";
 
-const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
+const Sidebar = ({ onChatSelect, data: chats, isLoading }) => {
 
   const { onlineUsers, subscribeToChat, unsubscribeFromChat, selectedChat, socket } = useSocketStore();
 
@@ -77,8 +75,6 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
       return "Offline";
     }
   };
-
-  const memoizedUsersIcon = useMemo(() => <Users className="size-6" />, []);
 
   // Process chats to remove duplicates for one-on-one chats
   const processedChats = useMemo(() => {
@@ -152,7 +148,7 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="relative">
-                {memoizedUsersIcon}
+                <Users className="size-6" />
                 <div className="absolute -top-1 -right-1 size-4 bg-primary text-primary-content text-[10px] font-bold rounded-full flex items-center justify-center">
                   {filteredChats?.length || 0}
                 </div>
@@ -177,7 +173,7 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
                 />
                 <span className="text-xs">Show online only</span>
               </label>
-              <div className="badge badge-sm badge-success">{formatNumber(onlineUsers.length - 1)} online</div>
+              <div className="badge badge-sm badge-success">{onlineUsers.length - 1 === -1 ? "Offline":formatNumber(onlineUsers.length - 1)} online</div>
             </div>
             <div className="text-xs text-zinc-500">
               {new Date().toLocaleDateString()}
@@ -206,11 +202,11 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
               <input
                 type="text"
                 placeholder="Search chats..."
-                className="input input-sm input-bordered w-full pl-8"
+                className="input input-bordered w-full pl-8"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
-              <div className="absolute left-2 top-1/2 -translate-y-1/2 text-base-content/50">
+              <div className="absolute left-2 top-1/2 -translate-y-1/2 text-base-content/50 z-10">
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
@@ -369,5 +365,6 @@ const Sidebar = memo(({ onChatSelect, data: chats, isLoading }) => {
       </aside>
     </div>
   );
-});
-export default memo(Sidebar);
+};
+
+export default Sidebar;
